@@ -1,14 +1,18 @@
 # enchere
 Projet eni enchere 
 
-Sur la gauche, le plugin Git vous permet d’ajouter un dépôt local, de cloner un dépôt Git, et de créer un nouveau dépôt Git local. Vous n'avez pas encore de dépôts enregistrés. C'est normal ! Nous allons cloner un dépôt d'un projet open source : fastjson, une bibliothèque Java permettant de traiter un format de fichier très utile en développement : JSON.
+Lien vers le site openclassroom pour mettre en place git dans eclipse :
+--
 
-Cliquez sur Clone a repository. Cela ouvre un assistant à plusieurs étapes.
+https://openclassrooms.com/fr/courses/6106191-installez-votre-environnement-de-developpement-java-avec-eclipse/6250106-decouvrez-git-avec-eclipse-et-github
 
-Dans URL, saisissez https://github.com/alibaba/fastjson et cliquez sur Next.
+##### Steps : 
+* Cloner le repository à partir de la branche la master 
 
-La fenêtre suivante montre l'ensemble des branches disponibles. Cliquez directement sur Next.
 
-Choisissez l'emplacement de destination sur votre ordinateur. Cliquez ensuite sur Finish.
+Pour la partie développement : 
 
-Un nouveau dépôt apparaît dans Git Repositories. Cliquez une fois dessus, vous aurez alors accès à un onglet affichant l'historique des modifications de code.
+* Une branche dev est créée elle sera la principal source de développement 
+* Pour commit, il suffit de se rendre dans VCS pour un aide mémoire vous pouvez trouvez sur internet un récap des commandes git sur internet
+* Pour mettre à jour votre branche c'est important de faire un rebase régulièrement pour etre sur d'avoir votre branche à jour
+
