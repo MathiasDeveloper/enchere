@@ -219,5 +219,16 @@ public class Utilisateur {
 	public void setArticles(List<Article> articles) {
 		this.articles = articles;
 	}
+	/**
+	 * {@inheritDoc}
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Utilisateur [noUtilisateur=" + noUtilisateur + ", pseudo=" + pseudo + ", nom=" + nom + ", prenom="
+				+ prenom + ", email=" + email + ", telephone=" + telephone + ", rue=" + rue + ", codePostal="
+				+ codePostal + ", ville=" + ville + ", motDePasse=" + motDePasse + ", credit=" + credit
+				+ ", administrateur=" + administrateur + ", encheres=" + encheres + ", articles=" + articles + "]";
+	}
     
 }

@@ -6,6 +6,7 @@ package fr.eni.encheres.dal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import fr.eni.encheres.bo.Utilisateur;
@@ -16,7 +17,7 @@ import fr.eni.encheres.bo.Utilisateur;
  * @version enchere - v1.0
  * @date 7 avr. 2020
  */
-public class UtilisateurDAOImpl implements DAO{
+public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 	
 	private static ConnectionProvider connectionProvider = new ConnectionProvider();
 
@@ -25,7 +26,7 @@ public class UtilisateurDAOImpl implements DAO{
 	 * @see fr.eni.encheres.dal.DAO#create(java.lang.Object)
 	 */
 	@Override
-	public Object create(Object objet) {
+	public Utilisateur create(Utilisateur objet) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -35,7 +36,7 @@ public class UtilisateurDAOImpl implements DAO{
 	 * @see fr.eni.encheres.dal.DAO#update(java.lang.Object)
 	 */
 	@Override
-	public Object update(Object objet) {
+	public Utilisateur update(Utilisateur objet) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -45,7 +46,7 @@ public class UtilisateurDAOImpl implements DAO{
 	 * @see fr.eni.encheres.dal.DAO#delete(java.lang.Object)
 	 */
 	@Override
-	public Object delete(Object objet) {
+	public Utilisateur delete(Utilisateur objet) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -55,16 +56,16 @@ public class UtilisateurDAOImpl implements DAO{
 	 * @see fr.eni.encheres.dal.DAO#find(int)
 	 */
 	@Override
-	public Object find(int id) {
+	public Utilisateur find(int id) {
 		String REQUETE = "SELECT * " + 
-				"FROM ENCHERES " +
+				"FROM UTILISATEURS " +
 				"WHERE no_utilisateur=?";
 		Utilisateur utilisateur = new Utilisateur();
-		try(Connection cnx = connectionProvider.getInstance().preparedStarement){
-			PreparedStatement pstmt = cnx.prepareStatement(REQUETE);
-			pstmt.setInt(1, id);
-			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()) {
+			try {
+				PreparedStatement pstmt = connectionProvider.getInstance().prepareStatement(REQUETE);
+				pstmt.setInt(1, id);
+				ResultSet rs = pstmt.executeQuery();
+				while(rs.next()) {
 				utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
 				utilisateur.setPseudo(rs.getString("pseudo"));
 				utilisateur.setNom(rs.getString("nom"));
@@ -77,11 +78,11 @@ public class UtilisateurDAOImpl implements DAO{
 				utilisateur.setMotDePasse(rs.getString("mot_de_passe"));
 				utilisateur.setCredit(rs.getInt("credit"));
 				utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
 		return utilisateur;
 	}
 
@@ -90,10 +91,12 @@ public class UtilisateurDAOImpl implements DAO{
 	 * @see fr.eni.encheres.dal.DAO#findAll(java.lang.Object)
 	 */
 	@Override
-	public ArrayList findAll(Object objet) {
+	public ArrayList<Utilisateur> findAll(Utilisateur objet) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 
 }
