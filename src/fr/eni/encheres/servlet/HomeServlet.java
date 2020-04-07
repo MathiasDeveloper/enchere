@@ -1,5 +1,6 @@
 package fr.eni.encheres.servlet;
 
+import fr.eni.encheres.dal.ConnectionProvider;
 import javax.servlet.annotation.WebServlet;
 import java.io.IOException;
 
