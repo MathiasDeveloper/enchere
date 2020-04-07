@@ -5,20 +5,22 @@ package fr.eni.encheres.dal;
 
 import java.util.ArrayList;
 
+import fr.eni.encheres.bo.Article;
+
 /**
  * Classe en charge de
  * @author Dorig
  * @version enchere - v1.0
  * @date 7 avr. 2020
  */
-public class ArticleDAOImpl implements DAO{
+public class ArticleDAOImpl implements DAO<Article>{
 
 	/**
 	 * {@inheritDoc}
 	 * @see fr.eni.encheres.dal.DAO#create(java.lang.Object)
 	 */
 	@Override
-	public Object create(Object objet) {
+	public Article create(Article objet) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -28,7 +30,7 @@ public class ArticleDAOImpl implements DAO{
 	 * @see fr.eni.encheres.dal.DAO#update(java.lang.Object)
 	 */
 	@Override
-	public Object update(Object objet) {
+	public Article update(Article objet) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -38,7 +40,7 @@ public class ArticleDAOImpl implements DAO{
 	 * @see fr.eni.encheres.dal.DAO#delete(java.lang.Object)
 	 */
 	@Override
-	public Object delete(Object objet) {
+	public Article delete(Article objet) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -48,7 +50,7 @@ public class ArticleDAOImpl implements DAO{
 	 * @see fr.eni.encheres.dal.DAO#find(int)
 	 */
 	@Override
-	public Object find(int id) {
+	public Article find(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -58,10 +60,12 @@ public class ArticleDAOImpl implements DAO{
 	 * @see fr.eni.encheres.dal.DAO#findAll(java.lang.Object)
 	 */
 	@Override
-	public ArrayList findAll(Object objet) {
+	public ArrayList<Article> findAll(Article objet) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 
 }
