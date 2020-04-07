@@ -59,12 +59,7 @@ public class EnchereManager implements Manager<Enchere>{
 	 * {@inheritDoc}
 	 * @see fr.eni.encheres.bll.Manager#find()
 	 */
-	@Override
-<<<<<<< HEAD
-	public Enchere find() {
-=======
 	public Enchere find(int id) {
->>>>>>> refs/remotes/origin/release.creationclasses
 		// TODO Auto-generated method stub
 		return null;
 	}

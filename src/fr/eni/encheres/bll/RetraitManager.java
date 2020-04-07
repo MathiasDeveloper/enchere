@@ -60,11 +60,7 @@ public class RetraitManager implements Manager<Retrait>{
 	 * @see fr.eni.encheres.bll.Manager#find()
 	 */
 	@Override
-<<<<<<< HEAD
-	public Retrait find() {
-=======
 	public Retrait find(int id) {
->>>>>>> refs/remotes/origin/release.creationclasses
 		// TODO Auto-generated method stub
 		return null;
 	}

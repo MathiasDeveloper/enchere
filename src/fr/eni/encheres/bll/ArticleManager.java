@@ -60,11 +60,7 @@ public class ArticleManager implements Manager<Article>{
 	 * @see fr.eni.encheres.bll.Manager#find()
 	 */
 	@Override
-<<<<<<< HEAD
-	public Article find() {
-=======
 	public Article find(int id) {
->>>>>>> refs/remotes/origin/release.creationclasses
 		// TODO Auto-generated method stub
 		return null;
 	}
