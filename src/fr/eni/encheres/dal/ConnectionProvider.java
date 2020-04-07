@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 public class ConnectionProvider {
 
 	/**
-	 * Instance de la classe connection provider
+	 * Instance de la classe Connection
 	 */
 	private static Connection connection;
 
