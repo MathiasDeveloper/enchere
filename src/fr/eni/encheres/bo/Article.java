@@ -13,7 +13,7 @@ import java.util.Date;
  */
 public class Article {
 
-	private int noArticle;
+	private int idArticle;
 	private String nomArticle;
 	private String description;
 	private Date dateDebutEnchere;

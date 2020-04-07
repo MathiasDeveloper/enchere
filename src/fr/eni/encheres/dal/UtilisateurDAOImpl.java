@@ -19,6 +19,10 @@ import fr.eni.encheres.bo.Utilisateur;
  */
 public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 	
+	private static final String FIND = "SELECT * " + 
+										"FROM UTILISATEURS " +
+										"WHERE idUtilisateur=?";
+	
 	private static ConnectionProvider connectionProvider = new ConnectionProvider();
 
 	/**
@@ -57,16 +61,13 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 	 */
 	@Override
 	public Utilisateur find(int id) {
-		String REQUETE = "SELECT * " + 
-				"FROM UTILISATEURS " +
-				"WHERE no_utilisateur=?";
 		Utilisateur utilisateur = new Utilisateur();
 			try {
-				PreparedStatement pstmt = connectionProvider.getInstance().prepareStatement(REQUETE);
+				PreparedStatement pstmt = connectionProvider.getInstance().prepareStatement(FIND);
 				pstmt.setInt(1, id);
 				ResultSet rs = pstmt.executeQuery();
 				while(rs.next()) {
-				utilisateur.setNoUtilisateur(rs.getInt("no_utilisateur"));
+				utilisateur.setNoUtilisateur(rs.getInt("idUtilisateur"));
 				utilisateur.setPseudo(rs.getString("pseudo"));
 				utilisateur.setNom(rs.getString("nom"));
 				utilisateur.setPrenom(rs.getString("prenom"));
