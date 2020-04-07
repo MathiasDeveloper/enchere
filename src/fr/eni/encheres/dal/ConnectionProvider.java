@@ -20,8 +20,8 @@ public class ConnectionProvider {
 
 
 	//Constructeur privé
-	private ConnectionProvider(){
-		connection = ConnectionProvider.getConnection();
+	public ConnectionProvider(){
+		ConnectionProvider.getConnection();
 	}
 
 
@@ -30,29 +30,22 @@ public class ConnectionProvider {
 	 * @return ConnectionProvider
 	 */
 	public Connection getInstance(){
-		if (connection == null)
-			new ConnectionProvider();
 		return connection;
 	}
 
 	/**
-	 * Récupère la connexion à la bdd une fois que la classe est instanciée
+	 * Récupère la connexion à la bdd
 	 */
-	private static Connection getConnection(){
-		Connection connection;
+	private static void getConnection(){
 
 		try {
 			Context context = new InitialContext();
-
 			DataSource dataSource = (DataSource)context.lookup("java:comp/env/jdbc/pool_cnx");
 			connection = dataSource.getConnection();
-
 		} catch (NamingException | SQLException e) {
 			e.printStackTrace();
 			throw new RuntimeException("Impossible d'accéder à la base de données");
 		}
-
-		return connection;
 	}
 
 }
