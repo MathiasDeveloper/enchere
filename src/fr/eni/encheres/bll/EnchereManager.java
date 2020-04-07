@@ -5,20 +5,22 @@ package fr.eni.encheres.bll;
 
 import java.util.ArrayList;
 
+import fr.eni.encheres.bo.Enchere;
+
 /**
  * Classe en charge de
  * @author Dorig
  * @version enchere - v1.0
  * @date 7 avr. 2020
  */
-public class EnchereManager implements Manager{
+public class EnchereManager implements Manager<Enchere>{
 
 	/**
 	 * {@inheritDoc}
 	 * @see fr.eni.encheres.bll.Manager#getInstance()
 	 */
 	@Override
-	public Object getInstance() {
+	public Enchere getInstance() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -28,7 +30,7 @@ public class EnchereManager implements Manager{
 	 * @see fr.eni.encheres.bll.Manager#create()
 	 */
 	@Override
-	public Object create() {
+	public Enchere create() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -38,7 +40,7 @@ public class EnchereManager implements Manager{
 	 * @see fr.eni.encheres.bll.Manager#update()
 	 */
 	@Override
-	public Object update() {
+	public Enchere update() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -48,7 +50,7 @@ public class EnchereManager implements Manager{
 	 * @see fr.eni.encheres.bll.Manager#delete()
 	 */
 	@Override
-	public Object delete() {
+	public Enchere delete() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -58,7 +60,7 @@ public class EnchereManager implements Manager{
 	 * @see fr.eni.encheres.bll.Manager#find()
 	 */
 	@Override
-	public Object find() {
+	public Enchere find() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -68,9 +70,11 @@ public class EnchereManager implements Manager{
 	 * @see fr.eni.encheres.bll.Manager#findAll()
 	 */
 	@Override
-	public ArrayList findAll() {
+	public ArrayList<Enchere> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 }

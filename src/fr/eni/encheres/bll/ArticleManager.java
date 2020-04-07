@@ -5,20 +5,22 @@ package fr.eni.encheres.bll;
 
 import java.util.ArrayList;
 
+import fr.eni.encheres.bo.Article;
+
 /**
  * Classe en charge de
  * @author Dorig
  * @version enchere - v1.0
  * @date 7 avr. 2020
  */
-public class ArticleManager implements Manager{
+public class ArticleManager implements Manager<Article>{
 
 	/**
 	 * {@inheritDoc}
 	 * @see fr.eni.encheres.bll.Manager#getInstance()
 	 */
 	@Override
-	public Object getInstance() {
+	public Article getInstance() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -28,7 +30,7 @@ public class ArticleManager implements Manager{
 	 * @see fr.eni.encheres.bll.Manager#create()
 	 */
 	@Override
-	public Object create() {
+	public Article create() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -38,7 +40,7 @@ public class ArticleManager implements Manager{
 	 * @see fr.eni.encheres.bll.Manager#update()
 	 */
 	@Override
-	public Object update() {
+	public Article update() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -48,7 +50,7 @@ public class ArticleManager implements Manager{
 	 * @see fr.eni.encheres.bll.Manager#delete()
 	 */
 	@Override
-	public Object delete() {
+	public Article delete() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -58,7 +60,7 @@ public class ArticleManager implements Manager{
 	 * @see fr.eni.encheres.bll.Manager#find()
 	 */
 	@Override
-	public Object find() {
+	public Article find() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -68,9 +70,10 @@ public class ArticleManager implements Manager{
 	 * @see fr.eni.encheres.bll.Manager#findAll()
 	 */
 	@Override
-	public ArrayList findAll() {
+	public ArrayList<Article> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }
