@@ -19,7 +19,9 @@ public class ConnectionProvider {
 	private static Connection connection;
 
 
-	//Constructeur privé
+	/**
+	 * Constructeur ConnectionProvider
+	 */
 	public ConnectionProvider(){
 		ConnectionProvider.getConnection();
 	}
@@ -27,7 +29,7 @@ public class ConnectionProvider {
 
 	/**
 	 * Récupère l'instance de la connection à la bdd
-	 * @return ConnectionProvider
+	 * @return Connection
 	 */
 	public Connection getInstance(){
 		return connection;
