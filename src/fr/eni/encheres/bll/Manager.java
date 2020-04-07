@@ -7,6 +7,6 @@ public interface Manager <T> {
     T create();
     T update();
     T delete();
-    T find();
+    T find(int id);
     ArrayList<T> findAll();
 }
