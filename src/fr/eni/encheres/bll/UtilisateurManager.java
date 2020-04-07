@@ -6,6 +6,7 @@ package fr.eni.encheres.bll;
 import java.util.ArrayList;
 
 import fr.eni.encheres.bo.Utilisateur;
+import fr.eni.encheres.dal.UtilisateurDAOImpl;
 
 /**
  * Classe en charge de
@@ -60,9 +61,9 @@ public class UtilisateurManager implements Manager<Utilisateur>{
 	 * @see fr.eni.encheres.bll.Manager#find()
 	 */
 	@Override
-	public Utilisateur find() {
-		// TODO Auto-generated method stub
-		return null;
+	public Utilisateur find(int id) {
+		UtilisateurDAOImpl utilisateurDAOImpl = new UtilisateurDAOImpl();
+		return utilisateurDAOImpl.find(id);
 	}
 
 	/**

@@ -60,7 +60,7 @@ public class CategorieManager implements Manager<Categorie>{
 	 * @see fr.eni.encheres.bll.Manager#find()
 	 */
 	@Override
-	public Categorie find() {
+	public Categorie find(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

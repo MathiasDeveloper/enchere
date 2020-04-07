@@ -60,7 +60,7 @@ public class EnchereManager implements Manager<Enchere>{
 	 * @see fr.eni.encheres.bll.Manager#find()
 	 */
 	@Override
-	public Enchere find() {
+	public Enchere find(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
