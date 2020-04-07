@@ -8,6 +8,7 @@ import java.util.ArrayList;
  */
 public interface DAO <T> {
     T create (T objet);
+    T update (T objet);
     T delete (T objet);
     T find (int id);
     ArrayList<T> findAll (T objet);
