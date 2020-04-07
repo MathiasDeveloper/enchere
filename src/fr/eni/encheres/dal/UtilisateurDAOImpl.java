@@ -74,9 +74,9 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 				utilisateur.setEmail(rs.getString("email"));
 				utilisateur.setTelephone(rs.getString("telephone"));
 				utilisateur.setRue(rs.getString("rue"));
-				utilisateur.setCodePostal(rs.getString("code_postal"));
+				utilisateur.setCodePostal(rs.getString("codePostal"));
 				utilisateur.setVille(rs.getString("ville"));
-				utilisateur.setMotDePasse(rs.getString("mot_de_passe"));
+				utilisateur.setMotDePasse(rs.getString("motDePasse"));
 				utilisateur.setCredit(rs.getInt("credit"));
 				utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
 				}
