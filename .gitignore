@@ -26,3 +26,6 @@ hs_err_pid*
 #fichier de configuration workspace
 /.idea/
 /build/
+/.settings/
+.classpath
+.project
