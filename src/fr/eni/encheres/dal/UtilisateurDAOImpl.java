@@ -1,6 +1,3 @@
-/**
- * 
- */
 package fr.eni.encheres.dal;
 
 import java.sql.Connection;
