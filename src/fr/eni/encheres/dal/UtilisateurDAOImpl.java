@@ -31,7 +31,7 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 										"codePostal=?," +
 										"ville=?," +
 										"motDePasse=?," +
-										"credit=?," +
+										"credit=? " +
 										"WHERE idUtilisateur=?";
 	
 	private static ConnectionProvider connectionProvider = new ConnectionProvider();
@@ -63,7 +63,7 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 			pstmt.setString(8, utilisateur.getVille());
 			pstmt.setString(9, utilisateur.getMotDePasse());
 			pstmt.setInt(10, utilisateur.getCredit());
-			pstmt.setInt(11, utilisateur.getidUtilisateur());
+			pstmt.setInt(11, utilisateur.getIdUtilisateur());
 			pstmt.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -91,7 +91,7 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 				pstmt.setInt(1, id);
 				ResultSet rs = pstmt.executeQuery();
 				while(rs.next()) {
-				utilisateur.setNoUtilisateur(rs.getInt("idUtilisateur"));
+				utilisateur.setIdUtilisateur(rs.getInt("idUtilisateur"));
 				utilisateur.setPseudo(rs.getString("pseudo"));
 				utilisateur.setNom(rs.getString("nom"));
 				utilisateur.setPrenom(rs.getString("prenom"));
