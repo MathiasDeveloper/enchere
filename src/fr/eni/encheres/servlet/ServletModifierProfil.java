@@ -57,7 +57,7 @@ public class ServletModifierProfil extends HttpServlet {
 			}
 			UtilisateurDAOImpl utilisateurDAOImpl = new UtilisateurDAOImpl();
 			utilisateurDAOImpl.update(utilisateur);
-			request.setAttribute("message", "Votre profil a été modifié avec succes.");
+			request.setAttribute("message", "Votre profil a été modifié avec succès.");
 			request.setAttribute("utilisateur", utilisateur);
 			this.getServletContext().getRequestDispatcher("/WEB-INF/modifierProfil.jsp").forward(request, response);
 		}else {

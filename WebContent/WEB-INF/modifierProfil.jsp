@@ -1,16 +1,14 @@
 <%@page import="fr.eni.encheres.bo.Utilisateur"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <!-- Bootstrap core CSS -->
 <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<%
-	Utilisateur utilisateur = (Utilisateur)request.getAttribute("utilisateur");
-%>
-<title><%=utilisateur.getPseudo() %></title>
+<title>${utilisateur.pseudo }</title>
 </head>
 <body>
 <div class="p-5 ml-5">
@@ -28,13 +26,13 @@
 			<p>Crédit : </p>
 		</div>
 		<div class="text-center d-flex flex-column w-10">
-			<input class="mb-2" type="text" name="pseudo" value="<%=utilisateur.getPseudo() %>">
-			<input class="mb-2" type="text" name="prenom" value="<%=utilisateur.getPrenom() %>">
-			<input class="mb-2" type="tel" name="telephone" value="<%=utilisateur.getTelephone() %>">
-			<input class="mb-2" type="text" name="codePostal" value="<%=utilisateur.getCodePostal() %>">
+			<input class="mb-2" type="text" name="pseudo" value="${utilisateur.pseudo }">
+			<input class="mb-2" type="text" name="prenom" value="${utilisateur.prenom }">
+			<input class="mb-2" type="tel" name="telephone" value="${utilisateur.telephone }">
+			<input class="mb-2" type="text" name="codePostal" value="${utilisateur.codePostal }">
 			<input class="mb-2" type="password" name="mdp">
 			<input class="mb-3" type="password" name="newmdp">
-			<p class="mb-2"><%=utilisateur.getCredit() %></p>
+			<p class="mb-2">${utilisateur.credit }</p>
 		</div>
 		<div class="w-10">
 			<p>Nom : </p>
@@ -45,23 +43,19 @@
 			<p>Confirmation : </p>
 		</div>
 		<div class="text-center d-flex flex-column w-10">
-			<input class="mb-2" type="text" name="nom" value="<%=utilisateur.getNom() %>">
-			<input class="mb-2" type="email" name="email" value="<%=utilisateur.getEmail() %>">
-			<input class="mb-2" type="text" name="rue" value="<%=utilisateur.getRue() %>">
-			<input class="mb-2" type="text" name="ville" value="<%=utilisateur.getVille() %>">
+			<input class="mb-2" type="text" name="nom" value="${utilisateur.nom }">
+			<input class="mb-2" type="email" name="email" value="${utilisateur.email }">
+			<input class="mb-2" type="text" name="rue" value="${utilisateur.rue }">
+			<input class="mb-2" type="text" name="ville" value="${utilisateur.ville }">
 			<p style="visibility: hidden">espace</p>
 			<input class="mb-2" type="password" name="confirmation">
-			<input class="mb-2" type="hidden" name="utilisateur" value="<%=utilisateur.getIdUtilisateur() %>" >
+			<input class="mb-2" type="hidden" name="utilisateur" value="${utilisateur.idUtilisateur }" >
 		</div>
 	</div>
 	<div class="text-center">
-		<%
-			if(request.getAttribute("message")!=null){
-		%>		
-				<p><%=request.getAttribute("message") %></p>
-		<%		
-			}
-		%>
+		<c:if test="${!empty message }">
+			<p>${message }</p>
+		</c:if>
 	</div>
 	<div class="button d-flex justify-content-center">
         <button type="submit">Enregistrer</button>
