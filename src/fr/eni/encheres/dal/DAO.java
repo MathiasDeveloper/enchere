@@ -7,9 +7,9 @@ import java.util.ArrayList;
  * @param <T>
  */
 public interface DAO <T> {
-    T create (T objet);
-    T update (T objet);
-    T delete (T objet);
+    void create (T objet);
+    void update (T objet);
+    void delete (T objet);
     T find (int id);
-    ArrayList<T> findAll (T objet);
+    ArrayList<T> findAll ();
 }

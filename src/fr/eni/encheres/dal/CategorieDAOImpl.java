@@ -20,9 +20,8 @@ public class CategorieDAOImpl implements DAO<Categorie>{
 	 * @see fr.eni.encheres.dal.DAO#create(java.lang.Object)
 	 */
 	@Override
-	public Categorie create(Categorie objet) {
+	public void create(Categorie categorie) {
 		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
@@ -30,9 +29,8 @@ public class CategorieDAOImpl implements DAO<Categorie>{
 	 * @see fr.eni.encheres.dal.DAO#update(java.lang.Object)
 	 */
 	@Override
-	public Categorie update(Categorie objet) {
+	public void update(Categorie categorie) {
 		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
@@ -40,9 +38,8 @@ public class CategorieDAOImpl implements DAO<Categorie>{
 	 * @see fr.eni.encheres.dal.DAO#delete(java.lang.Object)
 	 */
 	@Override
-	public Categorie delete(Categorie objet) {
-		// TODO Auto-generated method stub
-		return null;
+	public void delete(Categorie categorie) {
+		// TODO Auto-generated method stubvoid
 	}
 
 	/**
@@ -60,7 +57,7 @@ public class CategorieDAOImpl implements DAO<Categorie>{
 	 * @see fr.eni.encheres.dal.DAO#findAll(java.lang.Object)
 	 */
 	@Override
-	public ArrayList<Categorie> findAll(Categorie objet) {
+	public ArrayList<Categorie> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

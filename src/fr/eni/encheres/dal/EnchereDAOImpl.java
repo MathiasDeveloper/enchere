@@ -20,9 +20,8 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 	 * @see fr.eni.encheres.dal.DAO#create(java.lang.Object)
 	 */
 	@Override
-	public Enchere create(Enchere objet) {
+	public void create(Enchere enchere) {
 		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
@@ -30,9 +29,8 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 	 * @see fr.eni.encheres.dal.DAO#update(java.lang.Object)
 	 */
 	@Override
-	public Enchere update(Enchere objet) {
+	public void update(Enchere enchere) {
 		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
@@ -40,9 +38,8 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 	 * @see fr.eni.encheres.dal.DAO#delete(java.lang.Object)
 	 */
 	@Override
-	public Enchere delete(Enchere objet) {
+	public void delete(Enchere enchere) {
 		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
@@ -60,7 +57,7 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 	 * @see fr.eni.encheres.dal.DAO#findAll(java.lang.Object)
 	 */
 	@Override
-	public ArrayList<Enchere> findAll(Enchere objet) {
+	public ArrayList<Enchere> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
