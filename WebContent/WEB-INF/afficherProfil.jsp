@@ -1,16 +1,14 @@
 <%@page import="fr.eni.encheres.bo.Utilisateur"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <!-- Bootstrap core CSS -->
 <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<%
-	Utilisateur utilisateur = (Utilisateur)request.getAttribute("utilisateur");
-%>
-<title><%=utilisateur.getPseudo() %></title>
+<title>${utilisateur.pseudo }</title>
 </head>
 <body>
 <div class="p-5 ml-5">
@@ -28,14 +26,14 @@
 		<p>Ville : </p>
 	</div>
 	<div class="text-center pl-5">
-		<p><%=utilisateur.getPseudo() %></p>
-		<p><%=utilisateur.getNom() %></p>
-		<p><%=utilisateur.getPrenom() %></p>
-		<p><%=utilisateur.getEmail() %></p>
-		<p><%=utilisateur.getTelephone() %></p>
-		<p><%=utilisateur.getRue() %></p>
-		<p><%=utilisateur.getCodePostal() %></p>
-		<p><%=utilisateur.getVille() %></p>
+		<p>${utilisateur.pseudo }</p>
+		<p>${utilisateur.nom }</p>
+		<p>${utilisateur.prenom }</p>
+		<p>${utilisateur.email }</p>
+		<p>${utilisateur.telephone }</p>
+		<p>${utilisateur.rue }</p>
+		<p>${utilisateur.codePostal }</p>
+		<p>${utilisateur.ville }</p>
 	</div>
 </div>
 </body>
