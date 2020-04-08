@@ -21,18 +21,6 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 	private static final String FIND = "SELECT * " + 
 										"FROM UTILISATEURS " +
 										"WHERE idUtilisateur=?";
-	private static final String UPDATE = "UPDATE UTILISATEURS " +
-										"SET pseudo=?," + 
-										"nom=?," +
-										"prenom=?," +
-										"email=?," +
-										"telephone=?," +
-										"rue=?," +
-										"codePostal=?," +
-										"ville=?," +
-										"motDePasse=?," +
-										"credit=? " +
-										"WHERE idUtilisateur=?";
 	
 	private static ConnectionProvider connectionProvider = new ConnectionProvider();
 
@@ -42,7 +30,6 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 	 */
 	@Override
 	public void create(Utilisateur utilisateur) {
-		// TODO Auto-generated method stub
 	}
 
 	/**
@@ -51,23 +38,6 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 	 */
 	@Override
 	public void update(Utilisateur utilisateur) {
-		try {
-			PreparedStatement pstmt = connectionProvider.getInstance().prepareStatement(UPDATE);
-			pstmt.setString(1, utilisateur.getPseudo());
-			pstmt.setString(2, utilisateur.getNom());
-			pstmt.setString(3, utilisateur.getPrenom());
-			pstmt.setString(4, utilisateur.getEmail());
-			pstmt.setString(5, utilisateur.getTelephone());
-			pstmt.setString(6, utilisateur.getRue());
-			pstmt.setString(7, utilisateur.getCodePostal());
-			pstmt.setString(8, utilisateur.getVille());
-			pstmt.setString(9, utilisateur.getMotDePasse());
-			pstmt.setInt(10, utilisateur.getCredit());
-			pstmt.setInt(11, utilisateur.getIdUtilisateur());
-			pstmt.executeUpdate();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	/**
@@ -75,8 +45,7 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 	 * @see fr.eni.encheres.dal.DAO#delete(java.lang.Object)
 	 */
 	@Override
-	public void delete(Utilisateur objet) {
-		// TODO Auto-generated method stub
+	public void delete(Utilisateur utilisateur) {
 	}
 
 	/**
@@ -120,8 +89,4 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
-
-
 }
