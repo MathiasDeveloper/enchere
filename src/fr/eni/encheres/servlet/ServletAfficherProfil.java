@@ -14,7 +14,7 @@ import fr.eni.encheres.bll.UtilisateurManager;
 /**
  * Servlet implementation class AfficherProfil
  */
-@WebServlet(name="ServletAfficherProfil", urlPatterns = {"/AficherProfil"})
+@WebServlet(name="ServletAfficherProfil", urlPatterns = {"/AfficherProfil"})
 public class ServletAfficherProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
