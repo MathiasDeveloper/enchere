@@ -16,7 +16,7 @@
 <div class="p-5 ml-5">
 	<h1>ENI - Enchères</h1>
 </div>
-<form action="ModifierProfil" method="post">
+<form action="ModifierProfil" method="POST">
 	<div class="container d-flex justify-content-around pt-5 mt-5 mb-5">
 		<div class="w-10">
 			<p>Pseudo : </p>

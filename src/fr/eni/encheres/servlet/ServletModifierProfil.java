@@ -24,14 +24,12 @@ public class ServletModifierProfil extends HttpServlet {
      */
     public ServletModifierProfil() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		if(request.getParameter("id")==null) {
 			utilisateur = utilisateurDAOImpl.find(Integer.valueOf(request.getParameter("utilisateur")));
 			utilisateur.setPseudo(request.getParameter("pseudo"));
@@ -42,7 +40,7 @@ public class ServletModifierProfil extends HttpServlet {
 			utilisateur.setRue(request.getParameter("rue"));
 			utilisateur.setCodePostal(request.getParameter("codePostal"));
 			utilisateur.setVille(request.getParameter("ville"));
-			if(request.getParameter("newmdp")!="") {
+			if(!request.getParameter("newmdp").equals("")) {
 				if(request.getParameter("mdp").equals(utilisateur.getMotDePasse())) {
 					if(request.getParameter("newmdp").equals(request.getParameter("confirmation"))) {
 						utilisateur.setMotDePasse(request.getParameter("newmdp"));
@@ -73,7 +71,6 @@ public class ServletModifierProfil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
