@@ -23,27 +23,16 @@ public class ServletAfficherProfil extends HttpServlet {
      */
     public ServletAfficherProfil() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		if(request.getParameter("id")!=null) {
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			request.setAttribute("utilisateur", utilisateurManager.find(Integer.valueOf(request.getParameter("id"))));
 			this.getServletContext().getRequestDispatcher("/WEB-INF/afficherProfil.jsp").forward(request, response);
 		}		
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
-
 }
