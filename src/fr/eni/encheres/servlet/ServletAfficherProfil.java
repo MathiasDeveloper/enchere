@@ -14,7 +14,7 @@ import fr.eni.encheres.bll.UtilisateurManager;
 /**
  * Servlet implementation class AfficherProfil
  */
-@WebServlet("/ServletAfficherProfil")
+@WebServlet(name="ServletAfficherProfil", urlPatterns = {"/AficherProfil"})
 public class ServletAfficherProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -31,11 +31,10 @@ public class ServletAfficherProfil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		if(!request.getParameter("id").equals(null)) {
+		if(request.getParameter("id")!=null) {
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			request.setAttribute("utilisateur", utilisateurManager.find(Integer.valueOf(request.getParameter("id"))));
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/afficherProfil.jsp");
-			rd.forward(request, response);
+			this.getServletContext().getRequestDispatcher("/WEB-INF/afficherProfil.jsp").forward(request, response);
 		}		
 	}
 
