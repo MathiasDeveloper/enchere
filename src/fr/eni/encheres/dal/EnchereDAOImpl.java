@@ -21,7 +21,7 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 	 */
 	@Override
 	public void create(Enchere enchere) {
-		// TODO Auto-generated method stub
+		// TODO MRO : Création d'une enchere
 	}
 
 	/**

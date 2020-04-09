@@ -6,6 +6,7 @@ package fr.eni.encheres.bll;
 import java.util.ArrayList;
 
 import fr.eni.encheres.bo.Enchere;
+import fr.eni.encheres.dal.DAOFactory;
 
 /**
  * Classe en charge de
@@ -16,13 +17,20 @@ import fr.eni.encheres.bo.Enchere;
 public class EnchereManager implements Manager<Enchere>{
 
 	/**
-	 * {@inheritDoc}
-	 * @see fr.eni.encheres.bll.Manager#getInstance()
+	 * @param DDAOFactory
 	 */
-	@Override
-	public Enchere getInstance() {
-		// TODO Auto-generated method stub
-		return null;
+	private DAOFactory daoFactory = new DAOFactory();
+
+
+	/**
+	 * @param EnchereManager
+	 */
+	private static EnchereManager INSTANCE =  null;
+
+	public static EnchereManager getInstance() {
+		if (INSTANCE == null)
+			INSTANCE = new EnchereManager();
+		return INSTANCE;
 	}
 
 	/**
@@ -31,7 +39,7 @@ public class EnchereManager implements Manager<Enchere>{
 	 */
 	@Override
 	public void create(Enchere enchere) {
-
+		daoFactory.getEnchereDAOImpl().create(enchere);
 	}
 
 	/**

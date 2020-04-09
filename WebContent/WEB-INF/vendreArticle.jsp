@@ -16,10 +16,10 @@
             <h2>Article</h2>
             <hr>
             <div class="form-group">
-                <label for="nomArticle">Nom de l'article</label>
+                <label for="nom">Nom de l'article</label>
                 <input type="text"
                        class="form-control"
-                       id="nomArticle"
+                       id="nom"
                        name="nomArticle"
                        placeholder="Nom de l'article"
                        required>
@@ -41,7 +41,7 @@
                         name="categorie"
                         required>
                     <c:forEach  var="categorie" items="${categories}">
-                            <option value="${categorie.libelle}">${categorie.libelle}</option>
+                            <option value="${categorie.idCategorie}">${categorie.libelle}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -55,10 +55,47 @@
                 <input type="number"
                        id="prix"
                        class="form-control"
-                       name="prixVente"
-                       placeholder="prix de la vente"
+                       name="prixInitial"
+                       placeholder="Prix initial de la vente"
                        required>
         </div>
+        <div class="d-flex">
+            <div class="form-group">
+                <label for="dateDebutEnchere">Date de début de l'enchere</label>
+                <input type="date"
+                       id="dateDebutEnchere"
+                       class="form-control"
+                       name="dateDebutEnchere"
+                       placeholder="Prix initial de la vente"
+                       required>
+            </div>
+            <div class="form-group">
+                <label for="heureDebutEnchere">Heure de début de l'enchere</label>
+                <input type="time"
+                       id="heureDebutEnchere"
+                       class="form-control"
+                       name="heureDebutEnchere"
+                       required>
+            </div>
+            <div class="form-group">
+                <label for="dateFinEnchere">Date de fin de l'enchere</label>
+                <input type="date"
+                       id="dateFinEnchere"
+                       class="form-control"
+                       name="dateFinEnchere"
+                       required>
+            </div>
+            <div class="form-group">
+                <label for="heureFinEnchere">Heure de fin de l'enchere</label>
+                <input type="time"
+                       id="heureFinEnchere"
+                       class="form-control"
+                       name="heureFinEnchere"
+                       required>
+            </div>
+        </div>
+
+        <input type="submit" role="button" class="btn btn-primary">
     </form>
 </div>
 

@@ -6,6 +6,8 @@ package fr.eni.encheres.bll;
 import java.util.ArrayList;
 
 import fr.eni.encheres.bo.Article;
+import fr.eni.encheres.dal.DAOFactory;
+import fr.eni.encheres.outils.BuisnessException;
 
 /**
  * Classe en charge de
@@ -15,14 +17,17 @@ import fr.eni.encheres.bo.Article;
  */
 public class ArticleManager implements Manager<Article>{
 
+	private static ArticleManager INSTANCE = null;
+	private DAOFactory daoFactory = new DAOFactory();
+
 	/**
-	 * {@inheritDoc}
-	 * @see fr.eni.encheres.bll.Manager#getInstance()
+	 * Récupère l'instance de ArticleManager
+	 * @return ArticleManager
 	 */
-	@Override
-	public Article getInstance() {
-		// TODO Auto-generated method stub
-		return null;
+	public static ArticleManager getInstance(){
+		if (INSTANCE == null)
+			INSTANCE = new ArticleManager();
+		return INSTANCE;
 	}
 
 	/**
@@ -30,8 +35,8 @@ public class ArticleManager implements Manager<Article>{
 	 * @see fr.eni.encheres.bll.Manager#create()
 	 */
 	@Override
-	public void create(Article article) {
-
+	public void create(Article article) throws BuisnessException {
+		 daoFactory.getArticleDAOImpl().create(article);
 	}
 
 	/**

@@ -16,4 +16,22 @@ public class DAOFactory {
     public CategorieDAOImpl getCategorieDAOImpl(){
         return new CategorieDAOImpl();
     }
+
+    /**
+     * Récupération de la classe dao categorie
+     *
+     * @return CategorieDAOImpl
+     */
+    public ArticleDAOImpl getArticleDAOImpl(){
+        return new ArticleDAOImpl();
+    }
+
+    /**
+     * Récupération de la classe dao enchere
+     *
+     * @return CategorieDAOImpl
+     */
+    public EnchereDAOImpl getEnchereDAOImpl(){
+        return new EnchereDAOImpl();
+    }
 }

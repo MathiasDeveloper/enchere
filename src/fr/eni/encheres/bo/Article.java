@@ -68,6 +68,22 @@ public class Article {
 	private boolean etatVente;
 
 	/**
+	 * idUtilisateur : Recu de la session pour détérminer qui crée l'article
+	 *
+	 * @int
+	 */
+	private int idUtilisateur;
+
+	/**
+	 * idCategorie : Détérmine la catégorie de l'article
+	 *
+	 * @int
+	 */
+	private int idCategorie;
+
+
+
+	/**
 	 * Récupération de l'article
 	 *
 	 * @return idArticle
@@ -209,4 +225,40 @@ public class Article {
 	public void setEtatVente(boolean etatVente) {
 		this.etatVente = etatVente;
 	}
+
+	/**
+	 * getter idUtilisateur
+	 *
+	 * @return idUtilisateur
+	 */
+	public int getIdUtilisateur() {
+		return idUtilisateur;
+	}
+
+	/**
+	 * setter idUtilisateur
+	 *
+	 * @param idUtilisateur
+	 */
+	public void setIdUtilisateur(int idUtilisateur) {
+		this.idUtilisateur = idUtilisateur;
+	}
+
+	/**
+	 * getter idCategorie
+	 */
+	public int getIdCategorie() {
+		return idCategorie;
+	}
+
+	/**
+	 * setter idCategorie
+	 *
+	 * @param idCategorie
+	 */
+	public void setIdCategorie(int idCategorie) {
+		this.idCategorie = idCategorie;
+	}
+
+
 }
