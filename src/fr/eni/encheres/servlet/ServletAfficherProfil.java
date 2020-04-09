@@ -34,12 +34,12 @@ public class ServletAfficherProfil extends HttpServlet {
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			try {
 				request.setAttribute("utilisateur", utilisateurManager.find(Integer.valueOf(request.getParameter("id"))));
+				this.getServletContext().getRequestDispatcher("/WEB-INF/afficherProfil.jsp").forward(request, response);
 			} catch (NumberFormatException e) {
 				this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
 			} catch (BuisnessException e) {
 				e.printStackTrace();
 			}
-			this.getServletContext().getRequestDispatcher("/WEB-INF/afficherProfil.jsp").forward(request, response);
 		}else {
 			this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
 		}
