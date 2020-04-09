@@ -23,6 +23,31 @@ public class Utilisateur {
     private boolean administrateur;
     private List<Enchere> encheres;
     private List<Article> articles;
+    
+	/**
+	 * Constructeur
+	 */
+	public Utilisateur() {
+		super();
+	}
+	
+	/**
+	 * Constructeur
+	 * @param pseudo
+	 * @param email
+	 * @param motDePasse
+	 */
+	public Utilisateur(String identifiant, String motdepasse, boolean isEmail) {
+		if(isEmail == true ) {
+			this.email = identifiant;
+		}else {
+			this.pseudo = identifiant;
+		}	
+		this.motDePasse = motdepasse;
+	}
+
+
+
 	/**
 	 * Getter pour noUtilisateur.
 	 * @return the noUtilisateur
