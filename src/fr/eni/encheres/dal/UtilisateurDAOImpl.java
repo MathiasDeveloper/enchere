@@ -34,7 +34,8 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 										"ville=?, " +
 										"motDePasse=? " +
 										"WHERE idUtilisateur=?";
-	private static final String DELETE = "DELETE UTILISATEURS " +
+	private static final String DELETE = "DELETE " +
+										"FROM UTILISATEURS " +
 										"WHERE idUtilisateur=?";
 	private static final String FIND_BY_EMAIL = "SELECT * " + 
 			"FROM UTILISATEURS " +
