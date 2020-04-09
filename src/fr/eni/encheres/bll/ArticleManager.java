@@ -30,9 +30,8 @@ public class ArticleManager implements Manager<Article>{
 	 * @see fr.eni.encheres.bll.Manager#create()
 	 */
 	@Override
-	public Article create() {
-		// TODO Auto-generated method stub
-		return null;
+	public void create(Article article) {
+
 	}
 
 	/**
@@ -40,9 +39,8 @@ public class ArticleManager implements Manager<Article>{
 	 * @see fr.eni.encheres.bll.Manager#update()
 	 */
 	@Override
-	public Article update() {
-		// TODO Auto-generated method stub
-		return null;
+	public void update(Article article) {
+
 	}
 
 	/**
@@ -50,9 +48,8 @@ public class ArticleManager implements Manager<Article>{
 	 * @see fr.eni.encheres.bll.Manager#delete()
 	 */
 	@Override
-	public Article delete() {
-		// TODO Auto-generated method stub
-		return null;
+	public void delete(Article article) {
+
 	}
 
 	/**

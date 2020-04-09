@@ -30,9 +30,8 @@ public class CategorieManager implements Manager<Categorie>{
 	 * @see fr.eni.encheres.bll.Manager#create()
 	 */
 	@Override
-	public Categorie create() {
-		// TODO Auto-generated method stub
-		return null;
+	public void create(Categorie categorie) {
+
 	}
 
 	/**
@@ -40,9 +39,8 @@ public class CategorieManager implements Manager<Categorie>{
 	 * @see fr.eni.encheres.bll.Manager#update()
 	 */
 	@Override
-	public Categorie update() {
-		// TODO Auto-generated method stub
-		return null;
+	public void update(Categorie categorie) {
+
 	}
 
 	/**
@@ -50,9 +48,8 @@ public class CategorieManager implements Manager<Categorie>{
 	 * @see fr.eni.encheres.bll.Manager#delete()
 	 */
 	@Override
-	public Categorie delete() {
-		// TODO Auto-generated method stub
-		return null;
+	public void delete(Categorie categorie) {
+
 	}
 
 	/**

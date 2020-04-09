@@ -34,6 +34,8 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 										"ville=?, " +
 										"motDePasse=? " +
 										"WHERE idUtilisateur=?";
+	private static final String DELETE = "DELETE UTILISATEURS " +
+										"WHERE idUtilisateur=?";
 										
 	
 	private static ConnectionProvider connectionProvider = new ConnectionProvider();
@@ -77,10 +79,20 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 
 	/**
 	 * {@inheritDoc}
+	 * @throws BuisnessException 
 	 * @see fr.eni.encheres.dal.DAO#delete(java.lang.Object)
 	 */
 	@Override
-	public void delete(Utilisateur utilisateur) {
+	public void delete(Utilisateur utilisateur) throws BuisnessException {
+		try {
+			PreparedStatement pstmt = connectionProvider.getInstance().prepareStatement(DELETE);
+			pstmt.setInt(1, utilisateur.getIdUtilisateur());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			log = new Log(e.getMessage());
+			BuisnessException buisnessException = new BuisnessException(e.getMessage(), e);
+			throw buisnessException;
+		}
 	}
 
 	/**

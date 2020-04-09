@@ -30,9 +30,8 @@ public class EnchereManager implements Manager<Enchere>{
 	 * @see fr.eni.encheres.bll.Manager#create()
 	 */
 	@Override
-	public Enchere create() {
-		// TODO Auto-generated method stub
-		return null;
+	public void create(Enchere enchere) {
+
 	}
 
 	/**
@@ -40,9 +39,8 @@ public class EnchereManager implements Manager<Enchere>{
 	 * @see fr.eni.encheres.bll.Manager#update()
 	 */
 	@Override
-	public Enchere update() {
-		// TODO Auto-generated method stub
-		return null;
+	public void update(Enchere enchere) {
+
 	}
 
 	/**
@@ -50,9 +48,8 @@ public class EnchereManager implements Manager<Enchere>{
 	 * @see fr.eni.encheres.bll.Manager#delete()
 	 */
 	@Override
-	public Enchere delete() {
-		// TODO Auto-generated method stub
-		return null;
+	public void delete(Enchere enchere) {
+
 	}
 
 	/**

@@ -7,9 +7,9 @@ import fr.eni.encheres.outils.BuisnessException;
 
 public interface Manager <T> {
     T getInstance();
-    T create() throws BuisnessException;
-    T update() throws BuisnessException;
-    T delete() throws BuisnessException;
+    void create(T objet) throws BuisnessException;
+    void update(T objet) throws BuisnessException;
+    void delete(T objet) throws BuisnessException;
     T find(int id) throws BuisnessException;
     ArrayList<T> findAll();
 }

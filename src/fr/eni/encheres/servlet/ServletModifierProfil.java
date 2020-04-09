@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.UtilisateurDAOImpl;
 import fr.eni.encheres.outils.BuisnessException;
@@ -18,7 +19,7 @@ import fr.eni.encheres.outils.BuisnessException;
 public class ServletModifierProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Utilisateur utilisateur = new Utilisateur();
-	private UtilisateurDAOImpl utilisateurDAOImpl = new UtilisateurDAOImpl();
+	private UtilisateurManager utilidateurManager = new UtilisateurManager();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -69,7 +70,7 @@ public class ServletModifierProfil extends HttpServlet {
 				modifierUtilisateur(request, true); //on change le mdp
 			}
 			try {
-				utilisateurDAOImpl.update(utilisateur);
+				utilidateurManager.update(utilisateur);
 			} catch (BuisnessException e) {
 				e.printStackTrace();
 			}
@@ -98,7 +99,7 @@ public class ServletModifierProfil extends HttpServlet {
 	private boolean verifierExistenceUtilisateur(String id) {
 		boolean existe=true;
 		try {
-			utilisateur = utilisateurDAOImpl.find(Integer.valueOf(id));
+			utilisateur = utilidateurManager.find(Integer.valueOf(id));
 			if(utilisateur.getPseudo()==null) {
 				existe=false;
 			}

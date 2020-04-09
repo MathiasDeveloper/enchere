@@ -30,9 +30,8 @@ public class RetraitManager implements Manager<Retrait>{
 	 * @see fr.eni.encheres.bll.Manager#create()
 	 */
 	@Override
-	public Retrait create() {
-		// TODO Auto-generated method stub
-		return null;
+	public void create(Retrait retrait) {
+		
 	}
 
 	/**
@@ -40,9 +39,8 @@ public class RetraitManager implements Manager<Retrait>{
 	 * @see fr.eni.encheres.bll.Manager#update()
 	 */
 	@Override
-	public Retrait update() {
-		// TODO Auto-generated method stub
-		return null;
+	public void update(Retrait retrait) {
+
 	}
 
 	/**
@@ -50,9 +48,8 @@ public class RetraitManager implements Manager<Retrait>{
 	 * @see fr.eni.encheres.bll.Manager#delete()
 	 */
 	@Override
-	public Retrait delete() {
-		// TODO Auto-generated method stub
-		return null;
+	public void delete(Retrait retrait) {
+
 	}
 
 	/**

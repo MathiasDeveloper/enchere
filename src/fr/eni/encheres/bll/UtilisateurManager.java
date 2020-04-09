@@ -32,29 +32,30 @@ public class UtilisateurManager implements Manager<Utilisateur>{
 	 * @see fr.eni.encheres.bll.Manager#create()
 	 */
 	@Override
-	public Utilisateur create() {
-		// TODO Auto-generated method stub
-		return null;
+	public void create(Utilisateur utilisateur) {
+		
 	}
 
 	/**
 	 * {@inheritDoc}
+	 * @throws BuisnessException 
 	 * @see fr.eni.encheres.bll.Manager#update()
 	 */
 	@Override
-	public Utilisateur update() {
-		// TODO Auto-generated method stub
-		return null;
+	public void update(Utilisateur utilisateur) throws BuisnessException {
+		UtilisateurDAOImpl utilisateurDAOImpl = new UtilisateurDAOImpl();
+		utilisateurDAOImpl.update(utilisateur);
 	}
 
 	/**
 	 * {@inheritDoc}
+	 * @throws BuisnessException 
 	 * @see fr.eni.encheres.bll.Manager#delete()
 	 */
 	@Override
-	public Utilisateur delete() {
-		// TODO Auto-generated method stub
-		return null;
+	public void delete(Utilisateur utilisateur) throws BuisnessException {
+		UtilisateurDAOImpl utilisateurDAOImpl = new UtilisateurDAOImpl();
+		utilisateurDAOImpl.delete(utilisateur);
 	}
 
 	/**
