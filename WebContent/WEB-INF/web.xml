@@ -10,4 +10,8 @@
             <include-prelude>/WEB-INF/taglibs.jsp</include-prelude>
         </jsp-property-group>
     </jsp-config>
+	<display-name>enchere</display-name>
+	<welcome-file-list>
+		<welcome-file>ServletVerificationPourLaConnection</welcome-file>
+	</welcome-file-list>
 </web-app>
