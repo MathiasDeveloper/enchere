@@ -1,11 +1,13 @@
-/**
- * 
- */
 package fr.eni.encheres.dal;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import fr.eni.encheres.bo.Categorie;
+import fr.eni.encheres.outils.BuisnessException;
+import fr.eni.encheres.outils.Log;
 
 /**
  * Classe en charge de
@@ -14,6 +16,18 @@ import fr.eni.encheres.bo.Categorie;
  * @date 7 avr. 2020
  */
 public class CategorieDAOImpl implements DAO<Categorie>{
+
+	/**
+	 * Request find all
+	 *
+	 * @string
+	 */
+	private static final String FIND_ALL = "SELECT libelle FROM CATEGORIES";
+
+	/**
+	 * Connection provider
+	 */
+	private static ConnectionProvider connectionProvider = new ConnectionProvider();
 
 	/**
 	 * {@inheritDoc}
@@ -53,13 +67,29 @@ public class CategorieDAOImpl implements DAO<Categorie>{
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * @see fr.eni.encheres.dal.DAO#findAll(java.lang.Object)
+	 *
+	 * @return Categories
+	 * @throws BuisnessException
 	 */
 	@Override
-	public ArrayList<Categorie> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Categorie> findAll() throws BuisnessException {
+		ArrayList<Categorie> categories = new ArrayList<Categorie>();
+		PreparedStatement pstmt = null;
+
+		try {
+			pstmt = connectionProvider.getInstance().prepareStatement(FIND_ALL);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()){
+				Categorie categorie = new Categorie();
+				categorie.setLibelle(rs.getString(1));
+				categories.add(categorie);
+			}
+		} catch (SQLException e) {
+			new Log(e.getMessage());
+			throw new BuisnessException(e.getMessage(),e);
+		}
+
+		return categories;
 	}
 
 

@@ -17,15 +17,6 @@ import fr.eni.encheres.outils.BuisnessException;
  */
 public class UtilisateurManager implements Manager<Utilisateur>{
 
-	/**
-	 * {@inheritDoc}
-	 * @see fr.eni.encheres.bll.Manager#getInstance()
-	 */
-	@Override
-	public Utilisateur getInstance() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/**
 	 * {@inheritDoc}

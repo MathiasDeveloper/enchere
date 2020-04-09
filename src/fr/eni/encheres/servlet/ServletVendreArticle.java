@@ -1,5 +1,9 @@
 package fr.eni.encheres.servlet;
 
+import fr.eni.encheres.bll.CategorieManager;
+import fr.eni.encheres.bo.Categorie;
+import fr.eni.encheres.outils.BuisnessException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +13,8 @@ import java.io.IOException;
 
 @WebServlet(name = "ServletVendreArticle", urlPatterns = {"/VendreArticle"})
 public class ServletVendreArticle extends HttpServlet {
+
+    private static CategorieManager categorieManager = CategorieManager.getInstance();
 
     public ServletVendreArticle(){
         super();
@@ -24,7 +30,7 @@ public class ServletVendreArticle extends HttpServlet {
      * @throws IOException
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        this.getServletContext().getNamedDispatcher("/WEB-INF/vendreArticle.jsp").forward(request,response);
+
     }
 
     /**
@@ -36,6 +42,12 @@ public class ServletVendreArticle extends HttpServlet {
      * @throws IOException
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            request.setAttribute("categories", categorieManager.findAll());
+        } catch (BuisnessException e) {
+            e.printStackTrace();
+        }
 
+        this.getServletContext().getRequestDispatcher("/WEB-INF/vendreArticle.jsp").forward(request,response);
     }
 }

@@ -15,15 +15,6 @@ import fr.eni.encheres.bo.Enchere;
  */
 public class EnchereManager implements Manager<Enchere>{
 
-	/**
-	 * {@inheritDoc}
-	 * @see fr.eni.encheres.bll.Manager#getInstance()
-	 */
-	@Override
-	public Enchere getInstance() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/**
 	 * {@inheritDoc}

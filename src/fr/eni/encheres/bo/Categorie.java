@@ -11,6 +11,45 @@ package fr.eni.encheres.bo;
  */
 public class Categorie {
 
+	/**
+	 * @int
+	 */
 	private int idCategorie;
+
+	/**
+	 * @string
+	 */
 	private String libelle;
+
+	/**
+	 *
+	 * @return idCategorie
+	 */
+	public int getIdCategorie() {
+		return idCategorie;
+	}
+
+	/**
+	 *
+	 * @param idCategorie
+	 */
+	public void setIdCategorie(int idCategorie) {
+		this.idCategorie = idCategorie;
+	}
+
+	/**
+	 *
+	 * @return libelle
+	 */
+	public String getLibelle() {
+		return libelle;
+	}
+
+	/**
+	 *
+	 * @param libelle
+	 */
+	public void setLibelle(String libelle) {
+		this.libelle = libelle;
+	}
 }

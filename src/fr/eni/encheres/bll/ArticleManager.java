@@ -15,15 +15,6 @@ import fr.eni.encheres.bo.Article;
  */
 public class ArticleManager implements Manager<Article>{
 
-	/**
-	 * {@inheritDoc}
-	 * @see fr.eni.encheres.bll.Manager#getInstance()
-	 */
-	@Override
-	public Article getInstance() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/**
 	 * {@inheritDoc}

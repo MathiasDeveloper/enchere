@@ -15,15 +15,6 @@ import fr.eni.encheres.bo.Retrait;
  */
 public class RetraitManager implements Manager<Retrait>{
 
-	/**
-	 * {@inheritDoc}
-	 * @see fr.eni.encheres.bll.Manager#getInstance()
-	 */
-	@Override
-	public Retrait getInstance() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/**
 	 * {@inheritDoc}

@@ -118,8 +118,9 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * @see fr.eni.encheres.dal.DAO#findAll(java.lang.Object)
+	 * Retourne tout les utilisateurs
+	 *
+	 * @return ArrayList Utilisateur
 	 */
 	@Override
 	public ArrayList<Utilisateur> findAll() {
