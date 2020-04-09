@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.UtilisateurDAOImpl;
+import fr.eni.encheres.outils.BuisnessException;
 
 /**
  * Servlet implementation class ServletModifierProfil
@@ -31,11 +32,12 @@ public class ServletModifierProfil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			request.getParameter("id").equals(null);
-		}catch(Exception e) {
+			utilisateur = utilisateurDAOImpl.find(Integer.valueOf(request.getParameter("id")));
+		} catch (NumberFormatException e) {
 			this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
+		} catch (BuisnessException e) {
+			e.printStackTrace();
 		}
-		utilisateur = utilisateurDAOImpl.find(Integer.valueOf(request.getParameter("id")));
 		if(utilisateur.getPseudo().equals("")) {
 			this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
 		}
@@ -47,7 +49,11 @@ public class ServletModifierProfil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		utilisateur = utilisateurDAOImpl.find(Integer.valueOf(request.getParameter("utilisateur")));
+		try {
+			utilisateur = utilisateurDAOImpl.find(Integer.valueOf(request.getParameter("utilisateur")));
+		}catch (BuisnessException e) {
+			e.printStackTrace();
+		}
 		utilisateur.setPseudo(request.getParameter("pseudo"));
 		utilisateur.setNom(request.getParameter("nom"));
 		utilisateur.setPrenom(request.getParameter("prenom"));
@@ -72,7 +78,11 @@ public class ServletModifierProfil extends HttpServlet {
 			}
 		}
 		UtilisateurDAOImpl utilisateurDAOImpl = new UtilisateurDAOImpl();
-		utilisateurDAOImpl.update(utilisateur);
+		try {
+			utilisateurDAOImpl.update(utilisateur);
+		} catch (BuisnessException e) {
+			e.printStackTrace();
+		}
 		request.setAttribute("message", "Votre profil a été modifié avec succès.");
 		request.setAttribute("utilisateur", utilisateur);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/modifierProfil.jsp").forward(request, response);
