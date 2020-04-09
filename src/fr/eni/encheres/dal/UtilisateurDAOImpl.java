@@ -37,14 +37,14 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 	private static final String DELETE = "DELETE " +
 										"FROM UTILISATEURS " +
 										"WHERE idUtilisateur=?";
-	private static final String FIND_BY_EMAIL = "SELECT * " + 
+	private static final String FIND_BY_EMAIL = "SELECT * " +
 			"FROM UTILISATEURS " +
 			"WHERE email=? AND motDePasse=?";
 
-	private static final String FIND_BY_PSEUDO = "SELECT * " + 
+	private static final String FIND_BY_PSEUDO = "SELECT * " +
 			"FROM UTILISATEURS " +
 			"WHERE pseudo=? AND motDePasse=?";
-										
+
 	
 	private static ConnectionProvider connectionProvider = new ConnectionProvider();
 	private Utilisateur utilisateur = new Utilisateur();
@@ -87,7 +87,7 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 
 	/**
 	 * {@inheritDoc}
-	 * @throws BuisnessException 
+	 * @throws BuisnessException
 	 * @see fr.eni.encheres.dal.DAO#delete(java.lang.Object)
 	 */
 	@Override
@@ -138,17 +138,18 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * @see fr.eni.encheres.dal.DAO#findAll(java.lang.Object)
+	 * Retourne tout les utilisateurs
+	 *
+	 * @return ArrayList Utilisateur
 	 */
 	@Override
 	public ArrayList<Utilisateur> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	public boolean verifier(Utilisateur utilisateur) throws BuisnessException {
-		boolean existe = false; 
+		boolean existe = false;
 
 		if(utilisateur.getEmail() != null) {
 			try {

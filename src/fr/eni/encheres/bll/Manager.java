@@ -11,5 +11,5 @@ public interface Manager <T> {
     void update(T objet) throws BuisnessException;
     void delete(T objet) throws BuisnessException;
     T find(int id) throws BuisnessException;
-    ArrayList<T> findAll();
+    ArrayList<T> findAll() throws BuisnessException;
 }
