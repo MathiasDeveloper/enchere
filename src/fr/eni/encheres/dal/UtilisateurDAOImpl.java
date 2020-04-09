@@ -134,7 +134,7 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 		return null;
 	}
 	
-	public boolean verifier(Utilisateur utilisateur) {
+	public boolean verifier(Utilisateur utilisateur) throws BuisnessException {
 		boolean existe = false; 
 
 		if(utilisateur.getEmail() != null) {
@@ -160,7 +160,9 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log = new Log(e.getMessage());
+				BuisnessException buisnessException = new BuisnessException(e.getMessage(), e);
+				throw buisnessException;
 			}
 		}else {
 			try {
@@ -185,7 +187,9 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log = new Log(e.getMessage());
+				BuisnessException buisnessException = new BuisnessException(e.getMessage(), e);
+				throw buisnessException;
 			}
 		}
 

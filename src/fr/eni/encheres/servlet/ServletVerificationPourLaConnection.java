@@ -7,8 +7,10 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 
+import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.UtilisateurDAOImpl;
+import fr.eni.encheres.outils.BuisnessException;
 
 /**
  * Servlet Home
@@ -33,13 +35,23 @@ public class ServletVerificationPourLaConnection extends javax.servlet.http.Http
     	if(identifiant.contains("@")) {
     		//true = correspond à un email
     		Utilisateur utilisateur = new Utilisateur(identifiant,motdepasse,true);
-        	UtilisateurDAOImpl utilisateurDAOImpl = new UtilisateurDAOImpl();  
-        	existeEnBase = utilisateurDAOImpl.verifier(utilisateur);
+    		UtilisateurManager utilisateurManager = new UtilisateurManager();  
+        	try {
+				existeEnBase = utilisateurManager.verifier(utilisateur);
+			} catch (BuisnessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         	idUtilisateur = utilisateur.getIdUtilisateur();
     	}else {
     		Utilisateur utilisateur = new Utilisateur(identifiant,motdepasse,false);
-    		UtilisateurDAOImpl utilisateurDAOImpl = new UtilisateurDAOImpl();  
-    		existeEnBase = utilisateurDAOImpl.verifier(utilisateur);   	
+    		UtilisateurManager utilisateurManager = new UtilisateurManager();  
+    		try {
+				existeEnBase = utilisateurManager.verifier(utilisateur);
+			} catch (BuisnessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}   	
     		idUtilisateur = utilisateur.getIdUtilisateur();
     	}
     	
