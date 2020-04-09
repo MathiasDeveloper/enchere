@@ -33,11 +33,13 @@ public class ServletSupprimerCompte extends HttpServlet {
 			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			try {
 				utilisateurManager.delete(utilisateurManager.find(Integer.valueOf(request.getParameter("id"))));
+				this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 			} catch (NumberFormatException e) {
 				this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
 			} catch (BuisnessException e) {
 				e.printStackTrace();
 			}
+		}else {
 			this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
 		}
 	}
