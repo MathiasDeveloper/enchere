@@ -40,6 +40,8 @@ public class ServletAfficherProfil extends HttpServlet {
 				e.printStackTrace();
 			}
 			this.getServletContext().getRequestDispatcher("/WEB-INF/afficherProfil.jsp").forward(request, response);
-		}		
+		}else {
+			this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
+		}
 	}
 }
