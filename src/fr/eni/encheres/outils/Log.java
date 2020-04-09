@@ -13,33 +13,33 @@ import java.util.logging.SimpleFormatter;
 public class Log {
 
     /**
-     * Constructor qui s'occupe de crée le à l'instanciation de la classe
+     * Constructeur qui s'occupe de créer le à l'instanciation de la classe
      *
      * @param message => Message de l'erreur à récuperer via => "e.getMessage()"
      */
     public Log(String message) {
-        String fileName = "log.txt";
-        File file = new File(fileName);
-
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        FileHandler fileHandler = null;
-        try {
-            fileHandler = new FileHandler(fileName, true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Logger logger = Logger.getLogger("log");
-        logger.addHandler(fileHandler);
-        logger.setLevel(Level.WARNING);
-        logger.warning("Message d'erreur : " + message);
-        SimpleFormatter formatter = new SimpleFormatter();
-        fileHandler.setFormatter(formatter);
+//        String fileName = "log.txt";
+//        File file = new File(fileName);
+//
+//        if (!file.exists()) {
+//            try {
+//                file.createNewFile();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        FileHandler fileHandler = null;
+//        try {
+//            fileHandler = new FileHandler(fileName, true);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        Logger logger = Logger.getLogger("log");
+//        logger.addHandler(fileHandler);
+//        logger.setLevel(Level.WARNING);
+//        logger.warning("Message d'erreur : " + message);
+//        SimpleFormatter formatter = new SimpleFormatter();
+//        fileHandler.setFormatter(formatter);
     }
 }
