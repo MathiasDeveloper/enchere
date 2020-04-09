@@ -25,13 +25,14 @@
 		<br>
 		<div class="groupeFormulaire">
 			<label>Mot de passe :</label>
-			<input type="text" placeholder="••••••••••••" required name="motdepasse" id="motdepasse">
+			<input type="password" placeholder="••••••••••••" required name="motdepasse" id="motdepasse">
 		</div>
 		<br>
 		<div class="groupeFormulaire">
 			<button class="btn btn-primary">Connexion</button>
 			<div>
 			<input type="checkbox" name="remember" id="remember"> Se souvenir de moi
+			<br>
 			<a href="#">Mot de passe oublié</a>
 			</div>
 		</div>

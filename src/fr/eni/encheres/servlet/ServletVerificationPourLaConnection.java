@@ -70,7 +70,7 @@ public class ServletVerificationPourLaConnection extends javax.servlet.http.Http
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
     	
-    	RequestDispatcher rd = request.getRequestDispatcher("formulaireSeConnecter.jsp");
+    	RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/formulaireSeConnecter.jsp");
     	rd.forward(request, response);
     }
 }
