@@ -17,6 +17,7 @@ import fr.eni.encheres.outils.BuisnessException;
 @WebServlet(name="ServletSupprimerCompte", urlPatterns = {"/SupprimerCompte"})
 public class ServletSupprimerCompte extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -31,7 +32,6 @@ public class ServletSupprimerCompte extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("id")!=null) {
-			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			try {
 				utilisateurManager.delete(utilisateurManager.find(Integer.valueOf(request.getParameter("id"))));
 				Cookie[] cookies = request.getCookies();

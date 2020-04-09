@@ -6,6 +6,7 @@ package fr.eni.encheres.bll;
 import java.util.ArrayList;
 
 import fr.eni.encheres.bo.Utilisateur;
+import fr.eni.encheres.dal.DAOFactory;
 import fr.eni.encheres.dal.UtilisateurDAOImpl;
 import fr.eni.encheres.outils.BuisnessException;
 
@@ -16,6 +17,19 @@ import fr.eni.encheres.outils.BuisnessException;
  * @date 7 avr. 2020
  */
 public class UtilisateurManager implements Manager<Utilisateur>{
+	
+	private static UtilisateurManager INSTANCE = null;
+	private DAOFactory daoFactory = new DAOFactory();
+	/**
+	 * Récupération de l'instance
+	 *
+	 * @return UtilisateurManager
+	 */
+	public static UtilisateurManager getInstance() {
+		if (INSTANCE == null)
+			INSTANCE = new UtilisateurManager();
+		return INSTANCE;
+	}
 
 
 	/**
@@ -34,8 +48,7 @@ public class UtilisateurManager implements Manager<Utilisateur>{
 	 */
 	@Override
 	public void update(Utilisateur utilisateur) throws BuisnessException {
-		UtilisateurDAOImpl utilisateurDAOImpl = new UtilisateurDAOImpl();
-		utilisateurDAOImpl.update(utilisateur);
+		daoFactory.getUtilisateurDAOImpl().update(utilisateur);
 	}
 
 	/**
@@ -45,8 +58,7 @@ public class UtilisateurManager implements Manager<Utilisateur>{
 	 */
 	@Override
 	public void delete(Utilisateur utilisateur) throws BuisnessException {
-		UtilisateurDAOImpl utilisateurDAOImpl = new UtilisateurDAOImpl();
-		utilisateurDAOImpl.delete(utilisateur);
+		daoFactory.getUtilisateurDAOImpl().delete(utilisateur);
 	}
 
 	/**
@@ -56,8 +68,7 @@ public class UtilisateurManager implements Manager<Utilisateur>{
 	 */
 	@Override
 	public Utilisateur find(int id) throws BuisnessException {
-		UtilisateurDAOImpl utilisateurDAOImpl = new UtilisateurDAOImpl();
-		return utilisateurDAOImpl.find(id);
+		return daoFactory.getUtilisateurDAOImpl().find(id);
 	}
 	
 	/**
@@ -66,8 +77,7 @@ public class UtilisateurManager implements Manager<Utilisateur>{
 	 * @see fr.eni.encheres.bll.Manager#verifier()
 	 */
 	public boolean verifier(Utilisateur utilisateur) throws BuisnessException {
-		UtilisateurDAOImpl utilisateurDAOImpl = new UtilisateurDAOImpl();
-		return utilisateurDAOImpl.verifier(utilisateur);
+		return daoFactory.getUtilisateurDAOImpl().verifier(utilisateur);
 	}
 	
 	/**

@@ -22,6 +22,7 @@ public class ServletVerificationPourLaConnection extends javax.servlet.http.Http
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
 
 	protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
     	String identifiant = request.getParameter("identifiant");
@@ -35,7 +36,6 @@ public class ServletVerificationPourLaConnection extends javax.servlet.http.Http
     	if(identifiant.contains("@")) {
     		//true = correspond à un email
     		Utilisateur utilisateur = new Utilisateur(identifiant,motdepasse,true);
-    		UtilisateurManager utilisateurManager = new UtilisateurManager();  
         	try {
 				existeEnBase = utilisateurManager.verifier(utilisateur);
 			} catch (BuisnessException e) {
@@ -44,8 +44,7 @@ public class ServletVerificationPourLaConnection extends javax.servlet.http.Http
 			}
         	idUtilisateur = utilisateur.getIdUtilisateur();
     	}else {
-    		Utilisateur utilisateur = new Utilisateur(identifiant,motdepasse,false);
-    		UtilisateurManager utilisateurManager = new UtilisateurManager();  
+    		Utilisateur utilisateur = new Utilisateur(identifiant,motdepasse,false); 
     		try {
 				existeEnBase = utilisateurManager.verifier(utilisateur);
 			} catch (BuisnessException e) {

@@ -19,7 +19,7 @@ import fr.eni.encheres.outils.BuisnessException;
 public class ServletModifierProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Utilisateur utilisateur = new Utilisateur();
-	private UtilisateurManager utilidateurManager = new UtilisateurManager();
+	private static UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -74,7 +74,7 @@ public class ServletModifierProfil extends HttpServlet {
 				message="Votre profil a été modifié avec succès.";
 			}
 			try {
-				utilidateurManager.update(utilisateur);
+				utilisateurManager.update(utilisateur);
 			} catch (BuisnessException e) {
 				message="Une erreur inconnue s'est produite.";
 				modifier=1;
@@ -109,7 +109,7 @@ public class ServletModifierProfil extends HttpServlet {
 	private boolean verifierExistenceUtilisateur(String id) {
 		boolean existe=true;
 		try {
-			utilisateur = utilidateurManager.find(Integer.valueOf(id));
+			utilisateur = utilisateurManager.find(Integer.valueOf(id));
 			if(utilisateur.getPseudo()==null) {
 				existe=false;
 			}

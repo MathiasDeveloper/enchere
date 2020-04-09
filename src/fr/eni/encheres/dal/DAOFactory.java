@@ -1,7 +1,5 @@
 package fr.eni.encheres.dal;
 
-import fr.eni.encheres.bo.Categorie;
-import org.jetbrains.annotations.Contract;
 
 /**
  * Classe usine de DAO
@@ -15,5 +13,9 @@ public class DAOFactory {
      */
     public CategorieDAOImpl getCategorieDAOImpl(){
         return new CategorieDAOImpl();
+    }
+    
+    public UtilisateurDAOImpl getUtilisateurDAOImpl() {
+    	return new UtilisateurDAOImpl();
     }
 }
