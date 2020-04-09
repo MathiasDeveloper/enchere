@@ -33,12 +33,12 @@ public class Utilisateur {
 	
 	/**
 	 * Constructeur
-	 * @param pseudo
-	 * @param email
-	 * @param motDePasse
+	 * @param identifiant
+	 * @param motdepasse
+	 * @param isEmail
 	 */
 	public Utilisateur(String identifiant, String motdepasse, boolean isEmail) {
-		if(isEmail == true ) {
+		if(isEmail) {
 			this.email = identifiant;
 		}else {
 			this.pseudo = identifiant;
