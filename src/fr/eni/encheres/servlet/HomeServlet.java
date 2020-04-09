@@ -19,7 +19,7 @@ public class HomeServlet extends javax.servlet.http.HttpServlet {
 		{
 			if(unCookie.getName().equals("idUtilisateur")) {
 				connecte=true;
-				this.getServletContext().getRequestDispatcher("/WEB-INF/listeEnchereConnecte.jsp").forward(request, response);
+				this.getServletContext().getRequestDispatcher("/ListeEnchereConnecte").forward(request, response);
 			}
 		}
 		if(connecte==false) {
