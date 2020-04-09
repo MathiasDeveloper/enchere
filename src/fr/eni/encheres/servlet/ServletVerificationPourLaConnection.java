@@ -71,7 +71,7 @@ public class ServletVerificationPourLaConnection extends javax.servlet.http.Http
     			}
     		}
     		
-    		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/validationSeConnecter.jsp");
+    		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/listeEnchereConnecte.jsp");
         	rd.forward(request, response);
     	}else {
     		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/erreurSeConnecter.jsp");
