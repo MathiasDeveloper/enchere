@@ -30,7 +30,15 @@ public class ServletModifierProfil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			request.getParameter("id").equals(null);
+		}catch(Exception e) {
+			this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
+		}
 		utilisateur = utilisateurDAOImpl.find(Integer.valueOf(request.getParameter("id")));
+		if(utilisateur.getPseudo().equals("")) {
+			this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
+		}
 		request.setAttribute("utilisateur", utilisateur);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/modifierProfil.jsp").forward(request, response);
 	}
