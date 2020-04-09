@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import fr.eni.encheres.bo.Utilisateur;
+import fr.eni.encheres.outils.BuisnessException;
+import fr.eni.encheres.outils.Log;
 
 /**
  * Classe en charge de
@@ -21,27 +23,56 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 	private static final String FIND = "SELECT * " + 
 										"FROM UTILISATEURS " +
 										"WHERE idUtilisateur=?";
+	private static final String UPDATE = "UPDATE UTILISATEURS " +
+										"SET pseudo=?, " +
+										"nom=?, " +
+										"prenom=?, " +
+										"email=?, " +
+										"telephone=?, " +
+										"rue=?, " +
+										"codePostal=?, " +
+										"ville=?, " +
+										"motDePasse=? " +
+										"WHERE idUtilisateur=?";
+										
 	
 	private static ConnectionProvider connectionProvider = new ConnectionProvider();
+	private Utilisateur utilisateur = new Utilisateur();
+	private Log log;
 
 	/**
 	 * {@inheritDoc}
 	 * @see fr.eni.encheres.dal.DAO#create(java.lang.Object)
 	 */
 	@Override
-	public Utilisateur create(Utilisateur objet) {
-		// TODO Auto-generated method stub
-		return null;
+	public void create(Utilisateur utilisateur) {
 	}
 
 	/**
 	 * {@inheritDoc}
+	 * @throws BuisnessException 
 	 * @see fr.eni.encheres.dal.DAO#update(java.lang.Object)
 	 */
 	@Override
-	public Utilisateur update(Utilisateur objet) {
-		// TODO Auto-generated method stub
-		return null;
+	public void update(Utilisateur utilisateur) throws BuisnessException {
+		try {
+			PreparedStatement pstmt = connectionProvider.getInstance().prepareStatement(UPDATE);
+			pstmt.setString(1, utilisateur.getPseudo());
+			pstmt.setString(2, utilisateur.getNom());
+			pstmt.setString(3, utilisateur.getPrenom());
+			pstmt.setString(4, utilisateur.getEmail());
+			pstmt.setString(5, utilisateur.getTelephone());
+			pstmt.setString(6, utilisateur.getRue());
+			pstmt.setString(7, utilisateur.getCodePostal());
+			pstmt.setString(8, utilisateur.getVille());
+			pstmt.setString(9, utilisateur.getMotDePasse());
+			pstmt.setInt(10, utilisateur.getIdUtilisateur());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			log = new Log(e.getMessage());
+			BuisnessException buisnessException = new BuisnessException(e.getMessage(), e);
+			throw buisnessException;
+		}
 	}
 
 	/**
@@ -49,24 +80,22 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 	 * @see fr.eni.encheres.dal.DAO#delete(java.lang.Object)
 	 */
 	@Override
-	public Utilisateur delete(Utilisateur objet) {
-		// TODO Auto-generated method stub
-		return null;
+	public void delete(Utilisateur utilisateur) {
 	}
 
 	/**
 	 * {@inheritDoc}
+	 * @throws BuisnessException 
 	 * @see fr.eni.encheres.dal.DAO#find(int)
 	 */
 	@Override
-	public Utilisateur find(int id) {
-		Utilisateur utilisateur = new Utilisateur();
+	public Utilisateur find(int id) throws BuisnessException {
 			try {
 				PreparedStatement pstmt = connectionProvider.getInstance().prepareStatement(FIND);
 				pstmt.setInt(1, id);
 				ResultSet rs = pstmt.executeQuery();
 				while(rs.next()) {
-				utilisateur.setNoUtilisateur(rs.getInt("idUtilisateur"));
+				utilisateur.setIdUtilisateur(rs.getInt("idUtilisateur"));
 				utilisateur.setPseudo(rs.getString("pseudo"));
 				utilisateur.setNom(rs.getString("nom"));
 				utilisateur.setPrenom(rs.getString("prenom"));
@@ -81,7 +110,9 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log = new Log(e.getMessage());
+				BuisnessException buisnessException = new BuisnessException(e.getMessage(), e);
+				throw buisnessException;
 			}
 		return utilisateur;
 	}
@@ -91,12 +122,8 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 	 * @see fr.eni.encheres.dal.DAO#findAll(java.lang.Object)
 	 */
 	@Override
-	public ArrayList<Utilisateur> findAll(Utilisateur objet) {
+	public ArrayList<Utilisateur> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
-
-
 }

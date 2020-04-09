@@ -20,9 +20,8 @@ public class ArticleDAOImpl implements DAO<Article>{
 	 * @see fr.eni.encheres.dal.DAO#create(java.lang.Object)
 	 */
 	@Override
-	public Article create(Article objet) {
+	public void create(Article article) {
 		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
@@ -30,9 +29,8 @@ public class ArticleDAOImpl implements DAO<Article>{
 	 * @see fr.eni.encheres.dal.DAO#update(java.lang.Object)
 	 */
 	@Override
-	public Article update(Article objet) {
+	public void update(Article article) {
 		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
@@ -40,9 +38,8 @@ public class ArticleDAOImpl implements DAO<Article>{
 	 * @see fr.eni.encheres.dal.DAO#delete(java.lang.Object)
 	 */
 	@Override
-	public Article delete(Article objet) {
+	public void delete(Article article) {
 		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
@@ -60,7 +57,7 @@ public class ArticleDAOImpl implements DAO<Article>{
 	 * @see fr.eni.encheres.dal.DAO#findAll(java.lang.Object)
 	 */
 	@Override
-	public ArrayList<Article> findAll(Article objet) {
+	public ArrayList<Article> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -20,9 +20,8 @@ public class RetraitDAOImpl implements DAO<Retrait>{
 	 * @see fr.eni.encheres.dal.DAO#create(java.lang.Object)
 	 */
 	@Override
-	public Retrait create(Retrait objet) {
+	public void create(Retrait retrait) {
 		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
@@ -30,9 +29,8 @@ public class RetraitDAOImpl implements DAO<Retrait>{
 	 * @see fr.eni.encheres.dal.DAO#update(java.lang.Object)
 	 */
 	@Override
-	public Retrait update(Retrait objet) {
+	public void update(Retrait retrait) {
 		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
@@ -40,9 +38,8 @@ public class RetraitDAOImpl implements DAO<Retrait>{
 	 * @see fr.eni.encheres.dal.DAO#delete(java.lang.Object)
 	 */
 	@Override
-	public Retrait delete(Retrait objet) {
+	public void delete(Retrait retrait) {
 		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
@@ -60,7 +57,7 @@ public class RetraitDAOImpl implements DAO<Retrait>{
 	 * @see fr.eni.encheres.dal.DAO#findAll(java.lang.Object)
 	 */
 	@Override
-	public ArrayList<Retrait> findAll(Retrait objet) {
+	public ArrayList<Retrait> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

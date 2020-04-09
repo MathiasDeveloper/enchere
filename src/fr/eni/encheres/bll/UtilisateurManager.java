@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.UtilisateurDAOImpl;
+import fr.eni.encheres.outils.BuisnessException;
 
 /**
  * Classe en charge de
@@ -58,10 +59,11 @@ public class UtilisateurManager implements Manager<Utilisateur>{
 
 	/**
 	 * {@inheritDoc}
+	 * @throws BuisnessException 
 	 * @see fr.eni.encheres.bll.Manager#find()
 	 */
 	@Override
-	public Utilisateur find(int id) {
+	public Utilisateur find(int id) throws BuisnessException {
 		UtilisateurDAOImpl utilisateurDAOImpl = new UtilisateurDAOImpl();
 		return utilisateurDAOImpl.find(id);
 	}
