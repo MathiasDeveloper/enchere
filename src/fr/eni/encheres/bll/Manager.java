@@ -6,7 +6,7 @@ import fr.eni.encheres.outils.BuisnessException;
 
 
 public interface Manager <T> {
-    T getInstance();
+
     void create(T objet) throws BuisnessException;
     void update(T objet) throws BuisnessException;
     void delete(T objet) throws BuisnessException;
