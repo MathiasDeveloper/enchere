@@ -35,12 +35,12 @@ public class ServletVerificationPourLaConnection extends javax.servlet.http.Http
     		Utilisateur utilisateur = new Utilisateur(identifiant,motdepasse,true);
         	UtilisateurDAOImpl utilisateurDAOImpl = new UtilisateurDAOImpl();  
         	existeEnBase = utilisateurDAOImpl.verifier(utilisateur);
-        	idUtilisateur = utilisateur.getidUtilisateur();
+        	idUtilisateur = utilisateur.getIdUtilisateur();
     	}else {
     		Utilisateur utilisateur = new Utilisateur(identifiant,motdepasse,false);
     		UtilisateurDAOImpl utilisateurDAOImpl = new UtilisateurDAOImpl();  
     		existeEnBase = utilisateurDAOImpl.verifier(utilisateur);   	
-    		idUtilisateur = utilisateur.getidUtilisateur();
+    		idUtilisateur = utilisateur.getIdUtilisateur();
     	}
     	
     	if(existeEnBase == true) {

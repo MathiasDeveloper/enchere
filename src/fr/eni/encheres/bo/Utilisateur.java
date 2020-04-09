@@ -52,14 +52,14 @@ public class Utilisateur {
 	 * Getter pour noUtilisateur.
 	 * @return the noUtilisateur
 	 */
-	public int getidUtilisateur() {
+	public int getIdUtilisateur() {
 		return idUtilisateur;
 	}
 	/**
 	 * Setter pour noUtilisateur.
 	 * @param noUtilisateur the noUtilisateur to set
 	 */
-	public void setNoUtilisateur(int noUtilisateur) {
+	public void setIdUtilisateur(int noUtilisateur) {
 		this.idUtilisateur = noUtilisateur;
 	}
 	/**
@@ -250,7 +250,7 @@ public class Utilisateur {
 	 */
 	@Override
 	public String toString() {
-		return "Utilisateur [noUtilisateur=" + idUtilisateur + ", pseudo=" + pseudo + ", nom=" + nom + ", prenom="
+		return "Utilisateur [idUtilisateur=" + idUtilisateur + ", pseudo=" + pseudo + ", nom=" + nom + ", prenom="
 				+ prenom + ", email=" + email + ", telephone=" + telephone + ", rue=" + rue + ", codePostal="
 				+ codePostal + ", ville=" + ville + ", motDePasse=" + motDePasse + ", credit=" + credit
 				+ ", administrateur=" + administrateur + ", encheres=" + encheres + ", articles=" + articles + "]";
