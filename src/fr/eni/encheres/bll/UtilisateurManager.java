@@ -67,9 +67,18 @@ public class UtilisateurManager implements Manager<Utilisateur>{
 		UtilisateurDAOImpl utilisateurDAOImpl = new UtilisateurDAOImpl();
 		return utilisateurDAOImpl.find(id);
 	}
-
+	
 	/**
 	 * {@inheritDoc}
+	 * @throws BuisnessException 
+	 * @see fr.eni.encheres.bll.Manager#verifier()
+	 */
+	public boolean verifier(Utilisateur utilisateur) throws BuisnessException {
+		UtilisateurDAOImpl utilisateurDAOImpl = new UtilisateurDAOImpl();
+		return utilisateurDAOImpl.verifier(utilisateur);
+	}
+	
+	/**
 	 * @see fr.eni.encheres.bll.Manager#findAll()
 	 */
 	@Override
@@ -77,7 +86,4 @@ public class UtilisateurManager implements Manager<Utilisateur>{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
-
 }
