@@ -20,6 +20,12 @@ import fr.eni.encheres.outils.Log;
  */
 public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 	
+	private static final String CREATE = "INSERT INTO UTILISATEURS"  
+		+	"           				 ([pseudo],[nom],[prenom],[email] "
+		+	"           				,[telephone],[rue],[codePostal],[ville],[motDePasse])"
+		+	"     				VALUES"
+		+	"           				(?,?,?,?,?,?,?,?,?)";
+	
 	private static final String FIND = "SELECT * " + 
 										"FROM UTILISATEURS " +
 										"WHERE idUtilisateur=?";
@@ -52,10 +58,28 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 
 	/**
 	 * {@inheritDoc}
+	 * @throws BuisnessException 
 	 * @see fr.eni.encheres.dal.DAO#create(java.lang.Object)
 	 */
 	@Override
-	public void create(Utilisateur utilisateur) {
+	public void create(Utilisateur utilisateur) throws BuisnessException {
+		try {
+			PreparedStatement pstmt = connectionProvider.getInstance().prepareStatement(CREATE);
+			pstmt.setString(1, utilisateur.getPseudo());
+			pstmt.setString(2, utilisateur.getNom());
+			pstmt.setString(3, utilisateur.getPrenom());
+			pstmt.setString(4, utilisateur.getEmail());
+			pstmt.setString(5, utilisateur.getTelephone());
+			pstmt.setString(6, utilisateur.getRue());
+			pstmt.setString(7, utilisateur.getCodePostal());
+			pstmt.setString(8, utilisateur.getVille());
+			pstmt.setString(9, utilisateur.getMotDePasse());
+			pstmt.executeQuery();
+		} catch (SQLException e) {
+			log = new Log(e.getMessage());
+			BuisnessException buisnessException = new BuisnessException(e.getMessage(), e);
+			throw buisnessException;
+		}
 	}
 
 	/**
