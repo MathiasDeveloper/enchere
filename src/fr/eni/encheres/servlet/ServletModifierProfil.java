@@ -3,6 +3,7 @@ package fr.eni.encheres.servlet;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,11 +33,28 @@ public class ServletModifierProfil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(verifierExistenceUtilisateur(request.getParameter("id"))==false) {
-			this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
-		}else {
-			request.setAttribute("utilisateur", utilisateur);
-			this.getServletContext().getRequestDispatcher("/WEB-INF/modifierProfil.jsp").forward(request, response);
+		boolean connecte=false;
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for(Cookie unCookie:cookies)
+			{
+				if(unCookie.getName().equals("idUtilisateur")) {
+					connecte=true;
+					if(request.getParameter("id")!=null) {
+						if(verifierExistenceUtilisateur(request.getParameter("id"))==false) {
+							this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
+						}else {
+							request.setAttribute("utilisateur", utilisateur);
+							this.getServletContext().getRequestDispatcher("/WEB-INF/modifierProfil.jsp").forward(request, response);
+						}
+					}else {
+						this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
+					}
+				}
+			}
+			if(connecte==false) {
+				this.getServletContext().getRequestDispatcher("/WEB-INF//erreur404.jsp").forward(request, response);
+			}
 		}
 	}
 
@@ -44,49 +62,66 @@ public class ServletModifierProfil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int modifier=-1; //0=utilisateur inconnu, 1=erreur
-		String message="";
-		if(verifierExistenceUtilisateur(request.getParameter("utilisateur"))==false) {
-			modifier=0;
-		}
-		if(verifierTelephone(request.getParameter("telephone"))==false && modifier==-1) {
-			message="Votre numéro de téléphone doit uniquement être constitué de 10 chiffres.";
-			modifier=1;
-		}
-		if(modifier==-1) {
-			switch(verifierMotDePasse(request.getParameter("mdp"), request.getParameter("newmdp"), request.getParameter("confirmation"))) {
-				case 1: //newmdp#confirmation
-					message="Votre mot de passe de confirmation et votre nouveau mot de passe ne correspondent pas.";
-					modifier=1;
-					break;
-				case 2: //mdp incorrect
-					message="Votre mot de passe actuel est incorrect.";
-					modifier=1;
-					break;
+		boolean connecte=false;
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for(Cookie unCookie:cookies)
+			{
+				if(unCookie.getName().equals("idUtilisateur")) {
+					connecte=true;
+					if(request.getParameter("id")!=null) {
+						int modifier=-1; //0=utilisateur inconnu, 1=erreur
+						String message="";
+						if(verifierExistenceUtilisateur(request.getParameter("utilisateur"))==false) {
+							modifier=0;
+						}
+						if(verifierTelephone(request.getParameter("telephone"))==false && modifier==-1) {
+							message="Votre numéro de téléphone doit uniquement être constitué de 10 chiffres.";
+							modifier=1;
+						}
+						if(modifier==-1) {
+							switch(verifierMotDePasse(request.getParameter("mdp"), request.getParameter("newmdp"), request.getParameter("confirmation"))) {
+								case 1: //newmdp#confirmation
+									message="Votre mot de passe de confirmation et votre nouveau mot de passe ne correspondent pas.";
+									modifier=1;
+									break;
+								case 2: //mdp incorrect
+									message="Votre mot de passe actuel est incorrect.";
+									modifier=1;
+									break;
+							}
+						}
+						if(modifier==-1) {
+							if(verifierMotDePasse(request.getParameter("mdp"), request.getParameter("newmdp"), request.getParameter("confirmation"))==3) {
+								modifierUtilisateur(request, false); //on ne change pas le mdp
+								message="Votre profil a été modifié avec succès.";
+							}else {
+								modifierUtilisateur(request, true); //on change le mdp
+								message="Votre profil a été modifié avec succès.";
+							}
+							try {
+								utilisateurManager.update(utilisateur);
+							} catch (BuisnessException e) {
+								message="Une erreur inconnue s'est produite.";
+								modifier=1;
+								e.printStackTrace();
+							}
+						}
+						if(modifier==1) {
+							this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
+						}else {
+							request.setAttribute("message", message);
+							request.setAttribute("utilisateur", utilisateur);
+							this.getServletContext().getRequestDispatcher("/WEB-INF/modifierProfil.jsp").forward(request, response);
+						}
+					}else {
+						this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
+					}
+				}
 			}
-		}
-		if(modifier==-1) {
-			if(verifierMotDePasse(request.getParameter("mdp"), request.getParameter("newmdp"), request.getParameter("confirmation"))==3) {
-				modifierUtilisateur(request, false); //on ne change pas le mdp
-				message="Votre profil a été modifié avec succès.";
-			}else {
-				modifierUtilisateur(request, true); //on change le mdp
-				message="Votre profil a été modifié avec succès.";
+			if(connecte==false) {
+				this.getServletContext().getRequestDispatcher("/WEB-INF//erreur404.jsp").forward(request, response);
 			}
-			try {
-				utilisateurManager.update(utilisateur);
-			} catch (BuisnessException e) {
-				message="Une erreur inconnue s'est produite.";
-				modifier=1;
-				e.printStackTrace();
-			}
-		}
-		if(modifier==1) {
-			this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
-		}else {
-			request.setAttribute("message", message);
-			request.setAttribute("utilisateur", utilisateur);
-			this.getServletContext().getRequestDispatcher("/WEB-INF/modifierProfil.jsp").forward(request, response);
 		}
 	}
 	

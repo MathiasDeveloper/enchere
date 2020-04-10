@@ -58,12 +58,11 @@ public class ServletVerificationPourLaConnection extends javax.servlet.http.Http
     		PrintWriter out = response.getWriter();
     		Cookie[] cookies = request.getCookies();
     		    		
-    		if(cookies==null || cookies.length == 1){
-    						
+    		if(cookies == null || cookies.length > 0){
    				Cookie unCookie = new Cookie("idUtilisateur", String.valueOf(idUtilisateur));
     				unCookie.setMaxAge(300);
     				response.addCookie(unCookie);
-    		}else{
+    		} else{
     			out.println("Il existe déjà un cookie pour l'utilisateur avec cet ID");
     			for(Cookie unCookie:cookies)
     			{
@@ -71,7 +70,7 @@ public class ServletVerificationPourLaConnection extends javax.servlet.http.Http
     			}
     		}
     		
-    		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/validationSeConnecter.jsp");
+    		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/listeEnchereConnecte.jsp");
         	rd.forward(request, response);
     	}else {
     		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/erreurSeConnecter.jsp");
