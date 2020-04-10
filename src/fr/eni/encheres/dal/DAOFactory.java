@@ -18,4 +18,8 @@ public class DAOFactory {
     public UtilisateurDAOImpl getUtilisateurDAOImpl() {
     	return new UtilisateurDAOImpl();
     }
+    
+    public EnchereDAOImpl getEnchereDAOImpl() {
+    	return new EnchereDAOImpl();
+    }
 }

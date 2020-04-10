@@ -39,28 +39,24 @@ public class ServletSupprimerCompte extends HttpServlet {
 				if(unCookie.getName().equals("idUtilisateur")) {
 					connecte=true;
 					if(request.getParameter("id")!=null) {
-						if(request.getParameter("id")!=null) {
-							try {
-								utilisateurManager.delete(utilisateurManager.find(Integer.valueOf(request.getParameter("id"))));
-								Cookie[] cookiesVerif = request.getCookies();
-								for(Cookie unCookieVerif:cookies)
-				    			{
-				    				if(unCookieVerif.getName().equals("idUtilisateur")) {
-				    					unCookieVerif.setMaxAge(0);
-				    					response.addCookie(unCookieVerif);
-				    				}
+						try {
+							utilisateurManager.delete(utilisateurManager.find(Integer.valueOf(request.getParameter("id"))));
+							Cookie[] cookiesVerif = request.getCookies();
+							for(Cookie unCookieVerif:cookies)
+				    		{
+				    			if(unCookieVerif.getName().equals("idUtilisateur")) {
+				    				unCookieVerif.setMaxAge(0);
+				    				response.addCookie(unCookieVerif);
 				    			}
-								this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
-							} catch (NumberFormatException e) {
-								this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
-							} catch (BuisnessException e) {
-								e.printStackTrace();
-							}
-						}else {
-							this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
+				    		}
+							this.getServletContext().getRequestDispatcher("/Home").forward(request, response);
+						} catch (NumberFormatException e) {
+							this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
+						} catch (BuisnessException e) {
+							e.printStackTrace();
 						}
 					}else {
-						this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
+						this.getServletContext().getRequestDispatcher("/Home").forward(request, response);
 					}
 				}
 			}

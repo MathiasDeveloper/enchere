@@ -11,14 +11,7 @@ package fr.eni.encheres.bo;
  */
 public class Categorie {
 
-	/**
-	 * @int
-	 */
 	private int idCategorie;
-
-	/**
-	 * @string
-	 */
 	private String libelle;
 
 	/**
@@ -52,4 +45,15 @@ public class Categorie {
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Categorie [idCategorie=" + idCategorie + ", libelle=" + libelle + "]";
+	}
+	
+	
 }
