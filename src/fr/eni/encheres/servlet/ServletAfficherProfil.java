@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.encheres.bll.CategorieManager;
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.outils.BuisnessException;
 
@@ -18,6 +19,7 @@ import fr.eni.encheres.outils.BuisnessException;
 @WebServlet(name="ServletAfficherProfil", urlPatterns = {"/AficherProfil"})
 public class ServletAfficherProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -31,7 +33,6 @@ public class ServletAfficherProfil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("id")!=null) {
-			UtilisateurManager utilisateurManager = new UtilisateurManager();
 			try {
 				request.setAttribute("utilisateur", utilisateurManager.find(Integer.valueOf(request.getParameter("id"))));
 				this.getServletContext().getRequestDispatcher("/WEB-INF/afficherProfil.jsp").forward(request, response);

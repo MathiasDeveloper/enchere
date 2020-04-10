@@ -17,6 +17,9 @@ public class DAOFactory {
         return new CategorieDAOImpl();
     }
 
+    public UtilisateurDAOImpl getUtilisateurDAOImpl() {
+    	return new UtilisateurDAOImpl();
+
     /**
      * Récupération de la classe dao categorie
      *

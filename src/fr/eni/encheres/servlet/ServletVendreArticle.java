@@ -2,12 +2,8 @@ package fr.eni.encheres.servlet;
 
 import fr.eni.encheres.bll.ArticleManager;
 import fr.eni.encheres.bll.CategorieManager;
-import fr.eni.encheres.bll.EnchereManager;
-import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Categorie;
-import fr.eni.encheres.bo.Enchere;
 import fr.eni.encheres.outils.BuisnessException;
-import fr.eni.encheres.outils.Utils;
 
 import javax.rmi.CORBA.Util;
 import javax.servlet.ServletException;

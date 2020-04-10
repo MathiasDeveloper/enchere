@@ -16,10 +16,10 @@
             <h2>Article</h2>
             <hr>
             <div class="form-group">
-                <label for="nom">Nom de l'article</label>
+                <label for="nomArticle">Nom de l'article</label>
                 <input type="text"
                        class="form-control"
-                       id="nom"
+                       id="nomArticle"
                        name="nomArticle"
                        placeholder="Nom de l'article"
                        required>

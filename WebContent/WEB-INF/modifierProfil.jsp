@@ -57,7 +57,8 @@
 		</c:if>
 	</div>
 	<div class="button d-flex justify-content-center">
-        <button type="submit">Enregistrer</button>
+        <button class="btn btn-outline-secondary mr-5" type="submit">Enregistrer</button>
+        <a class="btn btn-outline-secondary ml-5" href="SupprimerCompte?id=${utilisateur.idUtilisateur }">Supprimer mon compte</a>
     </div>
 </form>
 </body>

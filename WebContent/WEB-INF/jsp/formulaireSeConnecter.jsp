@@ -17,7 +17,7 @@
 <body>
 	<h3>ENI-Enchères</h3>
 	
-	<form action="#" method="post">
+	<form action="seConnecter" method="post">
 		<div class="groupeFormulaire">
 			<label>Identifiant :</label>
 			<input type="text" placeholder="NineJea" required name="identifiant" id="identifiant">

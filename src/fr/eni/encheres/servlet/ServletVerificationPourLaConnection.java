@@ -22,6 +22,7 @@ public class ServletVerificationPourLaConnection extends javax.servlet.http.Http
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
 
 	protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
     	String identifiant = request.getParameter("identifiant");
@@ -35,7 +36,6 @@ public class ServletVerificationPourLaConnection extends javax.servlet.http.Http
     	if(identifiant.contains("@")) {
     		//true = correspond à un email
     		Utilisateur utilisateur = new Utilisateur(identifiant,motdepasse,true);
-    		UtilisateurManager utilisateurManager = new UtilisateurManager();  
         	try {
 				existeEnBase = utilisateurManager.verifier(utilisateur);
 			} catch (BuisnessException e) {
@@ -44,8 +44,7 @@ public class ServletVerificationPourLaConnection extends javax.servlet.http.Http
 			}
         	idUtilisateur = utilisateur.getIdUtilisateur();
     	}else {
-    		Utilisateur utilisateur = new Utilisateur(identifiant,motdepasse,false);
-    		UtilisateurManager utilisateurManager = new UtilisateurManager();  
+    		Utilisateur utilisateur = new Utilisateur(identifiant,motdepasse,false); 
     		try {
 				existeEnBase = utilisateurManager.verifier(utilisateur);
 			} catch (BuisnessException e) {
@@ -59,12 +58,11 @@ public class ServletVerificationPourLaConnection extends javax.servlet.http.Http
     		PrintWriter out = response.getWriter();
     		Cookie[] cookies = request.getCookies();
     		    		
-    		if(cookies==null || cookies.length == 1){
-    						
+    		if(cookies == null || cookies.length > 0){
    				Cookie unCookie = new Cookie("idUtilisateur", String.valueOf(idUtilisateur));
     				unCookie.setMaxAge(300);
     				response.addCookie(unCookie);
-    		}else{
+    		} else{
     			out.println("Il existe déjà un cookie pour l'utilisateur avec cet ID");
     			for(Cookie unCookie:cookies)
     			{
@@ -72,7 +70,7 @@ public class ServletVerificationPourLaConnection extends javax.servlet.http.Http
     			}
     		}
     		
-    		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/validationSeConnecter.jsp");
+    		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/listeEnchereConnecte.jsp");
         	rd.forward(request, response);
     	}else {
     		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/erreurSeConnecter.jsp");

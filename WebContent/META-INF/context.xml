@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
-    <Resource
+<Resource
 name="jdbc/pool_cnx"
 driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 type="javax.sql.DataSource"
@@ -10,5 +10,5 @@ password="Pa$$w0rd"
 maxTotal="100"
 maxIdle="30"
 maxWaitMillis="10000"
-    />
+/>
 </Context>
