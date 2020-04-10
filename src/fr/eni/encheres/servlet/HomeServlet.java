@@ -24,7 +24,7 @@ public class HomeServlet extends javax.servlet.http.HttpServlet {
 				}
 			}
 			if(connecte==false) {
-				this.getServletContext().getRequestDispatcher("/seConnecter").forward(request, response);
+				this.getServletContext().getRequestDispatcher("/ListeEnchereDeconnecte").forward(request, response);
 			}
 		}
     }

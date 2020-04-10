@@ -16,7 +16,7 @@ import fr.eni.encheres.outils.BuisnessException;
 /**
  * Servlet implementation class AfficherProfil
  */
-@WebServlet(name="ServletAfficherProfil", urlPatterns = {"/AficherProfil"})
+@WebServlet(name="ServletAfficherProfil", urlPatterns = {"/AfficherProfil"})
 public class ServletAfficherProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
