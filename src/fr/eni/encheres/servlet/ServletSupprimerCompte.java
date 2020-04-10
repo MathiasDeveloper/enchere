@@ -39,6 +39,7 @@ public class ServletSupprimerCompte extends HttpServlet {
     			{
     				if(unCookie.getName().equals("idUtilisateur")) {
     					unCookie.setMaxAge(0);
+    					response.addCookie(unCookie);
     				}
     			}
 				this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
