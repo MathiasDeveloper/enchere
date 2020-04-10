@@ -3,7 +3,7 @@
  */
 package fr.eni.encheres.bo;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Classe en charge de
@@ -67,20 +67,10 @@ public class Article {
 	 */
 	private boolean etatVente;
 
-	/**
-	 * idUtilisateur : Recu de la session pour détérminer qui crée l'article
-	 *
-	 * @int
-	 */
-	private int idUtilisateur;
 
-	/**
-	 * idCategorie : Détérmine la catégorie de l'article
-	 *
-	 * @int
-	 */
-	private int idCategorie;
+	private Categorie categorie;
 
+	private Utilisateur utilisateur;
 
 
 	/**
@@ -226,39 +216,33 @@ public class Article {
 		this.etatVente = etatVente;
 	}
 
-	/**
-	 * getter idUtilisateur
-	 *
-	 * @return idUtilisateur
-	 */
-	public int getIdUtilisateur() {
-		return idUtilisateur;
+	public Categorie getCategorie() {
+		return categorie;
 	}
 
-	/**
-	 * setter idUtilisateur
-	 *
-	 * @param idUtilisateur
-	 */
-	public void setIdUtilisateur(int idUtilisateur) {
-		this.idUtilisateur = idUtilisateur;
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
 	}
 
-	/**
-	 * getter idCategorie
-	 */
-	public int getIdCategorie() {
-		return idCategorie;
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
 	}
 
-	/**
-	 * setter idCategorie
-	 *
-	 * @param idCategorie
-	 */
-	public void setIdCategorie(int idCategorie) {
-		this.idCategorie = idCategorie;
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 
-
+	@Override
+	public String toString() {
+		return "Article{" +
+				"idArticle=" + idArticle +
+				", nomArticle='" + nomArticle + '\'' +
+				", description='" + description + '\'' +
+				", dateDebutEnchere=" + dateDebutEnchere +
+				", dateFinEnchere=" + dateFinEnchere +
+				", prixInitial=" + prixInitial +
+				", prixVente=" + prixVente +
+				", etatVente=" + etatVente +
+				'}';
+	}
 }

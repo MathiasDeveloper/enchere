@@ -2,19 +2,25 @@ package fr.eni.encheres.servlet;
 
 import fr.eni.encheres.bll.ArticleManager;
 import fr.eni.encheres.bll.CategorieManager;
+import fr.eni.encheres.bll.EnchereManager;
+import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Categorie;
+import fr.eni.encheres.bo.Enchere;
+import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.outils.BuisnessException;
+import fr.eni.encheres.outils.Log;
+import fr.eni.encheres.outils.Utils;
 
-import javax.rmi.CORBA.Util;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
+import java.util.Map;
+
 
 @WebServlet(name = "ServletVendreArticle", urlPatterns = {"/VendreArticle"})
 public class ServletVendreArticle extends HttpServlet {
@@ -50,14 +56,32 @@ public class ServletVendreArticle extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Article article = this.creerArticle(request);
-            Enchere enchere = this.creerEnchere(article, request);
-            articleManager.create(article);
+
+            // Vérification parametre du formulaire article
+            this.verifierParamsArticleFormulaire(request);
+
+            // Vérification des parametres du formulaire enchere
+            this.verifierParamsEnchereFormulaire(request);
+
+            // Création de l'objet Article à partir du formulaire
+            Article article = this.creerArticleFormulaire(request);
+
+            // Insertion de l'objet Article en bdd
+            article = articleManager.createArticle(article);
+
+            // Création de l'objet Enchere à partir du formulaire
+            Enchere enchere = this.creerEnchereFormulaire(article, request);
+
+            // Insertion en bdd de l'objet Enchere
             enchereManager.create(enchere);
+
+            if (request.getParameter("formSubmit") != null){
+                this.setMessageSucces(request);
+            }
+
         } catch (BuisnessException e) {
             e.printStackTrace();
         }
-
         doGet(request, response);
     }
 
@@ -93,27 +117,154 @@ public class ServletVendreArticle extends HttpServlet {
      *
      * @throws BuisnessException
      */
-    private Article creerArticle(HttpServletRequest request) throws BuisnessException {
+    private Article creerArticleFormulaire(HttpServletRequest request) throws BuisnessException {
         request.getAttribute("nomArticle");
         Article article = new Article();
         article.setNomArticle(request.getParameter("nomArticle"));
         article.setDescription(request.getParameter("descriptionArticle"));
-        article.setPrixInitial(Integer.parseInt(request.getParameter("prixInitialVente")));
-        article.setDateDebutEnchere(Utils.transformDateParam(request.getParameter("DateDebutEnchere")));
-        article.setDateFinEnchere(Utils.transformDateParam(request.getParameter("DateFinEnchere")));
-        article.setPrixInitial(Utils.transformStringToInt(request.getParameter("prixInitialVente")));
-        article.setIdCategorie(Utils.transformStringToInt(request.getParameter("categorie")));
+        article.setPrixInitial(Integer.parseInt(request.getParameter("prixInitial")));
+        article.setDateDebutEnchere(Utils.transformDateParam(request.getParameter("dateDebutEnchere")));
+        article.setDateFinEnchere(Utils.transformDateParam(request.getParameter("dateFinEnchere")));
+        article.setCategorie(this.creerCategorieFormulaire(request));
+        article.setUtilisateur(this.getIdUtilisateurBySession(request.getCookies()));
+
         return article;
     }
 
-    private Enchere creerEnchere(Article article, HttpServletRequest request) {
+    /**
+     * Méthode de création à partir
+     *
+     * @param article
+     * @param request
+     *
+     * @return Enchere
+     */
+    private Enchere creerEnchereFormulaire(Article article, HttpServletRequest request) {
         Enchere enchere = new Enchere();
         enchere.setArticle(article);
         enchere.setDateEnchere(article.getDateDebutEnchere());
-        enchere.setHeureDebutEnchere(Utils.transformStringToHeure(request.getParameter("heureDebutEnchere")));
-        enchere.setHeureFinEnchere(Utils.transformStringToHeure(request.getParameter("heureFinEnchere")));
+        enchere.setUtilisateur(this.getIdUtilisateurBySession(request.getCookies()));
+
+        try {
+            enchere.setHeureDebutEnchere(Utils.transformStringToHeure(request.getParameter("heureDebutEnchere")));
+            enchere.setHeureFinEnchere(Utils.transformStringToHeure(request.getParameter("heureFinEnchere")));
+        } catch (BuisnessException e) {
+            e.printStackTrace();
+        }
 
         return enchere;
+    }
+
+    /**
+     * Méthode de création d'une catégorie à partir du formulaire
+     *
+     * @param request
+     *
+     * @return
+     */
+    private Categorie creerCategorieFormulaire(HttpServletRequest request) {
+
+        Categorie categorie = new Categorie();
+
+        categorie.setIdCategorie(Utils.transformStringToInt(request.getParameter("categorie")));
+
+        return categorie;
+    }
+
+    /**
+     * Récupérer id utilisateur via la session
+     *
+     * @param cookies
+     *
+     * @return Utilisateur
+     */
+    private Utilisateur getIdUtilisateurBySession(Cookie[] cookies) {
+        Utilisateur utilisateur = new Utilisateur();
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("idUtilisateur")) {
+                    utilisateur.setIdUtilisateur(Utils.transformStringToInt(cookie.getValue()));
+                }
+            }
+        }
+        return utilisateur;
+    }
+
+    private void verifierParamsArticleFormulaire(HttpServletRequest request) throws BuisnessException {
+
+        String message = null;
+
+        Date dateDebut = Utils.transformDateParam(request.getParameter("dateDebutEnchere"));
+        Date dateFin = Utils.transformDateParam(request.getParameter("dateFinEnchere"));
+
+        try {
+
+            if (request.getParameter("nomArticle").trim().isEmpty()) {
+                message = "Merci de renseignez un nom d'article";
+            }
+            if (request.getParameter("descriptionArticle").trim().isEmpty()) {
+                message = "Merci de mettre une description de votre Article pour que les utilisateurs achetent " +
+                        "plus facilement votre bien";
+            }
+            if (request.getParameter("prixInitial").isEmpty()) {
+                message = "Merci de donnez un prix de base à votre article";
+            }
+            if (request.getParameter("dateDebutEnchere").isEmpty()) {
+                message = "Merci de donner une date de début d'enchere";
+            }
+
+            if (dateDebut.compareTo(dateFin) > 0){
+                message = "La date de début doit etre antérieur à la date de fin";
+            }
+
+            if (request.getParameter("dateFinEnchere").isEmpty()) {
+                message = "Merci de donnez une date de fin à votre enchere";
+            }
+
+            if (message != null){
+                throw new Exception();
+            }
+
+        } catch (Exception e) {
+            request.setAttribute("messageArticle", message);
+            new Log("Formulaire invalide" + e.getMessage());
+            throw new BuisnessException("Le formulaire n'est pas valide", e);
+        }
+
+    }
+
+    private void verifierParamsEnchereFormulaire(HttpServletRequest request) throws BuisnessException {
+        String message = null;
+
+        Date dateDebut = Utils.transformDateParam(request.getParameter("dateDebutEnchere"));
+        Date dateFin = Utils.transformDateParam(request.getParameter("dateFinEnchere"));
+
+         try {
+            if (request.getParameter("heureDebutEnchere").trim().isEmpty()) {
+                message = "Merci de renseignez une heure de début de l'enchere";
+            }
+            if (request.getParameter("heureFinEnchere").trim().isEmpty()) {
+                message = "Merci de renseignez une heure de fin de l'enchere";
+            }
+
+            if (dateDebut.compareTo(dateFin) == 0){
+                // TODO MRO : cas à gerer si le jour de début est égale à la date fin alors il faut vérifier si l'heure de début est supérieur à la date de fin
+             }
+
+            if (message != null){
+                throw new Exception();
+            }
+
+        } catch (Exception e) {
+             request.setAttribute("messageEnchere", message);
+             new Log("Formulaire invalide" + e.getMessage());
+             throw new BuisnessException("Le formulaire n'est pas valide " + e.getMessage(), e);
+        }
+    }
+
+    private void setMessageSucces(HttpServletRequest request){
+        request.setAttribute("messageSucces", "Enregistrement fait avec succès");
     }
 
 

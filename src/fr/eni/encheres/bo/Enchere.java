@@ -4,7 +4,7 @@
 package fr.eni.encheres.bo;
 
 import java.sql.Time;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Classe en charge de
@@ -37,6 +37,9 @@ public class Enchere {
 	 * @time
 	 */
 	private Time heureFinEnchere;
+
+
+	private Utilisateur utilisateur;
 
 	/**
 	 * Getter Article
@@ -122,5 +125,24 @@ public class Enchere {
 	 */
 	public void setHeureFinEnchere(Time heureFinEnchere) {
 		this.heureFinEnchere = heureFinEnchere;
+	}
+
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+
+	@Override
+	public String toString() {
+		return "Enchere{" +
+				"article=" + article +
+				", dateEnchere=" + dateEnchere +
+				", montantEnchere=" + montantEnchere +
+				", heureDebutEnchere=" + heureDebutEnchere +
+				", heureFinEnchere=" + heureFinEnchere +
+				'}';
 	}
 }

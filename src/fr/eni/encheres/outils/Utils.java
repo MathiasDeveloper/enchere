@@ -5,7 +5,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import java.util.Date;
+import java.sql.Date;
 
 
 public class Utils {
@@ -17,15 +17,8 @@ public class Utils {
      * @return Date
      * @throws BuisnessException
      */
-    public static Date transformDateParam(String paramDate) throws BuisnessException {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
-        Date date;
-        try {
-            date = sdf.parse(paramDate);
-        } catch (ParseException e) {
-            throw new BuisnessException(e.getMessage(), e);
-        }
-        return date;
+    public static Date transformDateParam(String paramDate) {
+        return  Date.valueOf(paramDate);
     }
 
     /**
@@ -34,8 +27,17 @@ public class Utils {
      * @param time
      * @return
      */
-    public static Time transformStringToHeure(String time){
-        return Time.valueOf(time);
+    public static Time transformStringToHeure(String time) throws BuisnessException {
+        DateFormat df = new SimpleDateFormat("hh:mm");
+        Time timeValue;
+
+        try{
+            timeValue = new Time(df.parse(time).getTime());
+        } catch (ParseException e) {
+            new Log(e.getMessage());
+            throw new BuisnessException(e.getMessage(), e);
+        }
+        return timeValue;
     }
 
     /**

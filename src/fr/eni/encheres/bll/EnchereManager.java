@@ -1,12 +1,9 @@
-/**
- * 
- */
 package fr.eni.encheres.bll;
 
 import java.util.ArrayList;
-
 import fr.eni.encheres.bo.Enchere;
 import fr.eni.encheres.dal.DAOFactory;
+import fr.eni.encheres.outils.BuisnessException;
 
 /**
  * Classe en charge de
@@ -38,7 +35,7 @@ public class EnchereManager implements Manager<Enchere>{
 	 * @see fr.eni.encheres.bll.Manager#create()
 	 */
 	@Override
-	public void create(Enchere enchere) {
+	public void create(Enchere enchere) throws BuisnessException {
 		daoFactory.getEnchereDAOImpl().create(enchere);
 	}
 

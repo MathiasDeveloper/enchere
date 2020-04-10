@@ -11,6 +11,21 @@
     </div>
 </div>
 <div class="container">
+    <c:if test="${!empty messageArticle}">
+        <div class="alert alert-danger" role="alert">
+            <p>${messageArticle}</p>
+        </div>
+    </c:if>
+    <c:if test="${!empty messageEnchere}">
+        <div class="alert alert-danger" role="alert">
+            <p>${messageEnchere}</p>
+        </div>
+    </c:if>
+    <c:if test="${empty messageEnchere && empty messageArticle && param.formSubmit != null}">
+        <div class="alert alert-success" role="alert">
+            <p>${messageSucces}</p>
+        </div>
+    </c:if>
     <form action="VendreArticle" method="POST">
         <div class="mb-5">
             <h2>Article</h2>
@@ -21,8 +36,9 @@
                        class="form-control"
                        id="nomArticle"
                        name="nomArticle"
+                       value="<c:out value="${param.nomArticle}"/>"
                        placeholder="Nom de l'article"
-                       required>
+                       >
             </div>
             <div class="form-group">
                 <label for="descriptionArticle">Description</label>
@@ -30,16 +46,14 @@
                           name="descriptionArticle"
                           id="descriptionArticle"
                           placeholder="Description de votre article"
-                          rows="3"
-                          required>
-        </textarea>
+                          rows="3">${param.descriptionArticle.trim()}</textarea>
             </div>
             <div class="form-group">
                 <label for="categorie">Categorie</label>
                 <select class="form-control"
                         id="categorie"
                         name="categorie"
-                        required>
+                        >
                     <c:forEach  var="categorie" items="${categories}">
                             <option value="${categorie.idCategorie}">${categorie.libelle}</option>
                     </c:forEach>
@@ -56,18 +70,20 @@
                        id="prix"
                        class="form-control"
                        name="prixInitial"
+                       value="<c:out value="${param.prixInitial}"/>"
                        placeholder="Prix initial de la vente"
-                       required>
+                       >
         </div>
-        <div class="d-flex">
+        <div class="d-flex justify-content-between">
             <div class="form-group">
-                <label for="dateDebutEnchere">Date de début de l'enchere</label>
+                <label for="dateDebut">Date de début de l'enchere</label>
                 <input type="date"
-                       id="dateDebutEnchere"
+                       id="dateDebut"
                        class="form-control"
                        name="dateDebutEnchere"
+                       value="<c:out value="${param.dateDebutEnchere}"/>"
                        placeholder="Prix initial de la vente"
-                       required>
+                       >
             </div>
             <div class="form-group">
                 <label for="heureDebutEnchere">Heure de début de l'enchere</label>
@@ -75,7 +91,8 @@
                        id="heureDebutEnchere"
                        class="form-control"
                        name="heureDebutEnchere"
-                       required>
+                       value="<c:out value="${param.heureDebutEnchere}"/>"
+                       >
             </div>
             <div class="form-group">
                 <label for="dateFinEnchere">Date de fin de l'enchere</label>
@@ -83,7 +100,8 @@
                        id="dateFinEnchere"
                        class="form-control"
                        name="dateFinEnchere"
-                       required>
+                       value="<c:out value="${param.dateFinEnchere}"/>"
+                       >
             </div>
             <div class="form-group">
                 <label for="heureFinEnchere">Heure de fin de l'enchere</label>
@@ -91,10 +109,11 @@
                        id="heureFinEnchere"
                        class="form-control"
                        name="heureFinEnchere"
-                       required>
+                       value="<c:out value="${param.heureFinEnchere}"/>"
+                       >
             </div>
         </div>
-
+        <input type="hidden" name="formSubmit">
         <input type="submit" role="button" class="btn btn-primary">
     </form>
 </div>

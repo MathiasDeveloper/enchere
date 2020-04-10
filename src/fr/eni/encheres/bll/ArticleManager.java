@@ -30,13 +30,18 @@ public class ArticleManager implements Manager<Article>{
 		return INSTANCE;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * @see fr.eni.encheres.bll.Manager#create()
-	 */
 	@Override
-	public void create(Article article) throws BuisnessException {
-		 daoFactory.getArticleDAOImpl().create(article);
+	public void create(Article objet) throws BuisnessException {
+	}
+
+	/**
+	 * Méthode de création d'un article
+	 *
+	 * @param article
+	 * @throws BuisnessException
+	 */
+	public Article createArticle(Article article) throws BuisnessException {
+		return daoFactory.getArticleDAOImpl().createArticle(article);
 	}
 
 	/**
