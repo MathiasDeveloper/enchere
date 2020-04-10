@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
@@ -28,48 +29,34 @@ public class ServletVerificationPourLaConnection extends javax.servlet.http.Http
     	String identifiant = request.getParameter("identifiant");
     	String motdepasse =  request.getParameter("motdepasse");
     	boolean existeEnBase = false;
-    	int idUtilisateur = 0;
+    	Utilisateur utilisateur = new Utilisateur();
     	
     	request.setAttribute("identifiant", identifiant);
     	request.setAttribute("motdepasse", motdepasse);
     	
     	if(identifiant.contains("@")) {
     		//true = correspond à un email
-    		Utilisateur utilisateur = new Utilisateur(identifiant,motdepasse,true);
+    		utilisateur = new Utilisateur(identifiant,motdepasse,true);
         	try {
 				existeEnBase = utilisateurManager.verifier(utilisateur);
 			} catch (BuisnessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-        	idUtilisateur = utilisateur.getIdUtilisateur();
     	}else {
-    		Utilisateur utilisateur = new Utilisateur(identifiant,motdepasse,false); 
+    		utilisateur = new Utilisateur(identifiant,motdepasse,false); 
     		try {
 				existeEnBase = utilisateurManager.verifier(utilisateur);
 			} catch (BuisnessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}   	
-    		idUtilisateur = utilisateur.getIdUtilisateur();
     	}
     	
     	if(existeEnBase == true) {
-    		PrintWriter out = response.getWriter();
-    		Cookie[] cookies = request.getCookies();
-    		    		
-    		if(cookies == null || cookies.length > 0){
-   				Cookie unCookie = new Cookie("idUtilisateur", String.valueOf(idUtilisateur));
-    				response.addCookie(unCookie);
-    		} else{
-    			out.println("Il existe déjà un cookie pour l'utilisateur avec cet ID");
-    			for(Cookie unCookie:cookies)
-    			{
-    				out.println(unCookie.getName()+"="+unCookie.getValue());
-    			}
-    		}
-    		
-    		RequestDispatcher rd = request.getRequestDispatcher("/Home");
+    		HttpSession session = request.getSession();
+    		session.setAttribute("idUtilisateur", utilisateur.getIdUtilisateur());
+    		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/listeEnchereConnecte.jsp");
         	rd.forward(request, response);
     	}else {
     		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/erreurSeConnecter.jsp");
