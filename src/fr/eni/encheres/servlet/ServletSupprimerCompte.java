@@ -31,25 +31,42 @@ public class ServletSupprimerCompte extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("id")!=null) {
-			try {
-				utilisateurManager.delete(utilisateurManager.find(Integer.valueOf(request.getParameter("id"))));
-				Cookie[] cookies = request.getCookies();
-				for(Cookie unCookie:cookies)
-    			{
-    				if(unCookie.getName().equals("idUtilisateur")) {
-    					unCookie.setMaxAge(0);
-    					response.addCookie(unCookie);
-    				}
-    			}
-				this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
-			} catch (NumberFormatException e) {
-				this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
-			} catch (BuisnessException e) {
-				e.printStackTrace();
+		boolean connecte=false;
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for(Cookie unCookie:cookies)
+			{
+				if(unCookie.getName().equals("idUtilisateur")) {
+					connecte=true;
+					if(request.getParameter("id")!=null) {
+						if(request.getParameter("id")!=null) {
+							try {
+								utilisateurManager.delete(utilisateurManager.find(Integer.valueOf(request.getParameter("id"))));
+								Cookie[] cookiesVerif = request.getCookies();
+								for(Cookie unCookieVerif:cookies)
+				    			{
+				    				if(unCookieVerif.getName().equals("idUtilisateur")) {
+				    					unCookieVerif.setMaxAge(0);
+				    					response.addCookie(unCookieVerif);
+				    				}
+				    			}
+								this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
+							} catch (NumberFormatException e) {
+								this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
+							} catch (BuisnessException e) {
+								e.printStackTrace();
+							}
+						}else {
+							this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
+						}
+					}else {
+						this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
+					}
+				}
 			}
-		}else {
-			this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
+			if(connecte==false) {
+				this.getServletContext().getRequestDispatcher("/WEB-INF//erreur404.jsp").forward(request, response);
+			}
 		}
 	}
 }
