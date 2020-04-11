@@ -56,7 +56,7 @@ public class ServletVerificationPourLaConnection extends javax.servlet.http.Http
     	if(existeEnBase == true) {
     		HttpSession session = request.getSession();
     		session.setAttribute("idUtilisateur", utilisateur.getIdUtilisateur());
-    		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/listeEnchereConnecte.jsp");
+    		RequestDispatcher rd = request.getRequestDispatcher("/Home");
         	rd.forward(request, response);
     	}else {
     		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/erreurSeConnecter.jsp");

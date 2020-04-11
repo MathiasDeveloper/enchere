@@ -17,7 +17,8 @@ import fr.eni.encheres.outils.BuisnessException;
  * @date 7 avr. 2020
  */
 public class UtilisateurManager implements Manager<Utilisateur>{
-	
+
+
 	private static UtilisateurManager INSTANCE = null;
 	private DAOFactory daoFactory = new DAOFactory();
 	/**

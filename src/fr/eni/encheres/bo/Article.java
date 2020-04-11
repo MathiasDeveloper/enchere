@@ -3,7 +3,7 @@
  */
 package fr.eni.encheres.bo;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Classe en charge de
@@ -13,136 +13,236 @@ import java.util.Date;
  */
 public class Article {
 
-	private int idArticle;
-	private String nomArticle;
-	private String description;
-	private Date dateDebutEnchere;
-	private Date dateFinEnchere;
-	private int prixInitial;
-	private int prixVente;
-	private Categorie categorie;
 	/**
-	 * Getter pour idArticle.
-	 * @return the idArticle
+	 * Id Article
+	 * @int
+	 */
+	private int idArticle;
+
+	/**
+	 * Id Article
+	 * @string
+	 */
+	private String nomArticle;
+
+	/**
+	 * description
+	 *
+	 * @string
+	 */
+	private String description;
+
+	/**
+	 * dateDebutEnchere
+	 *
+	 * @date
+	 */
+	private Date dateDebutEnchere;
+
+	/**
+	 * dateFinEnchere
+	 *
+	 * @date
+	 */
+	private Date dateFinEnchere;
+
+	/**
+	 * prixInitial
+	 *
+	 * @int
+	 */
+	private int prixInitial;
+
+	/**
+	 * prixVente
+	 *
+	 * @int
+	 */
+	private int prixVente;
+
+	/**
+	 * etatVente
+	 *
+	 * @boolean
+	 */
+	private boolean etatVente;
+
+
+	private Categorie categorie;
+
+	private Utilisateur utilisateur;
+
+
+	/**
+	 * Récupération de l'article
+	 *
+	 * @return idArticle
 	 */
 	public int getIdArticle() {
 		return idArticle;
 	}
+
 	/**
-	 * Setter pour idArticle.
-	 * @param idArticle the idArticle to set
+	 * Ajout de l'idArticle
+	 *
+	 * @param idArticle => int IdArticle
 	 */
 	public void setIdArticle(int idArticle) {
 		this.idArticle = idArticle;
 	}
+
 	/**
-	 * Getter pour nomArticle.
-	 * @return the nomArticle
+	 * Récupération du nom de l'article
+	 *
+	 * @return nomArticle => String nomArticle
 	 */
 	public String getNomArticle() {
 		return nomArticle;
 	}
+
 	/**
-	 * Setter pour nomArticle.
-	 * @param nomArticle the nomArticle to set
+	 * Ajout du nom de l'article
+	 *
+	 * @param nomArticle => String nomArticle
 	 */
 	public void setNomArticle(String nomArticle) {
 		this.nomArticle = nomArticle;
 	}
+
 	/**
-	 * Getter pour description.
-	 * @return the description
+	 * Récupère la description de l'article
+	 *
+	 * @return description => String description
 	 */
 	public String getDescription() {
 		return description;
 	}
+
 	/**
-	 * Setter pour description.
-	 * @param description the description to set
+	 * Ajoute la description de l'article
+	 *
+	 * @param description
 	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	/**
-	 * Getter pour dateDebutEnchere.
-	 * @return the dateDebutEnchere
+	 * Récupère la date de début de l'enchere
+	 *
+	 * @return dateDebutEnchere
 	 */
 	public Date getDateDebutEnchere() {
 		return dateDebutEnchere;
 	}
+
 	/**
-	 * Setter pour dateDebutEnchere.
-	 * @param dateDebutEnchere the dateDebutEnchere to set
+	 * Ajoute la date du début de l'enchere
+	 *
+	 * @param dateDebutEnchere
 	 */
 	public void setDateDebutEnchere(Date dateDebutEnchere) {
 		this.dateDebutEnchere = dateDebutEnchere;
 	}
+
 	/**
-	 * Getter pour dateFinEnchere.
-	 * @return the dateFinEnchere
+	 * Récupère la date de fin de l'enchere
+	 *
+	 * @return dateFinEnchere
 	 */
 	public Date getDateFinEnchere() {
 		return dateFinEnchere;
 	}
+
 	/**
-	 * Setter pour dateFinEnchere.
-	 * @param dateFinEnchere the dateFinEnchere to set
+	 * Ajoute la date de fin de l'enchere
+	 *
+	 * @param dateFinEnchere
 	 */
 	public void setDateFinEnchere(Date dateFinEnchere) {
 		this.dateFinEnchere = dateFinEnchere;
 	}
+
 	/**
-	 * Getter pour prixInitial.
-	 * @return the prixInitial
+	 * Récupère le prix initial de l'article
+	 *
+	 * @return prixInitial
 	 */
 	public int getPrixInitial() {
 		return prixInitial;
 	}
+
 	/**
-	 * Setter pour prixInitial.
-	 * @param prixInitial the prixInitial to set
+	 * Ajoute le prix initial de l'article
+	 *
+	 * @param prixInitial
 	 */
 	public void setPrixInitial(int prixInitial) {
 		this.prixInitial = prixInitial;
 	}
+
 	/**
-	 * Getter pour prixVente.
-	 * @return the prixVente
+	 * Récupère le prix de vente
+	 *
+	 * @return prixVente
 	 */
 	public int getPrixVente() {
 		return prixVente;
 	}
+
 	/**
-	 * Setter pour prixVente.
-	 * @param prixVente the prixVente to set
+	 * Ajoute le prix de vente
+	 *
+	 * @param prixVente
 	 */
 	public void setPrixVente(int prixVente) {
 		this.prixVente = prixVente;
 	}
+
 	/**
-	 * Getter pour categorie.
-	 * @return the categorie
+	 * Détermine si l'article est vendu ou non
+	 * @return
 	 */
+	public boolean isEtatVente() {
+		return etatVente;
+	}
+
+	/**
+	 * Ajout de l'etat de la vente
+	 *
+	 * @param etatVente => true ou false
+	 */
+	public void setEtatVente(boolean etatVente) {
+		this.etatVente = etatVente;
+	}
+
 	public Categorie getCategorie() {
 		return categorie;
 	}
-	/**
-	 * Setter pour categorie.
-	 * @param categorie the categorie to set
-	 */
+
 	public void setCategorie(Categorie categorie) {
 		this.categorie = categorie;
 	}
-	/**
-	 * {@inheritDoc}
-	 * @see java.lang.Object#toString()
-	 */
+
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+
 	@Override
 	public String toString() {
-		return "Article [idArticle=" + idArticle + ", nomArticle=" + nomArticle + ", description=" + description
-				+ ", dateDebutEnchere=" + dateDebutEnchere + ", dateFinEnchere=" + dateFinEnchere + ", prixInitial="
-				+ prixInitial + ", prixVente=" + prixVente + ", categorie=" + categorie + "]";
+		return "Article{" +
+				"idArticle=" + idArticle +
+				", nomArticle='" + nomArticle + '\'' +
+				", description='" + description + '\'' +
+				", dateDebutEnchere=" + dateDebutEnchere +
+				", dateFinEnchere=" + dateFinEnchere +
+				", prixInitial=" + prixInitial +
+				", prixVente=" + prixVente +
+				", etatVente=" + etatVente +
+				'}';
 	}
-	
-	
 }

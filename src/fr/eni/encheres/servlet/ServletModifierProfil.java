@@ -7,6 +7,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Utilisateur;
@@ -33,29 +34,21 @@ public class ServletModifierProfil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		boolean connecte=false;
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for(Cookie unCookie:cookies)
-			{
-				if(unCookie.getName().equals("idUtilisateur")) {
-					connecte=true;
-					if(request.getParameter("id")!=null) {
-						if(verifierExistenceUtilisateur(request.getParameter("id"))==false) {
-							this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
-						}else {
-							request.setAttribute("utilisateur", utilisateur);
-							this.getServletContext().getRequestDispatcher("/WEB-INF/modifierProfil.jsp").forward(request, response);
-						}
-					}else {
-						this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
-					}
+		HttpSession session = request.getSession();
+    	if(session.getAttribute("idUltilisateur")!=null) {
+    		if(request.getParameter("id")!=null) {
+				if(verifierExistenceUtilisateur(request.getParameter("id"))==false) {
+					this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
+				}else {
+					request.setAttribute("utilisateur", utilisateur);
+					this.getServletContext().getRequestDispatcher("/WEB-INF/modifierProfil.jsp").forward(request, response);
 				}
+			}else {
+				this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
 			}
-			if(connecte==false) {
-				this.getServletContext().getRequestDispatcher("/WEB-INF//erreur404.jsp").forward(request, response);
-			}
-		}
+    	}else {
+    		this.getServletContext().getRequestDispatcher("/WEB-INF//erreur404.jsp").forward(request, response);
+    	}
 	}
 
 	/**

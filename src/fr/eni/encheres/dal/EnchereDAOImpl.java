@@ -22,22 +22,45 @@ import fr.eni.encheres.outils.Log;
  * @date 7 avr. 2020
  */
 public class EnchereDAOImpl implements DAO<Enchere>{
-	
+
+	private static final String INSERT_INTO = "INSERT INTO `ENCHERES` (" +
+			"`idUtilisateur`, " +
+			"`idArticle`, " +
+			"`dateEnchere`, " +
+			"`montantEnchere`, " +
+			"`heureDebutEnchere`, " +
+			"`heureFinEnchere`) " +
+			"VALUES (?, ?, ?, ?, ?, ?);";
 	private static final String FINDALL = "SELECT * " + 
-										"FROM ENCHERES " + 
-										"JOIN UTILISATEURS ON ENCHERES.idUtilisateur=UTILISATEURS.idUtilisateur " + 
-										"JOIN ARTICLES ON ENCHERES.idArticle=ARTICLES.idArticle " + 
-										"JOIN CATEGORIES ON ARTICLES.idCategorie=CATEGORIES.idCategorie";
-	private static ConnectionProvider connectionProvider = new ConnectionProvider();
-	private Log log;
+			"FROM ENCHERES " + 
+			"JOIN UTILISATEURS ON ENCHERES.idUtilisateur=UTILISATEURS.idUtilisateur " + 
+			"JOIN ARTICLES ON ENCHERES.idArticle=ARTICLES.idArticle " + 
+			"JOIN CATEGORIES ON ARTICLES.idCategorie=CATEGORIES.idCategorie";
+
+	private ConnectionProvider connectionProvider = new ConnectionProvider();
 
 	/**
 	 * {@inheritDoc}
 	 * @see fr.eni.encheres.dal.DAO#create(java.lang.Object)
 	 */
 	@Override
-	public void create(Enchere enchere) {
-		// TODO Auto-generated method stub
+	public void create(Enchere enchere) throws BuisnessException {
+		try {
+			PreparedStatement ps = connectionProvider.getInstance().prepareStatement(INSERT_INTO);
+
+			ps.setInt(1, enchere.getUtilisateur().getIdUtilisateur());
+			ps.setInt(2, enchere.getArticle().getIdArticle());
+			ps.setDate(3, enchere.getDateEnchere());
+			ps.setInt(4, enchere.getMontantEnchere());
+			ps.setTime(5, enchere.getHeureDebutEnchere());
+			ps.setTime(6, enchere.getHeureFinEnchere());
+
+			ps.executeUpdate();
+
+		} catch (SQLException e){
+			new Log(e.getMessage());
+			throw new BuisnessException(e.getMessage(),e);
+		}
 	}
 
 	/**
@@ -98,6 +121,7 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 				utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
 				categorie.setIdCategorie(rs.getInt("idCategorie"));
 				categorie.setLibelle(rs.getString("libelle"));
+				article.setUtilisateur(utilisateur);
 				article.setCategorie(categorie);
 				article.setDateDebutEnchere(rs.getDate("dateDebutEnchere"));
 				article.setDateFinEnchere(rs.getDate("dateFinEnchere"));
@@ -115,7 +139,7 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			log = new Log(e.getMessage());
+			new Log(e.getMessage());
 			BuisnessException buisnessException = new BuisnessException(e.getMessage(), e);
 			throw buisnessException;
 		}

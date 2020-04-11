@@ -7,6 +7,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.bll.EnchereManager;
 import fr.eni.encheres.bll.UtilisateurManager;
@@ -32,28 +33,18 @@ public class ServletListeEnchereConnecte extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		boolean connecte=false;
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for(Cookie unCookie:cookies)
-			{
-				if(unCookie.getName().equals("idUtilisateur")) {
-					connecte=true;
-					try {
-						System.out.println(enchereManager.findAll());
-						request.setAttribute("encheres", enchereManager.findAll());
-						this.getServletContext().getRequestDispatcher("/WEB-INF/listeEnchereConnecte.jsp").forward(request, response);
-					} catch (BuisnessException e) {
-						e.printStackTrace();
-					}
-				}
+		HttpSession session = request.getSession();
+    	if(session.getAttribute("idUtilisateur")!=null) {
+    		try {
+				request.setAttribute("utilisateur", session.getAttribute("idUtilisateur"));
+				request.setAttribute("encheres", enchereManager.findAll());
+				this.getServletContext().getRequestDispatcher("/WEB-INF/listeEnchereConnecte.jsp").forward(request, response);
+			} catch (BuisnessException e) {
+				e.printStackTrace();
 			}
-			if(connecte==false) {
-				this.getServletContext().getRequestDispatcher("/WEB-INF/erreur404.jsp").forward(request, response);
-			}
-		}else {
-			this.getServletContext().getRequestDispatcher("/WEB-INF/erreur404.jsp").forward(request, response);
-		}
+    	}else {
+    		this.getServletContext().getRequestDispatcher("/WEB-INF//erreur404.jsp").forward(request, response);
+    	}
 	}
 
 	/**
