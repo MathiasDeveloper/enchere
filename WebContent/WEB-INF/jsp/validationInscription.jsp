@@ -8,12 +8,30 @@
 </head>
 <body>
 	<%  
-		String identifiant = (String)request.getAttribute("identifiant");
+		String pseudo = (String)request.getAttribute("pseudo");
 		String motdepasse  = (String)request.getAttribute("motdepasse");
 	%>
-	
-	<p><%=identifiant	%></p>
+	<h1>Utilisateur ajouté en base</h1>
+	<p><%=pseudo	%></p>
 	<p><%=motdepasse %></p>
+	
+		<%
+	
+	if(session.getAttribute("idUtilisateur")!=null){
+		int idUtilisateur=(int)session.getAttribute("idUtilisateur");
+		%>
+		<p>ID :  <%=idUtilisateur %></p>
+		
+	<%
+	}else{
+		%>
+		
+		<p>La session n'existe pas</p>
+		
+		<%
+	}
+	
+	%>
 	
 	
 </body>

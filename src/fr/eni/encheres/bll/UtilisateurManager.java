@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.dal.DAOFactory;
-import fr.eni.encheres.dal.UtilisateurDAOImpl;
 import fr.eni.encheres.outils.BuisnessException;
 
 /**
@@ -34,11 +33,13 @@ public class UtilisateurManager implements Manager<Utilisateur>{
 
 	/**
 	 * {@inheritDoc}
+	 * @return 
+	 * @throws BuisnessException 
 	 * @see fr.eni.encheres.bll.Manager#create()
 	 */
 	@Override
-	public void create(Utilisateur utilisateur) {
-		
+	public void create(Utilisateur utilisateur) throws BuisnessException {
+		daoFactory.getUtilisateurDAOImpl().create(utilisateur);
 	}
 
 	/**
@@ -87,5 +88,16 @@ public class UtilisateurManager implements Manager<Utilisateur>{
 	public ArrayList<Utilisateur> findAll() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	/**
+	 * Méthode en charge d'ajouter un utilisateur en base
+	 * @param utilisateur
+	 * @return
+	 * @throws BuisnessException 
+	 */
+	public boolean ajout(Utilisateur utilisateur) throws BuisnessException {
+		return daoFactory.getUtilisateurDAOImpl().ajout(utilisateur);
 	}
 }
