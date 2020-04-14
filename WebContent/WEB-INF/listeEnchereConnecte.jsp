@@ -27,6 +27,12 @@
 	<div>
 		<label>Filtres : </label>
 		<input style="width: 200px;" type="text" placeholder="Le nom de l'article contient">
+		<label for="categorie">Categorie</label>
+        <select class="form-control" id="categorie" name="categorie">
+        	<c:forEach  var="categorie" items="${categories}">
+        		<option value="${categorie.idCategorie}">${categorie.libelle}</option>
+        	</c:forEach>
+        </select>
 	</div>
 	<div>
 		<button type="submit" class="btn btn-outline-secondary">Rechercher</button>

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.encheres.bll.CategorieManager;
 import fr.eni.encheres.bll.EnchereManager;
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.outils.BuisnessException;
@@ -20,6 +21,7 @@ import fr.eni.encheres.outils.BuisnessException;
 public class ServletListeEnchereConnecte extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static EnchereManager enchereManager = EnchereManager.getInstance();
+    private static CategorieManager categorieManager = CategorieManager.getInstance();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -38,6 +40,7 @@ public class ServletListeEnchereConnecte extends HttpServlet {
     		try {
 				request.setAttribute("utilisateur", session.getAttribute("idUtilisateur"));
 				request.setAttribute("encheres", enchereManager.findAll());
+				request.setAttribute("categories", categorieManager.findAll());
 				this.getServletContext().getRequestDispatcher("/WEB-INF/listeEnchereConnecte.jsp").forward(request, response);
 			} catch (BuisnessException e) {
 				e.printStackTrace();
