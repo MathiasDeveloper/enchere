@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <!-- Bootstrap core CSS -->
 <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<title>${utilisateur.pseudo }</title>
+<title>Eni enchere - ${utilisateur.pseudo }</title>
 </head>
 <body>
 <div class="p-5 ml-5">

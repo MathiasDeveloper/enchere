@@ -129,7 +129,6 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 				utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				log = new Log(e.getMessage());
 				BuisnessException buisnessException = new BuisnessException(e.getMessage(), e);
 				throw buisnessException;

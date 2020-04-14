@@ -67,9 +67,8 @@ public class ArticleManager implements Manager<Article>{
 	 * @see fr.eni.encheres.bll.Manager#find()
 	 */
 	@Override
-	public Article find(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Article find(int id) throws BuisnessException {
+		return daoFactory.getArticleDAOImpl().find(id);
 	}
 
 	/**

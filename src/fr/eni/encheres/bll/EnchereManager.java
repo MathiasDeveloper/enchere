@@ -61,9 +61,8 @@ public class EnchereManager implements Manager<Enchere>{
 	 * {@inheritDoc}
 	 * @see fr.eni.encheres.bll.Manager#find()
 	 */
-	public Enchere find(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Enchere find(int id) throws BuisnessException {
+		return daoFactory.getEnchereDAOImpl().find(id);
 	}
 
 	/**
