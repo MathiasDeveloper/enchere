@@ -35,5 +35,10 @@
 		<p>${utilisateur.ville }</p>
 	</div>
 </div>
+<div class="text-center">
+	<c:if test="${modifier==\"oui\" }">
+		<a class="btn btn-outline-secondary" href="ModifierProfil?id=${utilisateur.idUtilisateur }">Modifier</a>
+	</c:if>
+</div>
 </body>
 </html>

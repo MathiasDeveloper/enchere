@@ -34,9 +34,12 @@ public class ServletAfficherProfil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-    	if(session.getAttribute("idUltilisateur")!=null) {
+    	if(session.getAttribute("idUtilisateur")!=null) {
     		try {
 				request.setAttribute("utilisateur", utilisateurManager.find(Integer.valueOf(request.getParameter("id"))));
+				if(Integer.valueOf(request.getParameter("id"))==(session.getAttribute("idUtilisateur"))) {
+					request.setAttribute("modifier", "oui");
+				}
 				this.getServletContext().getRequestDispatcher("/WEB-INF/afficherProfil.jsp").forward(request, response);
 			} catch (NumberFormatException e) {
 				this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);

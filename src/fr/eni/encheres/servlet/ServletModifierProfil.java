@@ -35,7 +35,7 @@ public class ServletModifierProfil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-    	if(session.getAttribute("idUltilisateur")!=null) {
+    	if(session.getAttribute("idUtilisateur")!=null) {
     		if(request.getParameter("id")!=null) {
 				if(verifierExistenceUtilisateur(request.getParameter("id"))==false) {
 					this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
