@@ -13,10 +13,7 @@ import fr.eni.encheres.outils.Utils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.Map;
@@ -126,7 +123,7 @@ public class ServletVendreArticle extends HttpServlet {
         article.setDateDebutEnchere(Utils.transformDateParam(request.getParameter("dateDebutEnchere")));
         article.setDateFinEnchere(Utils.transformDateParam(request.getParameter("dateFinEnchere")));
         article.setCategorie(this.creerCategorieFormulaire(request));
-        article.setUtilisateur(this.getIdUtilisateurBySession(request.getCookies()));
+        article.setUtilisateur(this.getIdUtilisateurBySession(request.getSession()));
 
         return article;
     }
@@ -143,7 +140,7 @@ public class ServletVendreArticle extends HttpServlet {
         Enchere enchere = new Enchere();
         enchere.setArticle(article);
         enchere.setDateEnchere(article.getDateDebutEnchere());
-        enchere.setUtilisateur(this.getIdUtilisateurBySession(request.getCookies()));
+        enchere.setUtilisateur(this.getIdUtilisateurBySession(request.getSession()));
 
         try {
             enchere.setHeureDebutEnchere(Utils.transformStringToHeure(request.getParameter("heureDebutEnchere")));
@@ -174,20 +171,17 @@ public class ServletVendreArticle extends HttpServlet {
     /**
      * Récupérer id utilisateur via la session
      *
-     * @param cookies
+     * @param session
      *
      * @return Utilisateur
      */
-    private Utilisateur getIdUtilisateurBySession(Cookie[] cookies) {
+    private Utilisateur getIdUtilisateurBySession(HttpSession session) {
         Utilisateur utilisateur = new Utilisateur();
 
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("idUtilisateur")) {
-                    utilisateur.setIdUtilisateur(Utils.transformStringToInt(cookie.getValue()));
-                }
-            }
+        if (!session.getAttribute("idUtilisateur").equals("")) {
+            utilisateur.setIdUtilisateur((int) session.getAttribute("idUtilisateur"));
         }
+
         return utilisateur;
     }
 
