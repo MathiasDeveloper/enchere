@@ -28,11 +28,28 @@ public class ServletVerificationPourLaConnection extends javax.servlet.http.Http
 	protected void doPost(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
     	String identifiant = request.getParameter("identifiant");
     	String motdepasse =  request.getParameter("motdepasse");
+    	String seSouvenirDeMoi = request.getParameter("remember");
+    	int timeToExpire = 10*365*24*60*60;
+    	
     	boolean existeEnBase = false;
     	Utilisateur utilisateur = new Utilisateur();
     	
     	request.setAttribute("identifiant", identifiant);
     	request.setAttribute("motdepasse", motdepasse);
+    	
+    	if(seSouvenirDeMoi != null) {
+    		Cookie[] cookies = request.getCookies();
+    		    		
+    		if(cookies==null || cookies.length > 0 ) {
+    			/* Dans la description de SeConnecter,
+   				*le login peut être pseudo motdepasse, et dans se souvenir dee moi on demande le login, donc on prends l'identifiant
+   				*/
+   				Cookie unCookie = new Cookie("rememberLogin", identifiant); 
+   				unCookie.setMaxAge(timeToExpire);
+    			response.addCookie(unCookie);
+    		}
+    	}
+ 
     	
     	if(identifiant.contains("@")) {
     		//true = correspond à un email
