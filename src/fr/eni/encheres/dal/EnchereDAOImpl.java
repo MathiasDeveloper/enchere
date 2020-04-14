@@ -36,6 +36,12 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 			"JOIN UTILISATEURS ON ENCHERES.idUtilisateur=UTILISATEURS.idUtilisateur " + 
 			"JOIN ARTICLES ON ENCHERES.idArticle=ARTICLES.idArticle " + 
 			"JOIN CATEGORIES ON ARTICLES.idCategorie=CATEGORIES.idCategorie";
+	private static  final String FINDBYNAME = "SELECT * " + 
+			"FROM ENCHERES " + 
+			"JOIN UTILISATEURS ON ENCHERES.idUtilisateur=UTILISATEURS.idUtilisateur " + 
+			"JOIN ARTICLES ON ENCHERES.idArticle=ARTICLES.idArticle " + 
+			"JOIN CATEGORIES ON ARTICLES.idCategorie=CATEGORIES.idCategorie " +
+			"WHERE ARTICLES.nomArticle LIKE ? ";
 
 	private ConnectionProvider connectionProvider = new ConnectionProvider();
 
@@ -103,50 +109,73 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 			PreparedStatement pstmt = connectionProvider.getInstance().prepareStatement(FINDALL);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
-				Utilisateur utilisateur = new Utilisateur();
-				Categorie categorie = new Categorie();
-				Article article = new Article();
-				Enchere enchere = new Enchere();
-				utilisateur.setIdUtilisateur(rs.getInt("idUtilisateur"));
-				utilisateur.setPseudo(rs.getString("pseudo"));
-				utilisateur.setNom(rs.getString("nom"));
-				utilisateur.setPrenom(rs.getString("prenom"));
-				utilisateur.setEmail(rs.getString("email"));
-				utilisateur.setTelephone(rs.getString("telephone"));
-				utilisateur.setRue(rs.getString("rue"));
-				utilisateur.setCodePostal(rs.getString("codePostal"));
-				utilisateur.setVille(rs.getString("ville"));
-				utilisateur.setMotDePasse(rs.getString("motDePasse"));
-				utilisateur.setCredit(rs.getInt("credit"));
-				utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
-				categorie.setIdCategorie(rs.getInt("idCategorie"));
-				categorie.setLibelle(rs.getString("libelle"));
-				article.setUtilisateur(utilisateur);
-				article.setCategorie(categorie);
-				article.setDateDebutEnchere(rs.getDate("dateDebutEnchere"));
-				article.setDateFinEnchere(rs.getDate("dateFinEnchere"));
-				article.setDescription(rs.getString("description"));
-				article.setIdArticle(rs.getInt("idArticle"));
-				article.setNomArticle(rs.getString("nomArticle"));
-				article.setPrixInitial(rs.getInt("prixInitial"));
-				article.setPrixVente(rs.getInt("prixVente"));
-				enchere.setArticle(article);
-				enchere.setDateEnchere(rs.getDate("dateEnchere"));
-				enchere.setHeureDebutEnchere(rs.getTime("heureDebutEnchere"));
-				enchere.setHeureFinEnchere(rs.getTime("heureFinEnchere"));
-				enchere.setMontantEnchere(rs.getInt("montantEnchere"));
-				encheres.add(enchere);
+				encheres.add(creerObjetEnchere(rs));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			new Log(e.getMessage());
 			BuisnessException buisnessException = new BuisnessException(e.getMessage(), e);
 			throw buisnessException;
 		}
 		return encheres;
 	}
-
-
-
-
+	
+	public ArrayList<Enchere> findByName(String name, int categorie, String condition) throws BuisnessException {
+		ArrayList<Enchere> encheres = new ArrayList<Enchere>();
+		String requete ="";
+		try {
+			if(categorie!=-1) {
+				requete = FINDBYNAME + "AND CATEGORIES.idCategorie=" + categorie + " " + condition;
+			}else {
+				requete = FINDBYNAME + condition;
+			}
+			PreparedStatement pstmt = connectionProvider.getInstance().prepareStatement(requete);
+			pstmt.setString(1, "%" + name + "%");
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				encheres.add(creerObjetEnchere(rs));
+			}
+		} catch (SQLException e) {
+			new Log(e.getMessage());
+			BuisnessException buisnessException = new BuisnessException(e.getMessage(), e);
+			throw buisnessException;
+		}
+		return encheres;
+	}
+	
+	private Enchere creerObjetEnchere(ResultSet rs) throws SQLException {
+		Utilisateur utilisateur = new Utilisateur();
+		Categorie categorie = new Categorie();
+		Article article = new Article();
+		Enchere enchere = new Enchere();
+		utilisateur.setIdUtilisateur(rs.getInt("idUtilisateur"));
+		utilisateur.setPseudo(rs.getString("pseudo"));
+		utilisateur.setNom(rs.getString("nom"));
+		utilisateur.setPrenom(rs.getString("prenom"));
+		utilisateur.setEmail(rs.getString("email"));
+		utilisateur.setTelephone(rs.getString("telephone"));
+		utilisateur.setRue(rs.getString("rue"));
+		utilisateur.setCodePostal(rs.getString("codePostal"));
+		utilisateur.setVille(rs.getString("ville"));
+		utilisateur.setMotDePasse(rs.getString("motDePasse"));
+		utilisateur.setCredit(rs.getInt("credit"));
+		utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
+		categorie.setIdCategorie(rs.getInt("idCategorie"));
+		categorie.setLibelle(rs.getString("libelle"));
+		enchere.setUtilisateur(utilisateur);
+		article.setUtilisateur(utilisateur);
+		article.setCategorie(categorie);
+		article.setDateDebutEnchere(rs.getDate("dateDebutEnchere"));
+		article.setDateFinEnchere(rs.getDate("dateFinEnchere"));
+		article.setDescription(rs.getString("description"));
+		article.setIdArticle(rs.getInt("idArticle"));
+		article.setNomArticle(rs.getString("nomArticle"));
+		article.setPrixInitial(rs.getInt("prixInitial"));
+		article.setPrixVente(rs.getInt("prixVente"));
+		enchere.setArticle(article);
+		enchere.setDateEnchere(rs.getDate("dateEnchere"));
+		enchere.setHeureDebutEnchere(rs.getTime("heureDebutEnchere"));
+		enchere.setHeureFinEnchere(rs.getTime("heureFinEnchere"));
+		enchere.setMontantEnchere(rs.getInt("montantEnchere"));
+		return enchere;
+	}
 }

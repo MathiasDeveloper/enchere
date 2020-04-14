@@ -32,12 +32,24 @@ public class ServletSupprimerCompte extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//On récupère la session
 		HttpSession session = request.getSession();
-    	if(session.getAttribute("idUltilisateur")!=null) {
+		
+		//Si l'utilisateur n'est pas connecté, on le renvoit sur une page 404
+    	if(session.getAttribute("idUtilisateur")!=null) {
+    		
+    		//On regarde si le paramètre id est renseigné
     		if(request.getParameter("id")!=null) {
 				try {
+					
+					//On supprime l'utilisateur
 					utilisateurManager.delete(utilisateurManager.find(Integer.valueOf(request.getParameter("id"))));
-					session.setAttribute("idUtilisateur", null);
+					
+					//On supprime la session
+					session.invalidate();
+					
+					//On redirige vers la page d'accueil
 					this.getServletContext().getRequestDispatcher("/Home").forward(request, response);
 				} catch (NumberFormatException e) {
 					e.printStackTrace();
@@ -45,8 +57,14 @@ public class ServletSupprimerCompte extends HttpServlet {
 					e.printStackTrace();
 				}
 	    	}else {
+	    		
+	    		//On redirige vers la page 404
 	    		this.getServletContext().getRequestDispatcher("/WEB-INF//erreur404.jsp").forward(request, response);
 	    	}
+    	}else {
+    		
+    		//On redirige vers la page 404
+    		this.getServletContext().getRequestDispatcher("/WEB-INF//erreur404.jsp").forward(request, response);
     	}
 	}
 }
