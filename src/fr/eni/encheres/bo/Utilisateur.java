@@ -31,6 +31,26 @@ public class Utilisateur {
 		super();
 	}
 	
+		/**
+	 * Constructeur
+	 * @param email
+	 */
+	public Utilisateur(String email) {
+		super();
+		this.email = email;
+	}
+
+	/**
+		 * Constructeur
+		 * @param email
+		 * @param motDePasse
+		 */
+		public Utilisateur(String email, String motDePasse) {
+			super();
+			this.email = email;
+			this.motDePasse = motDePasse;
+		}
+
 	/**
 	 * Constructeur
 	 * @param identifiant

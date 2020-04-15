@@ -89,4 +89,28 @@ public class UtilisateurManager implements Manager<Utilisateur>{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+	/**
+	 * Méthode en charge de
+	 * @param utilisateur
+	 * @return
+	 * @throws BuisnessException 
+	 */
+	public boolean searchEmail(Utilisateur utilisateur) throws BuisnessException {
+		// TODO Auto-generated method stub
+		return daoFactory.getUtilisateurDAOImpl().searchEmail(utilisateur);
+	}
+
+
+	/**
+	 * Méthode en charge de
+	 * @param utilisateur
+	 * @return
+	 * @throws BuisnessException 
+	 */
+	public boolean updatePassword(Utilisateur utilisateur) throws BuisnessException {
+		// TODO Auto-generated method stub
+		return daoFactory.getUtilisateurDAOImpl().updatePassword(utilisateur);
+	}
 }
