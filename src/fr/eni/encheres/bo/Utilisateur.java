@@ -31,6 +31,26 @@ public class Utilisateur {
 		super();
 	}
 	
+		/**
+	 * Constructeur
+	 * @param email
+	 */
+	public Utilisateur(String email) {
+		super();
+		this.email = email;
+	}
+
+	/**
+		 * Constructeur
+		 * @param email
+		 * @param motDePasse
+		 */
+		public Utilisateur(String email, String motDePasse) {
+			super();
+			this.email = email;
+			this.motDePasse = motDePasse;
+		}
+
 	/**
 	 * Constructeur
 	 * @param identifiant
@@ -47,6 +67,32 @@ public class Utilisateur {
 	}
 
 
+
+	/**
+	 * Constructeur
+	 * @param pseudo
+	 * @param nom
+	 * @param prenom
+	 * @param email
+	 * @param telephone
+	 * @param rue
+	 * @param codePostal
+	 * @param ville
+	 * @param motDePasse
+	 */
+	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+			String codePostal, String ville, String motDePasse) {
+		super();
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
+		this.motDePasse = motDePasse;
+	}
 
 	/**
 	 * Getter pour noUtilisateur.
