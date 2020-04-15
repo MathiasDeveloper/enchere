@@ -15,9 +15,9 @@
 	</div>
 	<div class="d-flex justify-content-around w-25 mr-5 mt-3">
 		<a href="/Home">Enchères</a>
-		<a>Vendre un article</a>
+		<a href="VendreArticle">Vendre un article</a>
 		<a href="AfficherProfil?id=${utilisateur }">Mon profil</a>
-		<a>Déconnexion</a>
+		<a href="seDeconnecter">Déconnexion</a>
 	</div>
 </div>
 <div class="text-center">

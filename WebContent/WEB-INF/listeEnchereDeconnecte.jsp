@@ -14,7 +14,7 @@
 		<h1>ENI - Enchères</h1>
 	</div>
 	<div class="d-flex justify-content-around w-25 mr-5 mt-3">
-		<a href="/seConnecter">S'inscrire - Se connecter</a>
+		<a href="seConnecter">S'inscrire - Se connecter</a>
 	</div>
 </div>
 <div class="text-center">
