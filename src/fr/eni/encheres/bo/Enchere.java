@@ -135,14 +135,16 @@ public class Enchere {
 		this.utilisateur = utilisateur;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
-		return "Enchere{" +
-				"article=" + article +
-				", dateEnchere=" + dateEnchere +
-				", montantEnchere=" + montantEnchere +
-				", heureDebutEnchere=" + heureDebutEnchere +
-				", heureFinEnchere=" + heureFinEnchere +
-				'}';
+		return "Enchere [article=" + article + ", dateEnchere=" + dateEnchere + ", montantEnchere=" + montantEnchere
+				+ ", heureDebutEnchere=" + heureDebutEnchere + ", heureFinEnchere=" + heureFinEnchere + ", utilisateur="
+				+ utilisateur + "]";
 	}
+
+	
 }

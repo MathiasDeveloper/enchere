@@ -10,6 +10,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 
 import fr.eni.encheres.bo.Article;
+import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Enchere;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.outils.BuisnessException;
@@ -36,6 +37,24 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 			"`heureDebutEnchere`, " +
 			"`heureFinEnchere`) " +
 			"VALUES (?, ?, ?, ?, ?, ?);";
+	private static final String FINDALL = "SELECT * " +
+			"FROM ENCHERES " +
+			"JOIN UTILISATEURS ON ENCHERES.idUtilisateur=UTILISATEURS.idUtilisateur " +
+			"JOIN ARTICLES ON ENCHERES.idArticle=ARTICLES.idArticle " +
+			"JOIN CATEGORIES ON ARTICLES.idCategorie=CATEGORIES.idCategorie";
+	private static  final String FINDBYCONDITION = "SELECT utilisateurs.idUtilisateur, utilisateurs.pseudo, utilisateurs.nom, " +
+												"utilisateurs.prenom, utilisateurs.email, utilisateurs.telephone, utilisateurs.rue, " +
+												"utilisateurs.codePostal, utilisateurs.ville, utilisateurs.motDePasse, " +
+												"utilisateurs.credit, utilisateurs.administrateur, categories.idCategorie, " +
+												"categories.libelle, articles.dateDebutEnchere, articles.dateFinEnchere, " +
+												"articles.description, articles.idArticle, articles.nomArticle, " +
+												"articles.prixInitial, articles.prixVente, encheres.dateEnchere, " +
+												"encheres.heureDebutEnchere, encheres.heureFinEnchere, encheres.montantEnchere " +
+												"FROM ENCHERES " +
+												"JOIN ARTICLES ON ENCHERES.idArticle=ARTICLES.idArticle " +
+												"JOIN CATEGORIES ON ARTICLES.idCategorie=CATEGORIES.idCategorie " +
+												"JOIN UTILISATEURS ON ARTICLES.idUtilisateur=UTILISATEURS.idUtilisateur " +
+												"WHERE ARTICLES.nomArticle LIKE ? ";
 
 	/**
 	 * REQUETE récupération de l'enchere en bdd
@@ -131,15 +150,83 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 
 	/**
 	 * {@inheritDoc}
+	 * @throws BuisnessException
 	 * @see fr.eni.encheres.dal.DAO#findAll(java.lang.Object)
 	 */
 	@Override
-	public ArrayList<Enchere> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Enchere> findAll() throws BuisnessException {
+		ArrayList<Enchere> encheres = new ArrayList<Enchere>();
+		try {
+			PreparedStatement pstmt = connectionProvider.getInstance().prepareStatement(FINDALL);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				encheres.add(creerObjetEnchere(rs));
+			}
+		} catch (SQLException e) {
+			new Log(e.getMessage());
+			BuisnessException buisnessException = new BuisnessException(e.getMessage(), e);
+			throw buisnessException;
+		}
+		return encheres;
 	}
 
+	public ArrayList<Enchere> findByCondition(String name, int categorie, String condition) throws BuisnessException {
+		ArrayList<Enchere> encheres = new ArrayList<Enchere>();
+		String requete ="";
+		try {
+			if(categorie!=-1) {
+				requete = FINDBYCONDITION + "AND CATEGORIES.idCategorie=" + categorie + " " + condition;
+			}else {
+				requete = FINDBYCONDITION + condition;
+			}
+			PreparedStatement pstmt = connectionProvider.getInstance().prepareStatement(requete);
+			pstmt.setString(1, "%" + name + "%");
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				encheres.add(creerObjetEnchere(rs));
+			}
+		} catch (SQLException e) {
+			new Log(e.getMessage());
+			BuisnessException buisnessException = new BuisnessException(e.getMessage(), e);
+			throw buisnessException;
+		}
+		return encheres;
+	}
 
-
-
+	private Enchere creerObjetEnchere(ResultSet rs) throws SQLException {
+		Utilisateur utilisateur = new Utilisateur();
+		Categorie categorie = new Categorie();
+		Article article = new Article();
+		Enchere enchere = new Enchere();
+		utilisateur.setIdUtilisateur(rs.getInt("idUtilisateur"));
+		utilisateur.setPseudo(rs.getString("pseudo"));
+		utilisateur.setNom(rs.getString("nom"));
+		utilisateur.setPrenom(rs.getString("prenom"));
+		utilisateur.setEmail(rs.getString("email"));
+		utilisateur.setTelephone(rs.getString("telephone"));
+		utilisateur.setRue(rs.getString("rue"));
+		utilisateur.setCodePostal(rs.getString("codePostal"));
+		utilisateur.setVille(rs.getString("ville"));
+		utilisateur.setMotDePasse(rs.getString("motDePasse"));
+		utilisateur.setCredit(rs.getInt("credit"));
+		utilisateur.setAdministrateur(rs.getBoolean("administrateur"));
+		categorie.setIdCategorie(rs.getInt("idCategorie"));
+		categorie.setLibelle(rs.getString("libelle"));
+		enchere.setUtilisateur(utilisateur);
+		article.setUtilisateur(utilisateur);
+		article.setCategorie(categorie);
+		article.setDateDebutEnchere(rs.getDate("dateDebutEnchere"));
+		article.setDateFinEnchere(rs.getDate("dateFinEnchere"));
+		article.setDescription(rs.getString("description"));
+		article.setIdArticle(rs.getInt("idArticle"));
+		article.setNomArticle(rs.getString("nomArticle"));
+		article.setPrixInitial(rs.getInt("prixInitial"));
+		article.setPrixVente(rs.getInt("prixVente"));
+		enchere.setArticle(article);
+		enchere.setDateEnchere(rs.getDate("dateEnchere"));
+		enchere.setHeureDebutEnchere(rs.getTime("heureDebutEnchere"));
+		enchere.setHeureFinEnchere(rs.getTime("heureFinEnchere"));
+		enchere.setMontantEnchere(rs.getInt("montantEnchere"));
+		return enchere;
+	}
 }

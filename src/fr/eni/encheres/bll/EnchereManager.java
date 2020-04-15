@@ -12,24 +12,21 @@ import fr.eni.encheres.outils.BuisnessException;
  * @date 7 avr. 2020
  */
 public class EnchereManager implements Manager<Enchere>{
-
-	/**
-	 * @param DDAOFactory
-	 */
+	
+	private static EnchereManager INSTANCE = null;
 	private DAOFactory daoFactory = new DAOFactory();
 
-
 	/**
-	 * @param EnchereManager
+<<<<<<< HEAD
+	 * Récupération de l'instance
+	 *
+	 * @return EcnhereManager
 	 */
-	private static EnchereManager INSTANCE =  null;
-
 	public static EnchereManager getInstance() {
 		if (INSTANCE == null)
 			INSTANCE = new EnchereManager();
 		return INSTANCE;
 	}
-
 	/**
 	 * {@inheritDoc}
 	 * @see fr.eni.encheres.bll.Manager#create()
@@ -67,12 +64,16 @@ public class EnchereManager implements Manager<Enchere>{
 
 	/**
 	 * {@inheritDoc}
+	 * @throws BuisnessException 
 	 * @see fr.eni.encheres.bll.Manager#findAll()
 	 */
 	@Override
-	public ArrayList<Enchere> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Enchere> findAll() throws BuisnessException {
+		return daoFactory.getEnchereDAOImpl().findAll();
+	}
+	
+	public ArrayList<Enchere> findByCondition(String name, int categorie, String condition) throws BuisnessException{
+		return daoFactory.getEnchereDAOImpl().findByCondition(name, categorie, condition);
 	}
 
 
