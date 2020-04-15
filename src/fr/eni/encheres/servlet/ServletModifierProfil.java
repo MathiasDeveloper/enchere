@@ -81,7 +81,7 @@ public class ServletModifierProfil extends HttpServlet {
 		if(session.getAttribute("idUtilisateur")!=null) {
 			
 			//On regarde si le paramètre id est renseigné
-			if(request.getParameter("id")!=null) {
+			if(request.getParameter("utilisateur")!=null) {
 				
 				//0=utilisateur inconnu, 1=erreur
 				int modifier=-1; 
