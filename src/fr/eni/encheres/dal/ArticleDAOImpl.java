@@ -132,7 +132,7 @@ public class ArticleDAOImpl implements DAO<Article>{
 				article.setDateFinEnchere(rs.getDate(5));
 				article.setPrixInitial(rs.getInt(6));
 				article.setPrixVente(rs.getInt(7));
-				utilisateur.setIdUtilisateur(rs.getInt(9));
+				utilisateur.setIdUtilisateur(rs.getInt(8));
 				categorie.setIdCategorie(rs.getInt(9));
 				article.setCategorie(categorie);
 				article.setUtilisateur(utilisateur);

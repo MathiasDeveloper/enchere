@@ -9,6 +9,7 @@ import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Enchere;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.outils.BuisnessException;
+import fr.eni.encheres.outils.Log;
 import fr.eni.encheres.outils.Utils;
 
 import javax.servlet.ServletException;
@@ -16,7 +17,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 @WebServlet(name = "ServletFaireUneEnchere", urlPatterns = {"/faireEnchere"})
 public class ServletFaireUneEnchere extends HttpServlet {
@@ -44,20 +50,39 @@ public class ServletFaireUneEnchere extends HttpServlet {
 
     /**
      * Méthode de traitement de requete de type post
+     *
      * @param request
      * @param response
+     *
      * @throws ServletException
      * @throws IOException
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        try {
+
+            this.checkIfPrixExist(request);
+
+            this.checkPrixIsValid(request);
+
+            // Initialisation des objets apres vérifications
+            this.setAttributeParams(request);
+
+
+        } catch (BuisnessException e) {
+            e.printStackTrace();
+        }
+
+        doGet(request, response);
     }
+
 
     /**
      * Méthode de traitement des requetes de type get
      *
      * @param request
      * @param response
+     *
      * @throws ServletException
      * @throws IOException
      */
@@ -65,27 +90,171 @@ public class ServletFaireUneEnchere extends HttpServlet {
 
 
         try {
-            article = this.getObjectArticleFromUrl(Utils.transformStringToInt(request.getParameter("id")));
-            enchere = this.getObjectEnchereFromUrl(article.getIdArticle());
-            utilisateur = this.getObjectUtilisateurFromUrl(article.getUtilisateur().getIdUtilisateur());
-            categorie = this.getObjectCategorieFromUrl(article.getCategorie().getIdCategorie());
+
+            // Check si l'utilisateur existe en Session
+            this.checkUtilisateurSession(request.getSession());
+
+
+            if (request.getParameter("id") != null || request.getParameter("idArticle") != null) {
+
+                // recupere l'id de l'url
+                int id = this.getIdParamrUrl(request);
+
+                // Créer l'article
+                article = this.createArticleFromId(id);
+
+                // Check si l'article est encore en enchere ou non
+                this.checkDateIsLate(article, request);
+
+                this.setAttributeParams(request);
+
+                this.getServletContext().getRequestDispatcher("/WEB-INF/faireEnchere.jsp").forward(request, response);
+            } else {
+                this.getServletContext().getRequestDispatcher("/WEB-INF/erreur404.jsp").forward(request, response);
+            }
+
+
         } catch (BuisnessException e) {
             e.printStackTrace();
         }
 
-        System.out.println(enchere.toString());
-        System.out.println(article.toString());
-        System.out.println(utilisateur.toString());
-        System.out.println(categorie.toString());
+    }
 
-        this.getServletContext().getRequestDispatcher("/WEB-INF/faireEnchere.jsp").forward(request,response);
+    /**
+     * Vérifie si le prix existe bien
+     *
+     * @param request
+     *
+     * @throws BuisnessException
+     */
+    private void checkIfPrixExist(HttpServletRequest request) throws BuisnessException {
+        String message = null;
+
+        try {
+            // Si le prix est vide
+            if (request.getParameter("prix").trim().equals("")) {
+                message = "Merci de renseigner un prix pour prendre en compte votre enchere";
+            }
+
+            if (message != null) {
+                throw new Exception();
+            }
+
+        } catch (Exception e) {
+            request.setAttribute("messagePrix", message);
+            throw new BuisnessException(e.getMessage(), e);
+        }
+    }
+
+
+    /**
+     * Méthode qui vérifie si le prix est valide ou non
+     *
+     * @param request
+     */
+    private void checkPrixIsValid(HttpServletRequest request) throws BuisnessException {
+
+        // Récupération de l'objet enchere via l'id de l'article
+        enchere = this.getObjectEnchereFromUrl(Utils.transformStringToInt(request.getParameter("idArticle")));
+
+        // Récupérer le prix saisit par l'utilisateur dans une varibale
+        Integer prix = Utils.transformStringToInt(request.getParameter("prix"));
+
+        String message = null;
+
+        try {
+            // Si le prix est supérieur à l'enchere précédente
+            if (prix > enchere.getMontantEnchere()) {
+                message = "Votre enchère à été prise en compte";
+            } else { // cas ou l'enchere est inférieure leve une erreur à l'utilisateur
+                message = "Votre enchère est plus basse que l'enchere d'un autre utilisateur";
+                throw new Exception("L'utilisateur à saisie un chiffre inferieur à l'enchere");
+            }
+        } catch (Exception e) {
+            request.setAttribute("message", message);
+            throw new BuisnessException(e.getMessage(), e);
+        }
+    }
+
+
+    /**
+     * Méthode qui vérifie si l'enchere est toujour possible
+     *
+     * @param article
+     */
+    private void checkDateIsLate(Article article, HttpServletRequest request) {
+
+        boolean isLate = false;
+
+        String message = null;
+
+        // Date du jour
+        Date date = new Date();
+
+        // Si il est trop tard is late passe à true
+        if (article.getDateFinEnchere().compareTo(date) < 0) {
+            isLate = true;
+        }
+
+        if (isLate) {
+            message = "L'article n'est actuellement dans aucune enchere";
+        }
+
+        if (message != null) {
+            request.setAttribute("messageDate", message);
+        }
+
+    }
+
+    /**
+     * Méthode qui vérifie si l'id est présent dans l'url ou pas et le retourne
+     *
+     * @param request
+     *
+     * @return int
+     *
+     */
+    private int getIdParamrUrl(HttpServletRequest request) {
+
+        int id = 0;
+
+        if (request.getParameter("id") != null) {
+            id = Utils.transformStringToInt(request.getParameter("id"));
+        }
+
+        if (request.getParameter("idArticle") != null) {
+            id = Utils.transformStringToInt(request.getParameter("idArticle"));
+        }
+
+        return id;
+    }
+
+    /**
+     * Méthode de vérification si l'utilisateur est présent en session
+     *
+     * @param session
+     *
+     */
+    private void checkUtilisateurSession(HttpSession session) {
+        boolean isValid = false;
+
+        if (session.getAttribute("idUtilisateur") != null) {
+            isValid = true;
+        }
+
+        if (isValid){
+            utilisateur.setIdUtilisateur((int) session.getAttribute("idUtilisateur"));
+        }
+
     }
 
     /**
      * Retourne l'objet Article à partir de l'url
      *
      * @param id
+     *
      * @return Article
+     *
      * @throws BuisnessException
      */
     private Article getObjectArticleFromUrl(int id) throws BuisnessException {
@@ -96,7 +265,9 @@ public class ServletFaireUneEnchere extends HttpServlet {
      * Retourne l'objet Enchere à partir de l'url
      *
      * @param id
+     *
      * @return Enchere
+     *
      * @throws BuisnessException
      */
     private Enchere getObjectEnchereFromUrl(int id) throws BuisnessException {
@@ -107,7 +278,9 @@ public class ServletFaireUneEnchere extends HttpServlet {
      * Retourne l'objet Utilisateur à partir de l'url
      *
      * @param id
+     *
      * @return Utilisateur
+     *
      * @throws BuisnessException
      */
     private Utilisateur getObjectUtilisateurFromUrl(int id) throws BuisnessException {
@@ -118,10 +291,43 @@ public class ServletFaireUneEnchere extends HttpServlet {
      * Retourne l'objet Categorie à partir de l'url
      *
      * @param id
+     *
      * @return Categorie
+     *
      * @throws BuisnessException
      */
     private Categorie getObjectCategorieFromUrl(int id) throws BuisnessException {
         return categorieManager.find(id);
+    }
+
+    /**
+     * Méthode de création de l'article par l'id placer en url après vérification si celui ci existe
+     *
+     * @param id
+     *
+     * @return Article
+     * @throws BuisnessException
+     */
+    private Article createArticleFromId(int id) throws BuisnessException {
+         return article = this.getObjectArticleFromUrl(id);
+    }
+
+    /**
+     * Méthode de création des objets
+     *
+     * @param request
+     *
+     * @throws BuisnessException
+     */
+    private void setAttributeParams(HttpServletRequest request) throws BuisnessException {
+
+        enchere = this.getObjectEnchereFromUrl(article.getIdArticle());
+        utilisateur = this.getObjectUtilisateurFromUrl(article.getUtilisateur().getIdUtilisateur());
+        categorie = this.getObjectCategorieFromUrl(article.getCategorie().getIdCategorie());
+
+        request.setAttribute("article", article);
+        request.setAttribute("enchere", enchere);
+        request.setAttribute("utilisateur", utilisateur);
+        request.setAttribute("categorie", categorie);
     }
 }
