@@ -36,12 +36,19 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 			"JOIN UTILISATEURS ON ENCHERES.idUtilisateur=UTILISATEURS.idUtilisateur " + 
 			"JOIN ARTICLES ON ENCHERES.idArticle=ARTICLES.idArticle " + 
 			"JOIN CATEGORIES ON ARTICLES.idCategorie=CATEGORIES.idCategorie";
-	private static  final String FINDBYCONDITION = "SELECT * " + 
-			"FROM ENCHERES " + 
-			"JOIN ARTICLES ON ENCHERES.idArticle=ARTICLES.idArticle " + 
-			"JOIN CATEGORIES ON ARTICLES.idCategorie=CATEGORIES.idCategorie " +
-			"JOIN UTILISATEURS ON ARTICLES.idUtilisateur=UTILISATEURS.idUtilisateur " +
-			"WHERE ARTICLES.nomArticle LIKE ? ";
+	private static  final String FINDBYCONDITION = "SELECT utilisateurs.idUtilisateur, utilisateurs.pseudo, utilisateurs.nom, " + 
+												"utilisateurs.prenom, utilisateurs.email, utilisateurs.telephone, utilisateurs.rue, " + 
+												"utilisateurs.codePostal, utilisateurs.ville, utilisateurs.motDePasse, " + 
+												"utilisateurs.credit, utilisateurs.administrateur, categories.idCategorie, " + 
+												"categories.libelle, articles.dateDebutEnchere, articles.dateFinEnchere, " + 
+												"articles.description, articles.idArticle, articles.nomArticle, " + 
+												"articles.prixInitial, articles.prixVente, encheres.dateEnchere, " + 
+												"encheres.heureDebutEnchere, encheres.heureFinEnchere, encheres.montantEnchere " + 
+												"FROM ENCHERES " + 
+												"JOIN ARTICLES ON ENCHERES.idArticle=ARTICLES.idArticle " + 
+												"JOIN CATEGORIES ON ARTICLES.idCategorie=CATEGORIES.idCategorie " +
+												"JOIN UTILISATEURS ON ARTICLES.idUtilisateur=UTILISATEURS.idUtilisateur " +
+												"WHERE ARTICLES.nomArticle LIKE ? ";
 
 	private ConnectionProvider connectionProvider = new ConnectionProvider();
 
