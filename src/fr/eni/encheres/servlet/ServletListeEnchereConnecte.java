@@ -89,7 +89,7 @@ public class ServletListeEnchereConnecte extends HttpServlet {
     				//On donne à la jsp le message d'erreur
     				request.setAttribute("message", message);
     				
-    			}else{
+    			}else if(request.getParameter("encheres")!=null || request.getParameter("ventes")!=null){
     				
     				String checkbox="";
     				
@@ -143,7 +143,7 @@ public class ServletListeEnchereConnecte extends HttpServlet {
 		
 			//Cas des enchères ouvertes
 			case "encheresouvertes":
-				condition = "AND ARTICLES.dateDebutEnchere<" + d + " AND ARTICLES.dateFinEnchere>" + d +" AND ARTICLES.idUtilisateur<>" + idUtilisateur;
+				condition = "AND ARTICLES.dateDebutEnchere<=" + d + " AND ARTICLES.dateFinEnchere>" + d +" AND ARTICLES.idUtilisateur<>" + idUtilisateur;
 				encheres = enchereManager.findByCondition(name, categorie, condition);
 				break;
 				
@@ -161,7 +161,7 @@ public class ServletListeEnchereConnecte extends HttpServlet {
 				
 			//Cas des ventes en cours
 			case "ventesencours":
-				condition = "AND ARTICLES.dateDebutEnchere<" + d + " AND ARTICLES.dateFinEnchere>" + d + " AND ARTICLES.idUtilisateur=" + idUtilisateur;
+				condition = "AND ARTICLES.dateDebutEnchere<=" + d + " AND ARTICLES.dateFinEnchere>" + d + " AND ARTICLES.idUtilisateur=" + idUtilisateur;
 				encheres = enchereManager.findByCondition(name, categorie, condition);
 				break;
 				
