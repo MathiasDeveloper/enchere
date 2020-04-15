@@ -29,3 +29,7 @@ hs_err_pid*
 /.settings/
 .classpath
 .project
+/bin/
+
+# Exclusion du context.xml
+/WebContent/META-INF/context.xml
