@@ -1,11 +1,9 @@
-/**
- * 
- */
 package fr.eni.encheres.bll;
 
 import java.util.ArrayList;
-
 import fr.eni.encheres.bo.Enchere;
+import fr.eni.encheres.dal.DAOFactory;
+import fr.eni.encheres.outils.BuisnessException;
 
 /**
  * Classe en charge de
@@ -14,15 +12,28 @@ import fr.eni.encheres.bo.Enchere;
  * @date 7 avr. 2020
  */
 public class EnchereManager implements Manager<Enchere>{
+	
+	private static EnchereManager INSTANCE = null;
+	private DAOFactory daoFactory = new DAOFactory();
 
-
+	/**
+<<<<<<< HEAD
+	 * Récupération de l'instance
+	 *
+	 * @return EcnhereManager
+	 */
+	public static EnchereManager getInstance() {
+		if (INSTANCE == null)
+			INSTANCE = new EnchereManager();
+		return INSTANCE;
+	}
 	/**
 	 * {@inheritDoc}
 	 * @see fr.eni.encheres.bll.Manager#create()
 	 */
 	@Override
-	public void create(Enchere enchere) {
-
+	public void create(Enchere enchere) throws BuisnessException {
+		daoFactory.getEnchereDAOImpl().create(enchere);
 	}
 
 	/**
@@ -54,12 +65,16 @@ public class EnchereManager implements Manager<Enchere>{
 
 	/**
 	 * {@inheritDoc}
+	 * @throws BuisnessException 
 	 * @see fr.eni.encheres.bll.Manager#findAll()
 	 */
 	@Override
-	public ArrayList<Enchere> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Enchere> findAll() throws BuisnessException {
+		return daoFactory.getEnchereDAOImpl().findAll();
+	}
+	
+	public ArrayList<Enchere> findByCondition(String name, int categorie, String condition) throws BuisnessException{
+		return daoFactory.getEnchereDAOImpl().findByCondition(name, categorie, condition);
 	}
 
 

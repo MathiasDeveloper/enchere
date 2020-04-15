@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,15 +13,31 @@
 <link href="<%=request.getContextPath()%>/css/seConnecter.css" rel="stylesheet">
 </head>
 <body>
+	
+	<!--  Récupération du cookie rememberLogin s'il existe -->
+	<%
+	Cookie cookie = null;
+	Cookie[] cookies = request.getCookies();
+	String cookieSearchName = "rememberLogin";
+	String cookieSearchValue = "";
+	
+	if (cookies != null) {
+		for (int i = 0; i < cookies.length; i++) {
+			cookie = cookies[i];
+			if(cookie.getName().equals(cookieSearchName)){
+				cookieSearchValue = cookie.getValue();
+			}
+		}
+	}
+	%>
+
 	<h3>ENI-Enchères</h3>
-	
-	
-	
+
 	<form action="#" method="post">
 		<p  class="badInput">Identifiant et/ou mot de passe incorrect</p>
 		<div class="groupeFormulaire">
 			<label>Identifiant :</label>
-			<input type="text" placeholder="NineJea" required name="identifiant" id="identifiant">
+			<input type="text" placeholder="NineJea" required name="identifiant" id="identifiant" value="<%=cookieSearchValue%>">
 		</div>
 		<br>
 		<div class="groupeFormulaire">

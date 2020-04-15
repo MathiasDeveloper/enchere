@@ -7,6 +7,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.outils.BuisnessException;
@@ -31,42 +32,39 @@ public class ServletSupprimerCompte extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		boolean connecte=false;
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for(Cookie unCookie:cookies)
-			{
-				if(unCookie.getName().equals("idUtilisateur")) {
-					connecte=true;
-					if(request.getParameter("id")!=null) {
-						if(request.getParameter("id")!=null) {
-							try {
-								utilisateurManager.delete(utilisateurManager.find(Integer.valueOf(request.getParameter("id"))));
-								Cookie[] cookiesVerif = request.getCookies();
-								for(Cookie unCookieVerif:cookies)
-				    			{
-				    				if(unCookieVerif.getName().equals("idUtilisateur")) {
-				    					unCookieVerif.setMaxAge(0);
-				    					response.addCookie(unCookieVerif);
-				    				}
-				    			}
-								this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
-							} catch (NumberFormatException e) {
-								this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
-							} catch (BuisnessException e) {
-								e.printStackTrace();
-							}
-						}else {
-							this.getServletContext().getRequestDispatcher("/WEB-INF/accueil.jsp").forward(request, response);
-						}
-					}else {
-						this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
-					}
+		
+		//On récupère la session
+		HttpSession session = request.getSession();
+		
+		//Si l'utilisateur n'est pas connecté, on le renvoit sur une page 404
+    	if(session.getAttribute("idUtilisateur")!=null) {
+    		
+    		//On regarde si le paramètre id est renseigné
+    		if(request.getParameter("id")!=null) {
+				try {
+					
+					//On supprime l'utilisateur
+					utilisateurManager.delete(utilisateurManager.find(Integer.valueOf(request.getParameter("id"))));
+					
+					//On supprime la session
+					session.invalidate();
+					
+					//On redirige vers la page d'accueil
+					this.getServletContext().getRequestDispatcher("/Home").forward(request, response);
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				} catch (BuisnessException e) {
+					e.printStackTrace();
 				}
-			}
-			if(connecte==false) {
-				this.getServletContext().getRequestDispatcher("/WEB-INF//erreur404.jsp").forward(request, response);
-			}
-		}
+	    	}else {
+	    		
+	    		//On redirige vers la page 404
+	    		this.getServletContext().getRequestDispatcher("/WEB-INF//erreur404.jsp").forward(request, response);
+	    	}
+    	}else {
+    		
+    		//On redirige vers la page 404
+    		this.getServletContext().getRequestDispatcher("/WEB-INF//erreur404.jsp").forward(request, response);
+    	}
 	}
 }

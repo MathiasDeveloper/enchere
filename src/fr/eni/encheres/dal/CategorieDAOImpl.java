@@ -22,7 +22,7 @@ public class CategorieDAOImpl implements DAO<Categorie>{
 	 *
 	 * @string
 	 */
-	private static final String FIND_ALL = "SELECT libelle FROM CATEGORIES";
+	private static final String FIND_ALL = "SELECT idCategorie,libelle FROM CATEGORIES";
 
 	/**
 	 * Connection provider
@@ -81,7 +81,8 @@ public class CategorieDAOImpl implements DAO<Categorie>{
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()){
 				Categorie categorie = new Categorie();
-				categorie.setLibelle(rs.getString(1));
+				categorie.setIdCategorie(rs.getInt(1));
+				categorie.setLibelle(rs.getString(2));
 				categories.add(categorie);
 			}
 		} catch (SQLException e) {

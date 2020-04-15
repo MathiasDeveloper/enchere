@@ -16,7 +16,8 @@ import fr.eni.encheres.outils.BuisnessException;
  * @date 7 avr. 2020
  */
 public class UtilisateurManager implements Manager<Utilisateur>{
-	
+
+
 	private static UtilisateurManager INSTANCE = null;
 	private DAOFactory daoFactory = new DAOFactory();
 	/**
@@ -99,5 +100,22 @@ public class UtilisateurManager implements Manager<Utilisateur>{
 	 */
 	public boolean ajout(Utilisateur utilisateur) throws BuisnessException {
 		return daoFactory.getUtilisateurDAOImpl().ajout(utilisateur);
+	}
+	
+	public boolean searchEmail(Utilisateur utilisateur) throws BuisnessException {
+		// TODO Auto-generated method stub
+		return daoFactory.getUtilisateurDAOImpl().searchEmail(utilisateur);
+	}
+
+
+	/**
+	 * Méthode en charge de
+	 * @param utilisateur
+	 * @return
+	 * @throws BuisnessException 
+	 */
+	public boolean updatePassword(Utilisateur utilisateur) throws BuisnessException {
+		// TODO Auto-generated method stub
+		return daoFactory.getUtilisateurDAOImpl().updatePassword(utilisateur);
 	}
 }

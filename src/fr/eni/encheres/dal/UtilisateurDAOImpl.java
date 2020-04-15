@@ -37,6 +37,10 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 										"ville=?, " +
 										"motDePasse=? " +
 										"WHERE idUtilisateur=?";
+	private static final String UPDATE_PASSWORD = "UPDATE UTILISATEURS " +
+			"SET motDePasse=? " +
+			"WHERE email=?";
+	
 	private static final String DELETE = "DELETE " +
 										"FROM UTILISATEURS " +
 										"WHERE idUtilisateur=?";
@@ -47,6 +51,10 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 	private static final String FIND_BY_PSEUDO = "SELECT * " +
 			"FROM UTILISATEURS " +
 			"WHERE pseudo=? AND motDePasse=?";
+	
+	private static final String SEARCH_EMAIL = "SELECT *" + 
+			"			FROM UTILISATEURS" + 
+			"			WHERE email=?";
 
 	
 	private static ConnectionProvider connectionProvider = new ConnectionProvider();
@@ -59,15 +67,6 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 	 * @see fr.eni.encheres.dal.DAO#create(java.lang.Object)
 	 */
 	public void create(Utilisateur utilisateur) throws BuisnessException {
-		/*try {
-			PreparedStatement pstmt = connectionProvider.getInstance().prepareStatement(CREATE);
-			pstmt.setInt(1, utilisateur.getIdUtilisateur());
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			log = new Log(e.getMessage());
-			BuisnessException buisnessException = new BuisnessException(e.getMessage(), e);
-			throw buisnessException;
-		}*/
 	}
 
 	/**
@@ -243,5 +242,63 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 			throw buisnessException;
 		}
 		return ajouteEnBase;
+	}
+
+	/**
+	 * Méthode en charge de
+	 * @param utilisateur2
+	 * @return
+	 * @throws BuisnessException 
+	 */
+	public boolean searchEmail(Utilisateur utilisateur) throws BuisnessException {
+		boolean existe = false;
+		int compteur = 0;
+
+		if(utilisateur.getEmail() != null) {
+			try {
+				PreparedStatement pstmt = connectionProvider.getInstance().prepareStatement(SEARCH_EMAIL);
+				pstmt.setString(1, utilisateur.getEmail());
+				ResultSet rs = pstmt.executeQuery();
+				while(rs.next()) {
+					compteur++;					
+				}
+				
+				if(compteur == 1 ) {
+					existe = true;
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				log = new Log(e.getMessage());
+				BuisnessException buisnessException = new BuisnessException(e.getMessage(), e);
+				throw buisnessException;
+			}
+		}
+			return existe;
+	}
+
+	/**
+	 * Méthode en charge de
+	 * @param utilisateur2
+	 * @return
+	 * @throws BuisnessException 
+	 */
+	public boolean updatePassword(Utilisateur utilisateur) throws BuisnessException {
+		boolean done = false;
+
+		if(utilisateur.getEmail() != null && utilisateur.getMotDePasse() != null) {
+			try {
+				PreparedStatement pstmt = connectionProvider.getInstance().prepareStatement(UPDATE_PASSWORD);
+				pstmt.setString(1, utilisateur.getMotDePasse());
+				pstmt.setString(2, utilisateur.getEmail());
+				pstmt.executeUpdate();
+				done = true;
+			} catch (SQLException e) {
+				log = new Log(e.getMessage());
+				BuisnessException buisnessException = new BuisnessException(e.getMessage(), e);
+				throw buisnessException;
+			}
+		}
+			return done;
 	}
 }
