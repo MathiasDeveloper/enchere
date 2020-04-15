@@ -38,9 +38,9 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 			"JOIN CATEGORIES ON ARTICLES.idCategorie=CATEGORIES.idCategorie";
 	private static  final String FINDBYCONDITION = "SELECT * " + 
 			"FROM ENCHERES " + 
-			"JOIN UTILISATEURS ON ENCHERES.idUtilisateur=UTILISATEURS.idUtilisateur " + 
 			"JOIN ARTICLES ON ENCHERES.idArticle=ARTICLES.idArticle " + 
 			"JOIN CATEGORIES ON ARTICLES.idCategorie=CATEGORIES.idCategorie " +
+			"JOIN UTILISATEURS ON ARTICLES.idUtilisateur=UTILISATEURS.idUtilisateur " +
 			"WHERE ARTICLES.nomArticle LIKE ? ";
 
 	private ConnectionProvider connectionProvider = new ConnectionProvider();
