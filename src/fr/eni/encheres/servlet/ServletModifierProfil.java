@@ -141,7 +141,7 @@ public class ServletModifierProfil extends HttpServlet {
 				}
 				
 				//Utilisateur inconnu
-				if(modifier==1) {
+				if(modifier==0) {
 					
 					//On redirige vers une page indiquant que l'utilisateur est inconnu
 					this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateurInconnu.jsp").forward(request, response);
