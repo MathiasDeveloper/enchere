@@ -52,7 +52,7 @@
 			<button class="btn btn-primary">Connexion</button>
 			<div>
 				<input type="checkbox" name="remember" id="remember"> Se
-				souvenir de moi <br> <a href="#">Mot de passe oublié</a>
+				souvenir de moi <br> <a href="motDePasseOublie">Mot de passe oublié</a>
 			</div>
 		</div>
 		<br>
