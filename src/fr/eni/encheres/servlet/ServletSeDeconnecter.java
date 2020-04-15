@@ -17,7 +17,7 @@ import fr.eni.encheres.outils.BuisnessException;
  * Servlet Home
  */
 
- @WebServlet( name="ServletVerificationPourLaConnection", urlPatterns = {"/seConnecter"} )
+ @WebServlet( name="ServletSeDeconnecter", urlPatterns = {"/seDeconnecter"} )
 public class ServletSeDeconnecter extends javax.servlet.http.HttpServlet {
     /**
 	 * 
@@ -35,7 +35,7 @@ public class ServletSeDeconnecter extends javax.servlet.http.HttpServlet {
     	
     	if(request.getParameter("idUtilisateur") != null ){  
             session.invalidate();
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/formulaireSeConnecter.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/listeEnchereConnecte.jsp");
         	rd.forward(request, response);
         }
     	
