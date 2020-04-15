@@ -39,6 +39,6 @@
 		<br>
 	</form>
 	
-	<button class="btn btn-success">Créer un compte</button>
+	<a href="Inscription" class="btn btn-success">Créer un compte</a>
 </body>
 </html>
