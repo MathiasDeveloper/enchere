@@ -28,7 +28,7 @@ public class HomeServlet extends javax.servlet.http.HttpServlet {
     	}else {
     		
     		//On redirige vers la jsp
-    		this.getServletContext().getRequestDispatcher("/ListeEnchereDeconnecter").forward(request, response);
+    		this.getServletContext().getRequestDispatcher("/ListeEnchereDeconnecte").forward(request, response);
     	}
     }
     
