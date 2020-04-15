@@ -73,8 +73,8 @@ public class EnchereManager implements Manager<Enchere>{
 		return daoFactory.getEnchereDAOImpl().findAll();
 	}
 	
-	public ArrayList<Enchere> findByName(String name, int categorie, String condition) throws BuisnessException{
-		return daoFactory.getEnchereDAOImpl().findByName(name, categorie, condition);
+	public ArrayList<Enchere> findByCondition(String name, int categorie, String condition) throws BuisnessException{
+		return daoFactory.getEnchereDAOImpl().findByCondition(name, categorie, condition);
 	}
 
 

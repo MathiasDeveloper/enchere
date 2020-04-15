@@ -36,7 +36,7 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 			"JOIN UTILISATEURS ON ENCHERES.idUtilisateur=UTILISATEURS.idUtilisateur " + 
 			"JOIN ARTICLES ON ENCHERES.idArticle=ARTICLES.idArticle " + 
 			"JOIN CATEGORIES ON ARTICLES.idCategorie=CATEGORIES.idCategorie";
-	private static  final String FINDBYNAME = "SELECT * " + 
+	private static  final String FINDBYCONDITION = "SELECT * " + 
 			"FROM ENCHERES " + 
 			"JOIN UTILISATEURS ON ENCHERES.idUtilisateur=UTILISATEURS.idUtilisateur " + 
 			"JOIN ARTICLES ON ENCHERES.idArticle=ARTICLES.idArticle " + 
@@ -119,14 +119,14 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 		return encheres;
 	}
 	
-	public ArrayList<Enchere> findByName(String name, int categorie, String condition) throws BuisnessException {
+	public ArrayList<Enchere> findByCondition(String name, int categorie, String condition) throws BuisnessException {
 		ArrayList<Enchere> encheres = new ArrayList<Enchere>();
 		String requete ="";
 		try {
 			if(categorie!=-1) {
-				requete = FINDBYNAME + "AND CATEGORIES.idCategorie=" + categorie + " " + condition;
+				requete = FINDBYCONDITION + "AND CATEGORIES.idCategorie=" + categorie + " " + condition;
 			}else {
-				requete = FINDBYNAME + condition;
+				requete = FINDBYCONDITION + condition;
 			}
 			PreparedStatement pstmt = connectionProvider.getInstance().prepareStatement(requete);
 			pstmt.setString(1, "%" + name + "%");

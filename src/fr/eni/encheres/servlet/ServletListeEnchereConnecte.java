@@ -144,37 +144,37 @@ public class ServletListeEnchereConnecte extends HttpServlet {
 			//Cas des enchères ouvertes
 			case "encheresouvertes":
 				condition = "AND ARTICLES.dateDebutEnchere<" + d + " AND ARTICLES.dateFinEnchere>" + d +" AND ARTICLES.idUtilisateur<>" + idUtilisateur;
-				encheres = enchereManager.findByName(name, categorie, condition);
+				encheres = enchereManager.findByCondition(name, categorie, condition);
 				break;
 				
 			//Cas des enchères en cours
 			case "encheresencours":
 				condition = "AND ARTICLES.dateDebutEnchere<" + d + " AND ARTICLES.dateFinEnchere>" + d +" AND ENCHERES.idUtilisateur=" + idUtilisateur;
-				encheres = enchereManager.findByName(name, categorie, condition);
+				encheres = enchereManager.findByCondition(name, categorie, condition);
 				break;
 				
 			//Cas des enchères remportées
 			case "encheresremportees":
 				condition = "AND ARTICLES.dateFinEnchere<" + d +" AND ENCHERES.idUtilisateur=" + idUtilisateur;
-				encheres = enchereManager.findByName(name, categorie, condition);
+				encheres = enchereManager.findByCondition(name, categorie, condition);
 				break;
 				
 			//Cas des ventes en cours
 			case "ventesencours":
 				condition = "AND ARTICLES.dateDebutEnchere<" + d + " AND ARTICLES.dateFinEnchere>" + d + " AND ARTICLES.idUtilisateur=" + idUtilisateur;
-				encheres = enchereManager.findByName(name, categorie, condition);
+				encheres = enchereManager.findByCondition(name, categorie, condition);
 				break;
 				
 			//Cas des ventes non débutées
 			case "ventesnondebutees":
 				condition = "AND ARTICLES.dateDebutEnchere>" + d + " AND ARTICLES.idUtilisateur=" + idUtilisateur;
-				encheres = enchereManager.findByName(name, categorie, condition);
+				encheres = enchereManager.findByCondition(name, categorie, condition);
 				break;
 				
 			//Cas des ventes terminées
 			case "ventesterminees":
 				condition = "AND ARTICLES.dateFinEnchere<" + d + " AND ARTICLES.idUtilisateur=" + idUtilisateur;
-				encheres = enchereManager.findByName(name, categorie, condition);
+				encheres = enchereManager.findByCondition(name, categorie, condition);
 				break;
 		}
 		return encheres;
