@@ -40,8 +40,6 @@ public class ServletFaireUneEnchere extends HttpServlet {
 
     private Utilisateur utilisateur = new Utilisateur();
 
-    private Categorie categorie = new Categorie();
-
     private Enchere enchere = new Enchere();
 
     /**
@@ -56,20 +54,30 @@ public class ServletFaireUneEnchere extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         try {
+            // Vérification utilisateur en session et le set
+            this.checkUtilisateurSession(request.getSession(), request);
+
 
             // Verifie si le champs prix est remplis sinon envoie une erreur à l'utilisateur
             this.checkIfPrixExist(request);
 
+            enchere = this.getObjectEnchereFromUrl(article.getIdArticle());
+
+            // envoie de l'utilisateur connecter pour faire le changement
+            enchere.setUtilisateur(utilisateur);
+
+            // Vérification de l'utilisateur sur son crédit
+            this.checkUtilisateurGotMoney(utilisateur, Utils.transformStringToInt(request.getParameter("prix")), request);
+
             // Verifie si le prix est valide
             this.checkPrixIsValid(request);
 
-            // Initialisation des objets apres vérifications
-            this.setAttributeParams(request);
+            enchere.setMontantEnchere(Utils.transformStringToInt(request.getParameter("prix")));
 
-            // Vérification de l'utilisateur sur son crédit
-            this.checkUtilisateurGotMoney(utilisateur, Utils.transformStringToInt(request.getParameter("prix")));
+            enchere.setArticle(article);
 
             enchereManager.update(enchere);
+
 
         } catch (BuisnessException e) {
             e.printStackTrace();
@@ -94,8 +102,7 @@ public class ServletFaireUneEnchere extends HttpServlet {
         try {
 
             // Check si l'utilisateur existe en Session
-            this.checkUtilisateurSession(request.getSession());
-
+            this.checkUtilisateurSession(request.getSession(), request);
 
             if (request.getParameter("id") != null || request.getParameter("idArticle") != null) {
 
@@ -161,16 +168,16 @@ public class ServletFaireUneEnchere extends HttpServlet {
         enchere = this.getObjectEnchereFromUrl(Utils.transformStringToInt(request.getParameter("idArticle")));
 
         // Récupérer le prix saisit par l'utilisateur dans une varibale
-        Integer prix = Utils.transformStringToInt(request.getParameter("prix"));
+        int prix = Utils.transformStringToInt(request.getParameter("prix"));
 
         String message = null;
 
         try {
             // Si le prix est supérieur à l'enchere précédente
-            if (prix > enchere.getMontantEnchere()) {
-                message = "Votre enchère à été prise en compte";
+            if (prix > enchere.getMontantEnchere() && prix >= article.getPrixInitial() && prix <= utilisateur.getCredit()) {
+                this.setMessageSuccesEnchere(request);
             } else { // cas ou l'enchere est inférieure leve une erreur à l'utilisateur
-                message = "Votre enchère est plus basse que l'enchere d'un autre utilisateur";
+                message = "Votre enchère est plus basse que l'enchere d'un autre utilisateur ou que le prix initial";
                 throw new Exception("L'utilisateur à saisie un chiffre inferieur à l'enchere");
             }
         } catch (Exception e) {
@@ -215,7 +222,6 @@ public class ServletFaireUneEnchere extends HttpServlet {
      * @param request
      *
      * @return int
-     *
      */
     private int getIdParamrUrl(HttpServletRequest request) {
 
@@ -236,17 +242,21 @@ public class ServletFaireUneEnchere extends HttpServlet {
      * Méthode de vérification si l'utilisateur est présent en session
      *
      * @param session
-     *
      */
-    private void checkUtilisateurSession(HttpSession session) {
+    private void checkUtilisateurSession(HttpSession session, HttpServletRequest request) throws BuisnessException {
         boolean isValid = false;
+
+        String message;
 
         if (session.getAttribute("idUtilisateur") != null) {
             isValid = true;
         }
 
-        if (isValid){
-            utilisateur.setIdUtilisateur((int) session.getAttribute("idUtilisateur"));
+        if (isValid) {
+            utilisateur = getObjectUtilisateurFromUrl((int) session.getAttribute("idUtilisateur"));
+        } else {
+            message = "merci de vous connecter pour pouvoir faire une enchere";
+            request.setAttribute("messageUtilisateur", message);
         }
 
     }
@@ -291,28 +301,16 @@ public class ServletFaireUneEnchere extends HttpServlet {
     }
 
     /**
-     * Retourne l'objet Categorie à partir de l'url
-     *
-     * @param id
-     *
-     * @return Categorie
-     *
-     * @throws BuisnessException
-     */
-    private Categorie getObjectCategorieFromUrl(int id) throws BuisnessException {
-        return categorieManager.find(id);
-    }
-
-    /**
      * Méthode de création de l'article par l'id placé en url après vérification si celui ci existe
      *
      * @param id
      *
      * @return Article
+     *
      * @throws BuisnessException
      */
     private Article createArticleFromId(int id) throws BuisnessException {
-         return article = this.getObjectArticleFromUrl(id);
+        return article = this.getObjectArticleFromUrl(id);
     }
 
     /**
@@ -324,46 +322,49 @@ public class ServletFaireUneEnchere extends HttpServlet {
      */
     private void setAttributeParams(HttpServletRequest request) throws BuisnessException {
 
-        enchere = this.getObjectEnchereFromUrl(article.getIdArticle());
-        utilisateur = this.getObjectUtilisateurFromUrl((int) request.getSession().getAttribute("idUtilisateur"));
-        categorie = this.getObjectCategorieFromUrl(article.getCategorie().getIdCategorie());
-
-        // Utilisateur en session pour l'update
-        enchere.setUtilisateur(utilisateur);
-
-        // Vérification si le prix existe sinon le reste n'est pas executer
-        this.checkIfPrixExist(request);
-
-        // Insertion du prix dans l'enchere
-        enchere.setMontantEnchere(Utils.transformStringToInt(request.getParameter("prix")));
+        utilisateur = this.getObjectUtilisateurFromUrl(article.getUtilisateur().getIdUtilisateur());
 
         request.setAttribute("article", article);
-        request.setAttribute("enchere", enchere);
         request.setAttribute("utilisateur", utilisateur);
-        request.setAttribute("categorie", categorie);
     }
 
-    private void checkUtilisateurGotMoney(Utilisateur utilisateur, int prix) throws BuisnessException {
+    /**
+     * Méthode de vérification sur les credit de l'utilisateur
+     *
+     * @param utilisateur
+     * @param prix
+     *
+     * @throws BuisnessException
+     */
+    private void checkUtilisateurGotMoney(Utilisateur utilisateur, int prix, HttpServletRequest request) throws BuisnessException {
         String message = null;
 
         try {
             // Si les crédit de l'utilisateur est à 0 alors lève une erreur
-            if (utilisateur.getCredit() == 0){
+            if (utilisateur.getCredit() == 0) {
                 message = "Merci de rajouter des crédits sur votre compte";
             }
             // Si le prix est supérieur au credit de l'utilisateur
-            if (prix > utilisateur.getCredit()){
-                message = "Le montant que vous avez saisi est superieur à celui de vos crédits actuelle";
+            if (prix > utilisateur.getCredit()) {
+                message = "Le montant que vous avez saisie est superieur à celui de vos crédits actuel";
+            }
+
+            if (prix > 0 && message == null) {
+                utilisateurManager.updateCreditUtilisateur(prix, enchere.getUtilisateur());
             }
 
             // Si message est différent de null leve une exception
-            if (message != null){
+            if (message != null) {
                 throw new Exception();
             }
 
-        } catch (Exception e){
+        } catch (Exception e) {
+            request.setAttribute("messageCredit", message);
             throw new BuisnessException(e.getMessage(), e);
         }
+    }
 
+    private void setMessageSuccesEnchere(HttpServletRequest request) {
+        request.setAttribute("messageSucces", "Enchere prise en compte");
     }
 }

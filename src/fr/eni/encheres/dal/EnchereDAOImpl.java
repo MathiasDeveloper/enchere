@@ -61,8 +61,8 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 	 */
 	private static  final String UPDATE = "UPDATE `ENCHERES` " +
 			"SET `idUtilisateur`=?," +
-			"`montantEnchere`=?," +
-			" WHERE id_article = ?";
+			"`montantEnchere`=?" +
+			" WHERE idArticle = ?";
 
 	/**
 	 * REQUETE récupération de l'enchere en bdd
@@ -121,6 +121,7 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 
 			ps.setInt(1, enchere.getUtilisateur().getIdUtilisateur());
 			ps.setInt(2, enchere.getMontantEnchere());
+			ps.setInt(3, enchere.getArticle().getIdArticle());
 
 			ps.executeUpdate();
 

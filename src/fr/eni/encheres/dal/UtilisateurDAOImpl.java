@@ -56,7 +56,9 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 			"			FROM UTILISATEURS" + 
 			"			WHERE email=?";
 
-	
+	private static final String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = ? WHERE idUtilisateur = ?";
+
+
 	private static ConnectionProvider connectionProvider = new ConnectionProvider();
 	private Utilisateur utilisateur = new Utilisateur();
 	private Log log;
@@ -245,7 +247,7 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 
 	/**
 	 * Méthode en charge de
-	 * @param utilisateur2
+	 * @param utilisateur
 	 * @return
 	 * @throws BuisnessException 
 	 */
@@ -278,7 +280,7 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 
 	/**
 	 * Méthode en charge de
-	 * @param utilisateur2
+	 * @param utilisateur
 	 * @return
 	 * @throws BuisnessException 
 	 */
@@ -300,4 +302,26 @@ public class UtilisateurDAOImpl implements DAO<Utilisateur>{
 		}
 			return done;
 	}
+
+	/**
+	 * Met a jour les crédits de l'utilisateur
+	 *
+	 * @param prix
+	 */
+    public void updateCreditUtilisateur(int prix, Utilisateur utilisateur) throws BuisnessException {
+		try {
+			PreparedStatement ps = connectionProvider.getInstance().prepareStatement(UPDATE_CREDIT);
+
+			int newCredit = utilisateur.getCredit() - prix;
+
+			ps.setInt(1, newCredit);
+			ps.setInt(2, utilisateur.getIdUtilisateur());
+
+			ps.executeUpdate();
+
+		} catch (SQLException e){
+			log = new Log(e.getMessage());
+			throw new BuisnessException(e.getMessage(), e);
+		}
+    }
 }
