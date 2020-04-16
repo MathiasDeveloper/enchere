@@ -69,6 +69,8 @@ public class ServletFaireUneEnchere extends HttpServlet {
             // Vérification de l'utilisateur sur son crédit
             this.checkUtilisateurGotMoney(utilisateur, Utils.transformStringToInt(request.getParameter("prix")));
 
+            enchereManager.update(enchere);
+
         } catch (BuisnessException e) {
             e.printStackTrace();
         }
@@ -325,6 +327,15 @@ public class ServletFaireUneEnchere extends HttpServlet {
         enchere = this.getObjectEnchereFromUrl(article.getIdArticle());
         utilisateur = this.getObjectUtilisateurFromUrl((int) request.getSession().getAttribute("idUtilisateur"));
         categorie = this.getObjectCategorieFromUrl(article.getCategorie().getIdCategorie());
+
+        // Utilisateur en session pour l'update
+        enchere.setUtilisateur(utilisateur);
+
+        // Vérification si le prix existe sinon le reste n'est pas executer
+        this.checkIfPrixExist(request);
+
+        // Insertion du prix dans l'enchere
+        enchere.setMontantEnchere(Utils.transformStringToInt(request.getParameter("prix")));
 
         request.setAttribute("article", article);
         request.setAttribute("enchere", enchere);

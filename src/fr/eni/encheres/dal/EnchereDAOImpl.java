@@ -57,6 +57,14 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 												"WHERE ARTICLES.nomArticle LIKE ? ";
 
 	/**
+	 * Requete update lors de l'enchere d'un utilisateur
+	 */
+	private static  final String UPDATE = "UPDATE `ENCHERES` " +
+			"SET `idUtilisateur`=?," +
+			"`montantEnchere`=?," +
+			" WHERE id_article = ?";
+
+	/**
 	 * REQUETE récupération de l'enchere en bdd
 	 *
 	 * @string
@@ -107,8 +115,18 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 	 * @see fr.eni.encheres.dal.DAO#update(java.lang.Object)
 	 */
 	@Override
-	public void update(Enchere enchere) {
-		// TODO Auto-generated method stub
+	public void update(Enchere enchere) throws BuisnessException {
+		try {
+			PreparedStatement ps = connectionProvider.getInstance().prepareStatement(UPDATE);
+
+			ps.setInt(1, enchere.getUtilisateur().getIdUtilisateur());
+			ps.setInt(2, enchere.getMontantEnchere());
+
+			ps.executeUpdate();
+
+		} catch (SQLException e) {
+			throw new BuisnessException(e.getMessage(), e);
+		}
 	}
 
 	/**

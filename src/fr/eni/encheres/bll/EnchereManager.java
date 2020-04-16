@@ -37,12 +37,11 @@ public class EnchereManager implements Manager<Enchere>{
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * @see fr.eni.encheres.bll.Manager#update()
+	 * Methode qui met à jour l'enchere à partir des infos de la vue
 	 */
 	@Override
-	public void update(Enchere enchere) {
-
+	public void update(Enchere enchere) throws BuisnessException {
+		daoFactory.getEnchereDAOImpl().update(enchere);
 	}
 
 	/**
