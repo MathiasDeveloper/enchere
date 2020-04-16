@@ -35,7 +35,7 @@ public class ServletSeDeconnecter extends javax.servlet.http.HttpServlet {
     	
     	if(session.getAttribute("idUtilisateur") != null ){  
             session.invalidate();
-            this.getServletContext().getRequestDispatcher("Home").forward(request, response);
+            this.getServletContext().getRequestDispatcher("/Home").forward(request, response);
         }
     	
     
