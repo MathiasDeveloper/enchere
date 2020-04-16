@@ -116,5 +116,5 @@
 </div>
 </div>
 </body>
-<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/listeEnchereConnecte.js"></script>
+<script type="text/javascript" src="assets/js/listeEnchereConnecte.js"></script>
 </html>
