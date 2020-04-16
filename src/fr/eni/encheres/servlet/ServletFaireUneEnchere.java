@@ -9,7 +9,6 @@ import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Enchere;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.outils.BuisnessException;
-import fr.eni.encheres.outils.Log;
 import fr.eni.encheres.outils.Utils;
 
 import javax.servlet.ServletException;
@@ -19,9 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @WebServlet(name = "ServletFaireUneEnchere", urlPatterns = {"/faireEnchere"})
@@ -49,7 +45,7 @@ public class ServletFaireUneEnchere extends HttpServlet {
     private Enchere enchere = new Enchere();
 
     /**
-     * Méthode de traitement de requete de type post
+     * Méthode de traitement de requete de type POST
      *
      * @param request
      * @param response
@@ -61,13 +57,17 @@ public class ServletFaireUneEnchere extends HttpServlet {
 
         try {
 
+            // Verifie si le champs prix est remplis sinon envoie une erreur à l'utilisateur
             this.checkIfPrixExist(request);
 
+            // Verifie si le prix est valide
             this.checkPrixIsValid(request);
 
             // Initialisation des objets apres vérifications
             this.setAttributeParams(request);
 
+            // Vérification de l'utilisateur sur son crédit
+            this.checkUtilisateurGotMoney(utilisateur, Utils.transformStringToInt(request.getParameter("prix")));
 
         } catch (BuisnessException e) {
             e.printStackTrace();
@@ -78,7 +78,7 @@ public class ServletFaireUneEnchere extends HttpServlet {
 
 
     /**
-     * Méthode de traitement des requetes de type get
+     * Méthode de traitement des requetes de type GET
      *
      * @param request
      * @param response
@@ -106,6 +106,7 @@ public class ServletFaireUneEnchere extends HttpServlet {
                 // Check si l'article est encore en enchere ou non
                 this.checkDateIsLate(article, request);
 
+                // Construit les objets nécessaire à partir de la requete
                 this.setAttributeParams(request);
 
                 this.getServletContext().getRequestDispatcher("/WEB-INF/faireEnchere.jsp").forward(request, response);
@@ -301,7 +302,7 @@ public class ServletFaireUneEnchere extends HttpServlet {
     }
 
     /**
-     * Méthode de création de l'article par l'id placer en url après vérification si celui ci existe
+     * Méthode de création de l'article par l'id placé en url après vérification si celui ci existe
      *
      * @param id
      *
@@ -313,7 +314,7 @@ public class ServletFaireUneEnchere extends HttpServlet {
     }
 
     /**
-     * Méthode de création des objets
+     * Méthode de création des objets à partir de la requete
      *
      * @param request
      *
@@ -329,5 +330,29 @@ public class ServletFaireUneEnchere extends HttpServlet {
         request.setAttribute("enchere", enchere);
         request.setAttribute("utilisateur", utilisateur);
         request.setAttribute("categorie", categorie);
+    }
+
+    private void checkUtilisateurGotMoney(Utilisateur utilisateur, int prix) throws BuisnessException {
+        String message = null;
+
+        try {
+            // Si les crédit de l'utilisateur est à 0 alors lève une erreur
+            if (utilisateur.getCredit() == 0){
+                message = "Merci de rajouter des crédits sur votre compte";
+            }
+            // Si le prix est supérieur au credit de l'utilisateur
+            if (prix > utilisateur.getCredit()){
+                message = "Le montant que vous avez saisi est superieur à celui de vos crédits actuelle";
+            }
+
+            // Si message est différent de null leve une exception
+            if (message != null){
+                throw new Exception();
+            }
+
+        } catch (Exception e){
+            throw new BuisnessException(e.getMessage(), e);
+        }
+
     }
 }

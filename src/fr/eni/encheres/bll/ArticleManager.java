@@ -31,7 +31,7 @@ public class ArticleManager implements Manager<Article>{
 	}
 
 	@Override
-	public void create(Article objet) throws BuisnessException {
+	public void create(Article article) throws BuisnessException {
 	}
 
 	/**
