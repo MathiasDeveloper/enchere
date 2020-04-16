@@ -113,6 +113,40 @@
                        >
             </div>
         </div>
+        <hr>
+        <h2>Retrait</h2>
+        <hr>
+		<div class="d-flex justify-content-between">
+	        <div class="form-group">
+	            <label for="retraitRue">Rue du retrait</label>
+	                <input type="text"
+	                       id="retraitRue"
+	                       class="form-control"
+	                       name="retraitRue"
+	                       value="<c:out value="${utilisateur.rue}"/>"
+	                       placeholder="Rue du retrait"
+	                       >
+	        </div>
+            <div class="form-group">
+                <label for="retraitCodePostal">Code Postal du retrait</label>
+                <input type="text"
+                       id="retraitCodePostal"
+                       class="form-control"
+                       name="retraitCodePostal"
+                       value="<c:out value="${utilisateur.codePostal}"/>"
+                       placeholder="Code Postal du retrait"
+                       >
+            </div>
+            <div class="form-group">
+                <label for="retraitVille">Ville du retrait</label>
+                <input type="text"
+                       id="retraitVille"
+                       class="form-control"
+                       name="retraitVille"
+                       value="<c:out value="${utilisateur.ville}"/>"
+                       >
+            </div>
+        </div>
         <input type="hidden" name="formSubmit">
         <input type="submit" role="button" class="btn btn-primary">
     </form>

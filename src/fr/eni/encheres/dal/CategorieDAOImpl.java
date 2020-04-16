@@ -25,10 +25,10 @@ public class CategorieDAOImpl implements DAO<Categorie>{
 	private static final String FIND_ALL = "SELECT idCategorie,libelle FROM CATEGORIES";
 
 
-	private static final String FIND_BY_ID = "SELECT `idCategorie`," +
-			" `libelle`" +
-			" FROM `CATEGORIES` " +
-			"WHERE `idCategorie` = ?";
+	private static final String FIND_BY_ID = "SELECT idCategorie," +
+			" libelle" +
+			" FROM CATEGORIES " +
+			"WHERE idCategorie = ?";
 
 	private  Categorie categorie = new Categorie();
 

@@ -1,11 +1,9 @@
 package fr.eni.encheres.servlet;
 
 import fr.eni.encheres.bll.ArticleManager;
-import fr.eni.encheres.bll.CategorieManager;
 import fr.eni.encheres.bll.EnchereManager;
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Article;
-import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Enchere;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.outils.BuisnessException;
@@ -32,8 +30,6 @@ public class ServletFaireUneEnchere extends HttpServlet {
 
     private ArticleManager articleManager = ArticleManager.getInstance();
 
-    private CategorieManager categorieManager = CategorieManager.getInstance();
-
     private UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
 
     private Article article = new Article();
@@ -57,12 +53,15 @@ public class ServletFaireUneEnchere extends HttpServlet {
             // Vérification utilisateur en session et le set
             this.checkUtilisateurSession(request.getSession(), request);
 
-
             // Verifie si le champs prix est remplis sinon envoie une erreur à l'utilisateur
             this.checkIfPrixExist(request);
 
-            enchere = this.getObjectEnchereFromUrl(article.getIdArticle());
+            //On récupère l'enchere
+            enchere = this.getObjectEnchereById(article.getIdArticle());
 
+            //On garde l'anchère en base afin de pouvoir garder les infos pour redonner les crédits à l'utilisateur qui perd l'enchère
+            Enchere oldEnchere = enchere;
+            
             // envoie de l'utilisateur connecter pour faire le changement
             enchere.setUtilisateur(utilisateur);
 
@@ -72,10 +71,22 @@ public class ServletFaireUneEnchere extends HttpServlet {
             // Verifie si le prix est valide
             this.checkPrixIsValid(request);
 
+            //On modifie le montent de l'enchere
             enchere.setMontantEnchere(Utils.transformStringToInt(request.getParameter("prix")));
 
+            //On met l'article dans l'enchere
             enchere.setArticle(article);
-
+            
+            //On récupère l'utilisateur perdant
+            Utilisateur utilisateurPerdant = getObjectUtilisateurById(oldEnchere.getUtilisateur().getIdUtilisateur());
+            
+            //On lui rajoute les crédit de l'enchère perdue
+            utilisateurPerdant.setCredit(utilisateurPerdant.getCredit() + oldEnchere.getMontantEnchere());
+            
+            //On update l'utilisateur perdant
+            utilisateurManager.updateCreditUtilisateur(0, utilisateurPerdant);
+            
+            //On update l'enchere
             enchereManager.update(enchere);
 
 
@@ -165,7 +176,7 @@ public class ServletFaireUneEnchere extends HttpServlet {
     private void checkPrixIsValid(HttpServletRequest request) throws BuisnessException {
 
         // Récupération de l'objet enchere via l'id de l'article
-        enchere = this.getObjectEnchereFromUrl(Utils.transformStringToInt(request.getParameter("idArticle")));
+        enchere = this.getObjectEnchereById(Utils.transformStringToInt(request.getParameter("idArticle")));
 
         // Récupérer le prix saisit par l'utilisateur dans une varibale
         int prix = Utils.transformStringToInt(request.getParameter("prix"));
@@ -253,7 +264,7 @@ public class ServletFaireUneEnchere extends HttpServlet {
         }
 
         if (isValid) {
-            utilisateur = getObjectUtilisateurFromUrl((int) session.getAttribute("idUtilisateur"));
+            utilisateur = getObjectUtilisateurById((int) session.getAttribute("idUtilisateur"));
         } else {
             message = "merci de vous connecter pour pouvoir faire une enchere";
             request.setAttribute("messageUtilisateur", message);
@@ -270,7 +281,7 @@ public class ServletFaireUneEnchere extends HttpServlet {
      *
      * @throws BuisnessException
      */
-    private Article getObjectArticleFromUrl(int id) throws BuisnessException {
+    private Article getObjectArticleById(int id) throws BuisnessException {
         return articleManager.find(id);
     }
 
@@ -283,7 +294,7 @@ public class ServletFaireUneEnchere extends HttpServlet {
      *
      * @throws BuisnessException
      */
-    private Enchere getObjectEnchereFromUrl(int id) throws BuisnessException {
+    private Enchere getObjectEnchereById(int id) throws BuisnessException {
         return enchereManager.find(id);
     }
 
@@ -296,7 +307,7 @@ public class ServletFaireUneEnchere extends HttpServlet {
      *
      * @throws BuisnessException
      */
-    private Utilisateur getObjectUtilisateurFromUrl(int id) throws BuisnessException {
+    private Utilisateur getObjectUtilisateurById(int id) throws BuisnessException {
         return utilisateurManager.find(id);
     }
 
@@ -310,7 +321,7 @@ public class ServletFaireUneEnchere extends HttpServlet {
      * @throws BuisnessException
      */
     private Article createArticleFromId(int id) throws BuisnessException {
-        return article = this.getObjectArticleFromUrl(id);
+        return article = this.getObjectArticleById(id);
     }
 
     /**
@@ -322,7 +333,7 @@ public class ServletFaireUneEnchere extends HttpServlet {
      */
     private void setAttributeParams(HttpServletRequest request) throws BuisnessException {
 
-        utilisateur = this.getObjectUtilisateurFromUrl(article.getUtilisateur().getIdUtilisateur());
+        utilisateur = this.getObjectUtilisateurById(article.getUtilisateur().getIdUtilisateur());
 
         request.setAttribute("article", article);
         request.setAttribute("utilisateur", utilisateur);

@@ -6,6 +6,8 @@ package fr.eni.encheres.bll;
 import java.util.ArrayList;
 
 import fr.eni.encheres.bo.Retrait;
+import fr.eni.encheres.dal.DAOFactory;
+import fr.eni.encheres.outils.BuisnessException;
 
 /**
  * Classe en charge de
@@ -14,15 +16,28 @@ import fr.eni.encheres.bo.Retrait;
  * @date 7 avr. 2020
  */
 public class RetraitManager implements Manager<Retrait>{
+	
+	private static RetraitManager INSTANCE = null;
+	private DAOFactory daoFactory = new DAOFactory();
 
+	/**
+	 * Récupère l'instance de ArticleManager
+	 * @return ArticleManager
+	 */
+	public static RetraitManager getInstance(){
+		if (INSTANCE == null)
+			INSTANCE = new RetraitManager();
+		return INSTANCE;
+	}
 
 	/**
 	 * {@inheritDoc}
+	 * @throws BuisnessException 
 	 * @see fr.eni.encheres.bll.Manager#create()
 	 */
 	@Override
-	public void create(Retrait retrait) {
-
+	public void create(Retrait retrait) throws BuisnessException {
+		daoFactory.getRetraitDAOImpl().create(retrait);
 	}
 
 	/**

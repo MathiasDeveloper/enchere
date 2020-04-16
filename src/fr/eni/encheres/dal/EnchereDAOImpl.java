@@ -29,13 +29,13 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 	 *
 	 * @string
 	 */
-	private static final String INSERT_INTO = "INSERT INTO `ENCHERES` (" +
-			"`idUtilisateur`, " +
-			"`idArticle`, " +
-			"`dateEnchere`, " +
-			"`montantEnchere`, " +
-			"`heureDebutEnchere`, " +
-			"`heureFinEnchere`) " +
+	private static final String INSERT_INTO = "INSERT INTO ENCHERES (" +
+			"idUtilisateur, " +
+			"idArticle, " +
+			"dateEnchere, " +
+			"montantEnchere, " +
+			"heureDebutEnchere, " +
+			"heureFinEnchere) " +
 			"VALUES (?, ?, ?, ?, ?, ?);";
 	private static final String FINDALL = "SELECT * " +
 			"FROM ENCHERES " +
@@ -59,9 +59,9 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 	/**
 	 * Requete update lors de l'enchere d'un utilisateur
 	 */
-	private static  final String UPDATE = "UPDATE `ENCHERES` " +
-			"SET `idUtilisateur`=?," +
-			"`montantEnchere`=?" +
+	private static  final String UPDATE = "UPDATE ENCHERES " +
+			"SET idUtilisateur=?," +
+			"montantEnchere=?" +
 			" WHERE idArticle = ?";
 
 	/**
@@ -70,13 +70,13 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 	 * @string
 	 */
 	private static final String FIND_BY_ID = "SELECT " +
-			"`idUtilisateur`," +
-			" `dateEnchere`, " +
-			"`montantEnchere`, " +
-			"`heureDebutEnchere`, " +
-			"`heureFinEnchere` " +
-			"FROM `ENCHERES` " +
-			"WHERE `idArticle` = ?";
+			"idUtilisateur," +
+			" dateEnchere, " +
+			"montantEnchere, " +
+			"heureDebutEnchere, " +
+			"heureFinEnchere " +
+			"FROM ENCHERES " +
+			"WHERE idArticle = ?";
 
 	private ConnectionProvider connectionProvider = new ConnectionProvider();
 
