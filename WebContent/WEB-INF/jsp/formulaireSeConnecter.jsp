@@ -15,12 +15,30 @@
 <link href="<%=request.getContextPath()%>/css/seConnecter.css" rel="stylesheet">
 </head>
 <body>
+
+	<!--  Récupération du cookie rememberLogin s'il existe -->
+	<%
+	Cookie cookie = null;
+	Cookie[] cookies = request.getCookies();
+	String cookieSearchName = "rememberLogin";
+	String cookieSearchValue = "";
+	
+	if (cookies != null) {
+		for (int i = 0; i < cookies.length; i++) {
+			cookie = cookies[i];
+			if(cookie.getName().equals(cookieSearchName)){
+				cookieSearchValue = cookie.getValue();
+			}
+		}
+	}
+	%>
+
 	<a href="Home" class="h3">ENI - Enchères</a>
 	
 	<form action="seConnecter" method="post">
 		<div class="groupeFormulaire">
 			<label>Identifiant :</label>
-			<input type="text" placeholder="NineJea" required name="identifiant" id="identifiant">
+			<input type="text" placeholder="NineJea" required name="identifiant" id="identifiant" value="<%=cookieSearchValue%>">
 		</div>
 		<br>
 		<div class="groupeFormulaire">
