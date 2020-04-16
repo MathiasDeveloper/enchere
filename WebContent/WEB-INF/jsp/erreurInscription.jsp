@@ -14,7 +14,7 @@
 	rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="<%=request.getContextPath()%>/css/inscription.css"
+<link href="<%=request.getContextPath()%>/assets/css/inscription.css"
 	rel="stylesheet">
 </head>
 <body>
