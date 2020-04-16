@@ -323,7 +323,7 @@ public class ServletFaireUneEnchere extends HttpServlet {
     private void setAttributeParams(HttpServletRequest request) throws BuisnessException {
 
         enchere = this.getObjectEnchereFromUrl(article.getIdArticle());
-        utilisateur = this.getObjectUtilisateurFromUrl(article.getUtilisateur().getIdUtilisateur());
+        utilisateur = this.getObjectUtilisateurFromUrl((int) request.getSession().getAttribute("idUtilisateur"));
         categorie = this.getObjectCategorieFromUrl(article.getCategorie().getIdCategorie());
 
         request.setAttribute("article", article);
