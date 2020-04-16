@@ -92,7 +92,7 @@
                 </div>
                 <div class="mt-3">
                     <c:if test="${!empty enchere.getArticle().getNomArticle()}">
-                        <a href="DetailEnchere?idArticle=${enchere.getArticle().getIdArticle() }">${enchere.getArticle().getNomArticle() }</a>
+                        <a href="faireEnchere?idArticle=${enchere.getArticle().getIdArticle() }">${enchere.getArticle().getNomArticle() }</a>
                     </c:if>
 
                     <c:if test="${empty enchere.getArticle().getNomArticle()}">
@@ -116,5 +116,5 @@
 </div>
 </div>
 </body>
-<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/listeEnchereConnecte.js"></script>
+<script type="text/javascript" src="assets/js/listeEnchereConnecte.js"></script>
 </html>

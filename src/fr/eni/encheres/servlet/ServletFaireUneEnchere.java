@@ -2,9 +2,11 @@ package fr.eni.encheres.servlet;
 
 import fr.eni.encheres.bll.ArticleManager;
 import fr.eni.encheres.bll.EnchereManager;
+import fr.eni.encheres.bll.RetraitManager;
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Enchere;
+import fr.eni.encheres.bo.Retrait;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.outils.BuisnessException;
 import fr.eni.encheres.outils.Utils;
@@ -31,12 +33,16 @@ public class ServletFaireUneEnchere extends HttpServlet {
     private ArticleManager articleManager = ArticleManager.getInstance();
 
     private UtilisateurManager utilisateurManager = UtilisateurManager.getInstance();
+    
+    RetraitManager retraitManager = RetraitManager.getInstance();
 
     private Article article = new Article();
 
     private Utilisateur utilisateur = new Utilisateur();
 
     private Enchere enchere = new Enchere();
+    
+    Retrait retrait = new Retrait();
 
     /**
      * Méthode de traitement de requete de type POST
@@ -122,12 +128,24 @@ public class ServletFaireUneEnchere extends HttpServlet {
 
                 // Créer l'article
                 article = this.createArticleFromId(id);
+                
+                //On créer le retrait
+                retrait = retraitManager.find(article.getIdArticle());
+                
+                //On créer l'enchere
+                enchere = enchereManager.find(article.getIdArticle());
 
                 // Check si l'article est encore en enchere ou non
                 this.checkDateIsLate(article, request);
 
                 // Construit les objets nécessaire à partir de la requete
                 this.setAttributeParams(request);
+                
+                //On passe les objets construits à la jsp
+                request.setAttribute("enchere", enchere);
+				request.setAttribute("retrait", retrait);
+				request.setAttribute("article", article);
+				request.setAttribute("utilisateur", utilisateur);
 
                 this.getServletContext().getRequestDispatcher("/WEB-INF/faireEnchere.jsp").forward(request, response);
             } else {
