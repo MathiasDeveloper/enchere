@@ -84,20 +84,22 @@
 		<button type="submit" class="btn btn-outline-secondary">Rechercher</button>
 	</div>
 </form>
-<div class=" d-flex mt-4 w-100 justify-content-around">
-	<c:forEach  var="enchere" items="${encheres}">
-		<div class="border w-25 d-flex justify-content-around mt-3">
-			<div>
-				<img src="">
+<div class="container">
+	<div class="d-flex mt-4 w-100 justify-content-around">
+		<c:forEach  var="enchere" items="${encheres}">
+			<div class="border w-25 d-flex justify-content-around mt-3">
+				<div>
+					<img src="">
+				</div>
+				<div class="mt-3">
+					<a href="#">${enchere.getArticle().getNomArticle() }</a>
+					<p>Prix : ${enchere.getMontantEnchere() }</p>
+					<p>Fin de l'enchère : ${enchere.getArticle().getDateFinEnchere() }</p>
+					<p>Vendeur : <a href="AfficherProfil?id=${enchere.getUtilisateur().getIdUtilisateur() }">${enchere.getUtilisateur().getPseudo() }</a></p>
+				</div>
 			</div>
-			<div class="mt-3">
-				<a href="#">${enchere.getArticle().getNomArticle() }</a>
-				<p>Prix : ${enchere.getMontantEnchere() }</p>
-				<p>Fin de l'enchère : ${enchere.getArticle().getDateFinEnchere() }</p>
-				<p>Vendeur : <a href="AfficherProfil?id=${enchere.getUtilisateur().getIdUtilisateur() }">${enchere.getUtilisateur().getPseudo() }</a></p>
-			</div>
-		</div>
-	</c:forEach>
+		</c:forEach>
+	</div>
 </div>
 </body>
 <script type="text/javascript" src="assets/js/listeEnchereConnecte.js"></script>

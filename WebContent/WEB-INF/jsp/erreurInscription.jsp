@@ -10,11 +10,10 @@
 
 <!-- Bootstrap core CSS -->
 <link
-	href="<%=request.getContextPath()%>/vendor/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
+	href="${pageContext.request.contextPath}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="<%=request.getContextPath()%>/assets/css/inscription.css"
+<link href="${pageContext.request.contextPath}/assets/css/inscription.css"
 	rel="stylesheet">
 </head>
 <body>

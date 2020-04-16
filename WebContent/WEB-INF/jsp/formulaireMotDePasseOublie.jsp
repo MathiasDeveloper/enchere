@@ -12,7 +12,7 @@
 	rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="<%=request.getContextPath()%>/css/seConnecter.css"
+<link href="<%=request.getContextPath()%>/assets/css/seConnecter.css"
 	rel="stylesheet">
 </head>
 <body>
