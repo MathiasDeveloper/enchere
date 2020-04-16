@@ -20,12 +20,6 @@
             </div>
         </c:if>
 
-        <c:if test="${!empty messageDate}">
-            <div class="alert alert-info" role="alert">
-                    ${messageDate}
-            </div>
-        </c:if>
-
         <c:if test="${!empty messageUtilisateur}">
             <div class="alert alert-info" role="alert">
                     ${messageUtilisateur}
@@ -41,6 +35,16 @@
         <c:if test="${!empty messageCredit}">
             <div class="alert alert-danger" role="alert">
                     ${messageCredit}
+            </div>
+        </c:if>
+        <c:if test="${!empty messageGagnant &&  enchere.utilisateur.idUtilisateur != sessionScope.idUtilisateur}">
+        	<div class="text-center mt-5">
+                    <p>${enchere.utilisateur.pseudo } a ${messageGagnant}</p>
+            </div>
+        </c:if>
+        <c:if test="${!empty messageGagnant &&  enchere.utilisateur.idUtilisateur == sessionScope.idUtilisateur}">
+        	<div class="text-center mt-5">
+                    <p>Vous avez ${messageGagnant}</p>
             </div>
         </c:if>
 		<div class="container d-flex justify-content-center pt-5 mt-5">
@@ -61,7 +65,12 @@
 				<p>${article.prixInitial}</p>
 				<p>${article.dateDebutEnchere}</p>
 				<p>${article.dateFinEnchere}</p>
-				<p>${retrait.rue} ${retrait.codePostal} ${retrait.ville}</p>
+				<c:if test="${!empty retrait.rue}">
+					<p>${retrait.rue} ${retrait.codePostal} ${retrait.ville}</p>
+				</c:if>
+				<c:if test="${empty retrait.rue}">
+					<p>${utilisateur.rue} ${utilisateur.codePostal} ${utilisateur.ville}</p>
+				</c:if>
 				<p>${utilisateur.pseudo}</p>
 			</div>
 		</div>

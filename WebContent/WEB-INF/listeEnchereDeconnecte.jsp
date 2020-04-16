@@ -69,5 +69,4 @@
 	</div>
 </div>
 </body>
->>>>>>> refs/remotes/origin/release
 </html>

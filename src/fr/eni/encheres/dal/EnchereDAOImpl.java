@@ -153,6 +153,8 @@ public class EnchereDAOImpl implements DAO<Enchere>{
 
 			while (rs.next()){
 				utilisateur.setIdUtilisateur(rs.getInt(1));
+				UtilisateurDAOImpl utilisateurDAOImpl = new UtilisateurDAOImpl();
+				utilisateur = utilisateurDAOImpl.find(utilisateur.getIdUtilisateur());
 				enchere.setUtilisateur(utilisateur);
 				enchere.setDateEnchere(rs.getDate(2));
 				enchere.setMontantEnchere(rs.getInt(3));

@@ -236,10 +236,11 @@ public class ServletFaireUneEnchere extends HttpServlet {
         }
 
         if (isLate) {
-            message = "L'article n'est actuellement dans aucune enchere";
+            message = " remporté l'enchère.";
         }
 
         if (message != null) {
+            request.setAttribute("messageGagnant", message);
             request.setAttribute("messageDate", message);
         }
 
