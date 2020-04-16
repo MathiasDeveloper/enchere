@@ -33,7 +33,7 @@ public class ServletSeDeconnecter extends javax.servlet.http.HttpServlet {
     	// Recupere la session
     	HttpSession session = request.getSession(true);
     	
-    	if(request.getAttribute("idUtilisateur") != null ){  
+    	if(session.getAttribute("idUtilisateur") != null ){  
             session.invalidate();
             this.getServletContext().getRequestDispatcher("/Home").forward(request, response);
         }
