@@ -16,7 +16,7 @@
 	rel="stylesheet">
 </head>
 <body>
-	<h3>ENI-Enchères</h3>
+	<a href="Home" class="h3">ENI - Enchères</a>
 
 	<form action="motDePasseOublie" method="post">
 		<div class="alert alert-danger" role="alert">

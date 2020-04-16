@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="p-5 ml-5">
-	<h1>ENI - Enchères</h1>
+	<a href="Home" class="h1">ENI - Enchères</a>hères</h1>
 </div>
 <div class="text-center">
 	<h1>L'utilisateur que vous avez recherché est inconnu.</h1>

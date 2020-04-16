@@ -15,7 +15,7 @@
 <link href="<%=request.getContextPath()%>/css/seConnecter.css" rel="stylesheet">
 </head>
 <body>
-	<h3>ENI-Enchères</h3>
+	<a href="Home" class="h3">ENI - Enchères</a>
 	
 	<form action="seConnecter" method="post">
 		<div class="groupeFormulaire">

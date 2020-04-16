@@ -18,7 +18,7 @@
 	rel="stylesheet">
 </head>
 <body>
-	<h3>ENI-Enchères</h3>
+	<a href="Home" class="h3">ENI - Enchères</a>
 
 	<form action="#" method="post">
 		<h2>Mon profil</h2>

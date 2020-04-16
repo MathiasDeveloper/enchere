@@ -19,7 +19,7 @@
 </head>
 <body>
 
-	<h3>ENI-Enchères</h3>
+	<a href="Home" class="h3">ENI - Enchères</a>
 	<form action="#" method="">
 		<div class="alert alert-success" role="alert">
   			Mot de passe changer avec succes

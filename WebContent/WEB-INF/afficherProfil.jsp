@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="p-5 ml-5">
-	<h1>ENI - Enchères</h1>
+	<a href="Home" class="h1">ENI - Enchères</a>
 </div>
 <div class="container d-flex justify-content-center pt-5 mt-5">
 	<div class="pr-5">
