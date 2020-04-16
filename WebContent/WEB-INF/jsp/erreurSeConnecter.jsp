@@ -31,9 +31,10 @@
 	}
 	%>
 
-	<h3>ENI-Enchères</h3>
+	<a href="Home" class="h3">ENI - Enchères</a>
 
 	<form action="#" method="post">
+		
 		<p  class="badInput">Identifiant et/ou mot de passe incorrect</p>
 		<div class="groupeFormulaire">
 			<label>Identifiant :</label>

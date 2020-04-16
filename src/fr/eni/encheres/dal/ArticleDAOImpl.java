@@ -7,6 +7,8 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import fr.eni.encheres.bo.Article;
+import fr.eni.encheres.bo.Categorie;
+import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.outils.BuisnessException;
 import fr.eni.encheres.outils.Log;
 
@@ -24,6 +26,25 @@ public class ArticleDAOImpl implements DAO<Article>{
 			"INSERT INTO `ARTICLES` (`nomArticle`, `description`, `dateDebutEnchere`," +
 			"`dateFinEnchere`, `prixInitial`, `prixVente`, `idUtilisateur`, `idCategorie`) " +
 			"VALUES (?, ?, ?, ?, ?, 0, ?, ?)";
+
+	private static final String FIND_BY_ID = "SELECT " +
+			"`idArticle`," +
+			" `nomArticle`, " +
+			"`description`," +
+			" `dateDebutEnchere`, " +
+			"`dateFinEnchere`," +
+			" `prixInitial`, " +
+			"`prixVente`, " +
+			"`idUtilisateur`, " +
+			"`idCategorie` " +
+			"FROM `ARTICLES` " +
+			"WHERE idArticle = ?";
+
+	private Article article = new Article();
+
+	private Utilisateur utilisateur = new Utilisateur();
+
+	private Categorie categorie = new Categorie();
 
 	@Override
 	public void create(Article objet) throws BuisnessException {
@@ -95,9 +116,33 @@ public class ArticleDAOImpl implements DAO<Article>{
 	 * @see fr.eni.encheres.dal.DAO#find(int)
 	 */
 	@Override
-	public Article find(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Article find(int id) throws BuisnessException {
+
+		try{
+			PreparedStatement ps = connectionProvider.getInstance().prepareStatement(FIND_BY_ID);
+			ps.setInt(1, id);
+
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()){
+				article.setIdArticle(rs.getInt(1));
+				article.setNomArticle(rs.getString(2));
+				article.setDescription(rs.getString(3));
+				article.setDateDebutEnchere(rs.getDate(4));
+				article.setDateFinEnchere(rs.getDate(5));
+				article.setPrixInitial(rs.getInt(6));
+				article.setPrixVente(rs.getInt(7));
+				utilisateur.setIdUtilisateur(rs.getInt(8));
+				categorie.setIdCategorie(rs.getInt(9));
+				article.setCategorie(categorie);
+				article.setUtilisateur(utilisateur);
+			}
+
+		} catch (SQLException e){
+			new Log(e.getMessage());
+			throw new BuisnessException(e.getMessage(),e);
+		}
+		return article;
 	}
 
 	/**

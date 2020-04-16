@@ -14,10 +14,7 @@
 		<a href="Home" class="h1">ENI - Enchères</a>
 	</div>
 	<div class="d-flex justify-content-around w-25 mr-5 mt-3">
-		<a href="Home">Enchères</a>
-		<a href="VendreArticle">Vendre un article</a>
-		<a href="AfficherProfil?id=${utilisateur }">Mon profil</a>
-		<a href="seDeconnecter">Déconnexion</a>
+		<a href="seConnecter">S'inscrire - Se connecter</a>
 	</div>
 </div>
 <div class="text-center">
@@ -28,7 +25,7 @@
 		<p>${message }</p>
 	</c:if>
 </div>
-<form class="d-flex justify-content-around mt-5" action="ListeEnchereConnecte" method="POST">
+<form class="d-flex justify-content-around mt-5" action="ListeEnchereDeconnecte" method="POST">
 	<div class="w-25">
 		<label>Filtres : </label><br>
 		<input style="width: 400px;" name="nom" type="text" placeholder="Le nom de l'article contient">
@@ -39,46 +36,6 @@
         		<option value="${categorie.idCategorie}">${categorie.libelle}</option>
         	</c:forEach>
         </select>
-        <div id="achatvente" class="d-flex justify-content-between">
-	        <div>
-			  <input type="radio" id="achats" name="type" value="achats" checked>
-			  <label for="achats">Achats</label>
-			</div>
-			<div class="pr-5 mr-5">
-			  <input type="radio" id="ventes" name="type" value="vente">
-			  <label for="ventes">Mes Ventes</label>
-			</div>
-		</div>
-		<div class="d-flex justify-content-between">
-	        <div class="ml-4">
-				<div>
-				  <input type="radio" id="encheresouvertes" name="encheres" value="encheresouvertes" checked>
-				  <label for="encheresouvertes">enchères ouvertes</label>
-				</div>
-				<div>
-				  <input type="radio" id="encheresencours" name="encheres" value="encheresencours">
-				  <label for="encheresencours">enchères en cours</label>
-				</div>
-				<div>
-				  <input type="radio" id="encheresremportees" name="encheres" value="encheresremportees">
-				  <label for="encheresremportees">Mes Ventes</label>
-				</div>
-			</div>
-			<div id="ventesradio" class="ml-4">
-	  		  	<div>
-				  <input type="radio" id="ventesencours" name="ventes" value="ventesencours" disabled>
-				  <label for="ventesencours">mes ventes en cours</label>
-				</div>
-				<div>
-				  <input type="radio" id="ventesnondebutees" name="ventes" value="ventesnondebutees" disabled>
-				  <label for="ventesnondebutees">ventes non débutées</label>
-				</div>
-				<div>
-				  <input type="radio" id="ventesterminees" name="ventes" value="ventesterminees" disabled>
-				  <label for="ventesterminees">ventes terminées</label>
-				</div>
-			</div>
-		</div>
 	</div>
 	<div class="d-flex align-items-center">
 		<button type="submit" class="btn btn-outline-secondary">Rechercher</button>

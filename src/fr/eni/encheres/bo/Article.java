@@ -72,6 +72,8 @@ public class Article {
 
 	private Utilisateur utilisateur;
 
+	private Enchere enchere;
+
 
 	/**
 	 * Récupération de l'article
@@ -230,6 +232,14 @@ public class Article {
 
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
+	}
+
+	public Enchere getEnchere() {
+		return enchere;
+	}
+
+	public void setEnchere(Enchere enchere) {
+		this.enchere = enchere;
 	}
 
 	@Override

@@ -24,6 +24,14 @@ public class CategorieDAOImpl implements DAO<Categorie>{
 	 */
 	private static final String FIND_ALL = "SELECT idCategorie,libelle FROM CATEGORIES";
 
+
+	private static final String FIND_BY_ID = "SELECT `idCategorie`," +
+			" `libelle`" +
+			" FROM `CATEGORIES` " +
+			"WHERE `idCategorie` = ?";
+
+	private  Categorie categorie = new Categorie();
+
 	/**
 	 * Connection provider
 	 */
@@ -57,13 +65,30 @@ public class CategorieDAOImpl implements DAO<Categorie>{
 	}
 
 	/**
-	 * {@inheritDoc}
-	 * @see fr.eni.encheres.dal.DAO#find(int)
+	 * Retourne la catégorie de l'article associer via l'id categorie
+	 *
+	 * @param id
+	 * @return Categorie
 	 */
 	@Override
-	public Categorie find(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Categorie find(int id) throws BuisnessException {
+		try {
+			PreparedStatement ps = connectionProvider.getInstance().prepareStatement(FIND_BY_ID);
+			ps.setInt(1 , id);
+
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()){
+				categorie.setIdCategorie(rs.getInt(1));
+				categorie.setLibelle(rs.getString(2));
+			}
+
+		} catch (SQLException e){
+			new Log(e.getMessage());
+			throw new BuisnessException(e.getMessage(), e);
+		}
+
+		return categorie;
 	}
 
 	/**

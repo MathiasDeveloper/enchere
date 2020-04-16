@@ -7,7 +7,7 @@
 <body>
 <div class="jumbotron">
     <div class="container">
-        <h1>ENI - Enchères</h1>
+        <a href="Home" class="h1">ENI - Enchères</a>
     </div>
 </div>
 <div class="container">
