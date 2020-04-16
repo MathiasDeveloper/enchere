@@ -54,6 +54,6 @@ public class Categorie {
 	public String toString() {
 		return "Categorie [idCategorie=" + idCategorie + ", libelle=" + libelle + "]";
 	}
-	
-	
+
+
 }

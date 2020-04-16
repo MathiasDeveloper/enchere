@@ -118,4 +118,14 @@ public class UtilisateurManager implements Manager<Utilisateur>{
 		// TODO Auto-generated method stub
 		return daoFactory.getUtilisateurDAOImpl().updatePassword(utilisateur);
 	}
+
+	/**
+	 * Met a jour les credits de l'utilisateur
+	 *
+	 * @param prix
+	 * @param utilisateur
+	 */
+    public void updateCreditUtilisateur(int prix, Utilisateur utilisateur) throws BuisnessException {
+		daoFactory.getUtilisateurDAOImpl().updateCreditUtilisateur(prix, utilisateur);
+    }
 }
