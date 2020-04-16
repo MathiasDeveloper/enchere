@@ -5,20 +5,18 @@
 <head>
 <meta charset="UTF-8">
 <!-- Bootstrap core CSS -->
-<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <title>Liste des enchères</title>
 </head>
 <body>
-<div class="d-flex justify-content-between">
-	<div class="ml-5">
-		<a href="Home" class="h1">ENI - Enchères</a>
-	</div>
-	<div class="d-flex justify-content-around w-25 mr-5 mt-3">
-		<a href="seConnecter">S'inscrire - Se connecter</a>
-	</div>
-</div>
-<div class="text-center">
-	<h1 class="mt-5">Liste des enchères</h1>
+
+
+<nav class="d-flex justify-content-between text-dark align-items-center p-3 bg-light">
+		<h1><a href="Home" class="nav-link" >ENI - Enchères</a></h1>
+	    <a href="seConnecter" class="nav-link">S'inscrire - Se connecter</a>
+</nav>
+<div class="jumbotron text-center">
+	<h1>Liste des enchères</h1>
 </div>
 <div class="text-center">
 	<c:if test="${!empty message }">
@@ -41,21 +39,34 @@
 		<button type="submit" class="btn btn-outline-secondary">Rechercher</button>
 	</div>
 </form>
-<div class=" d-flex mt-4 w-100 justify-content-around">
-	<c:forEach  var="enchere" items="${encheres}">
-		<div class="border w-25 d-flex justify-content-around mt-3">
-			<div>
-				<img src="">
+<div class="container">
+	<div class="d-flex flex-wrap justify-content-between mt-4 mb-4">
+		<c:forEach  var="enchere" items="${encheres}">
+			<div class="border mt-3">
+				<div>
+					<img src="/images/patate.jpeg">
+				</div>
+				<div class="p-3">
+					<c:if test="${!empty enchere.getArticle().getNomArticle()}">
+						<a href="#">${enchere.getArticle().getNomArticle() }</a>
+					</c:if>
+
+					<c:if test="${empty enchere.getArticle().getNomArticle()}">
+						<p> Aucun titre </p>
+					</c:if>
+
+					<c:if test="${enchere.getMontantEnchere() == 0}">
+						<p>Prix : ${enchere.getArticle().getPrixInitial()}</p>
+					</c:if>
+					<c:if test="${enchere.getMontantEnchere() > 0}">
+						<p>Prix : ${enchere.getMontantEnchere() }</p>
+					</c:if>
+					<p>Fin de l'enchère : ${enchere.getArticle().getDateFinEnchere() }</p>
+					<p>Vendeur : <a href="AfficherProfil?id=${enchere.getUtilisateur().getIdUtilisateur() }">${enchere.getUtilisateur().getPseudo() }</a></p>
+				</div>
 			</div>
-			<div class="mt-3">
-				<a href="#">${enchere.getArticle().getNomArticle() }</a>
-				<p>Prix : ${enchere.getMontantEnchere() }</p>
-				<p>Fin de l'enchère : ${enchere.getArticle().getDateFinEnchere() }</p>
-				<p>Vendeur : <a href="AfficherProfil?id=${enchere.getUtilisateur().getIdUtilisateur() }">${enchere.getUtilisateur().getPseudo() }</a></p>
-			</div>
-		</div>
-	</c:forEach>
+		</c:forEach>
+	</div>
 </div>
 </body>
-<script type="text/javascript" src="assets/js/listeEnchereConnecte.js"></script>
 </html>

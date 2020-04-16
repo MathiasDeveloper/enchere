@@ -9,13 +9,10 @@
 <title>ENI-Enchères | Inscription</title>
 
 <!-- Bootstrap core CSS -->
-<link
-	href="<%=request.getContextPath()%>/vendor/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
+<link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="<%=request.getContextPath()%>/css/inscription.css"
-	rel="stylesheet">
+<link href="/assets/css/inscription.css"rel="stylesheet">
 </head>
 <body>
 	<a href="Home" class="h3">ENI - Enchères</a>
