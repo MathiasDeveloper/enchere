@@ -37,4 +37,13 @@ public class DAOFactory {
     public EnchereDAOImpl getEnchereDAOImpl(){
         return new EnchereDAOImpl();
     }
+    
+    /**
+     * Récupération de la classe dao retrait
+     *
+     * @return CategorieDAOImpl
+     */
+    public RetraitDAOImpl getRetraitDAOImpl() {
+        return new RetraitDAOImpl();
+    }
 }

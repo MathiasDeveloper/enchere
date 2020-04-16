@@ -1,5 +1,6 @@
 package fr.eni.encheres.dal;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import fr.eni.encheres.outils.BuisnessException;

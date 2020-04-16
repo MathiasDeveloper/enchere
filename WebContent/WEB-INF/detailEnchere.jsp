@@ -30,16 +30,16 @@
 	<div class="text-center pl-5">
 		<p>${article.nomArticle }</p>
 		<p>${article.description}</p>
-		<p>${article.prixVente}</p>
+		<p>${enchere.montantEnchere }</p>
 		<p>${article.prixInitial}</p>
 		<p>${article.dateDebutEnchere}</p>
 		<p>${article.dateFinEnchere}</p>
-		<p>${retrait.rue}</p>
+		<p>${retrait.rue} ${retrait.codePostal} ${retrait.ville}</p>
 		<p>${utilisateur.pseudo}</p>
 	</div>
 </div>
 <div class="text-center">
-		<a class="btn btn-outline-secondary" href="faireEnchere?id=${utilisateur.idUtilisateur }">Encherir</a>
+		<a class="btn btn-outline-secondary" href="faireEnchere?idArticle=${article.idArticle }">Encherir</a>
 	</div>
 </body>
 </html>

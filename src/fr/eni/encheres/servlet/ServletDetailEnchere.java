@@ -13,10 +13,12 @@ import javax.servlet.http.HttpSession;
 import fr.eni.encheres.bll.ArticleManager;
 import fr.eni.encheres.bll.CategorieManager;
 import fr.eni.encheres.bll.EnchereManager;
+import fr.eni.encheres.bll.RetraitManager;
 import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Enchere;
+import fr.eni.encheres.bo.Retrait;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.outils.BuisnessException;
 import fr.eni.encheres.outils.Utils;
@@ -93,11 +95,19 @@ public class ServletDetailEnchere extends HttpServlet {
 
 				// Créer l'article
 				article = this.createArticleFromId(id);
+				
+				RetraitManager retraitManager = new RetraitManager();
+				
+				Retrait retrait = retraitManager.find(article.getIdArticle());
+				
+				Enchere enchere = enchereManager.find(article.getIdArticle());
 
 				// Check si l'article est encore en enchere ou non
 				this.checkDateIsLate(article, request);
 
 				// Construit les objets nécessaire à partir de la requete
+				request.setAttribute("enchere", enchere);
+				request.setAttribute("retrait", retrait);
 				request.setAttribute("article", article);
 				request.setAttribute("utilisateur", utilisateur);
 				//request.setAttribute("retrait", retrait);

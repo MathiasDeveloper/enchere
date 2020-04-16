@@ -23,21 +23,21 @@ public class ArticleDAOImpl implements DAO<Article>{
 	private ConnectionProvider connectionProvider = new ConnectionProvider();
 
 	private static final String INSERT_INTO =
-			"INSERT INTO `ARTICLES` (`nomArticle`, `description`, `dateDebutEnchere`," +
-			"`dateFinEnchere`, `prixInitial`, `prixVente`, `idUtilisateur`, `idCategorie`) " +
+			"INSERT INTO ARTICLES (nomArticle, description, dateDebutEnchere," +
+			"dateFinEnchere, prixInitial, prixVente, idUtilisateur, idCategorie) " +
 			"VALUES (?, ?, ?, ?, ?, 0, ?, ?)";
 
 	private static final String FIND_BY_ID = "SELECT " +
-			"`idArticle`," +
-			" `nomArticle`, " +
-			"`description`," +
-			" `dateDebutEnchere`, " +
-			"`dateFinEnchere`," +
-			" `prixInitial`, " +
-			"`prixVente`, " +
-			"`idUtilisateur`, " +
-			"`idCategorie` " +
-			"FROM `ARTICLES` " +
+			"idArticle," +
+			" nomArticle, " +
+			"description," +
+			" dateDebutEnchere, " +
+			"dateFinEnchere," +
+			" prixInitial, " +
+			"prixVente, " +
+			"idUtilisateur, " +
+			"idCategorie " +
+			"FROM ARTICLES " +
 			"WHERE idArticle = ?";
 
 	private Article article = new Article();

@@ -3,9 +3,12 @@ package fr.eni.encheres.servlet;
 import fr.eni.encheres.bll.ArticleManager;
 import fr.eni.encheres.bll.CategorieManager;
 import fr.eni.encheres.bll.EnchereManager;
+import fr.eni.encheres.bll.RetraitManager;
+import fr.eni.encheres.bll.UtilisateurManager;
 import fr.eni.encheres.bo.Article;
 import fr.eni.encheres.bo.Categorie;
 import fr.eni.encheres.bo.Enchere;
+import fr.eni.encheres.bo.Retrait;
 import fr.eni.encheres.bo.Utilisateur;
 import fr.eni.encheres.outils.BuisnessException;
 import fr.eni.encheres.outils.Log;
@@ -36,6 +39,10 @@ public class ServletVendreArticle extends HttpServlet {
 	 * Enchere Manager
 	 */
 	private static EnchereManager enchereManager = EnchereManager.getInstance();
+	/**
+	 * Retrait Manager
+	 */
+	private static RetraitManager retraitManager = RetraitManager.getInstance();
 
 	public ServletVendreArticle() {
 		super();
@@ -68,6 +75,9 @@ public class ServletVendreArticle extends HttpServlet {
 
 			// Création de l'objet Enchere à partir du formulaire
 			Enchere enchere = this.creerEnchereFormulaire(article, request);
+			
+			//Création du retrait
+			retraitManager.create(creationRetraitFormulaire(request, article));
 
 			// Insertion en bdd de l'objet Enchere
 			enchereManager.create(enchere);
@@ -102,6 +112,7 @@ public class ServletVendreArticle extends HttpServlet {
 			try {
 				if (!categorieManager.findAll().isEmpty()) {
 					request.setAttribute("categories", categorieManager.findAll());
+					request.setAttribute("utilisateur", UtilisateurManager.getInstance().find((int) session.getAttribute("idUtilisateur")));
 				}
 			} catch (BuisnessException e) {
 				e.printStackTrace();
@@ -268,6 +279,47 @@ public class ServletVendreArticle extends HttpServlet {
 
 		private void setMessageSucces(HttpServletRequest request){
 			request.setAttribute("messageSucces", "Enregistrement fait avec succès");
+		}
+		
+		private Retrait creationRetraitFormulaire(HttpServletRequest request, Article article) throws BuisnessException {
+			String message = null;
+			Retrait retrait = new Retrait();
+			if(request.getParameter("retraitRue").equals("") || request.getParameter("retraitCodePostal").equals("") || request.getParameter("retraitVille").equals("")) {
+				try {
+					message = "Merci de renseignez toutes les conditions de retrait.";
+					throw new Exception();
+				} catch (Exception e) {
+					request.setAttribute("messageEnchere", message);
+					new Log("Formulaire invalide" + e.getMessage());
+					throw new BuisnessException("Le formulaire n'est pas valide " + e.getMessage(), e);
+				}
+			}else{
+				if(request.getParameter("retraitCodePostal").length()==5) {
+					try {
+					    int codePostalNbre = Integer.parseInt(request.getParameter("retraitCodePostal"));
+						retrait.setArticle(article);
+						retrait.setRue(request.getParameter("retraitRue"));
+						retrait.setCodePostal(request.getParameter("retraitCodePostal"));
+						retrait.setVille(request.getParameter("retraitVille"));
+						return retrait;
+					} catch (NumberFormatException e) {
+						message = "Veuillez rentrer un code postal valide.";
+						request.setAttribute("messageEnchere", message);
+						new Log("Formulaire invalide" + e.getMessage());
+						throw new BuisnessException("Le formulaire n'est pas valide " + e.getMessage(), e);
+					}
+				}else {
+					try {
+						message = "Veuillez rentrer un code postal valide.";
+						throw new Exception();
+					} catch (Exception e) {
+						request.setAttribute("messageEnchere", message);
+						new Log("Formulaire invalide" + e.getMessage());
+						throw new BuisnessException("Le formulaire n'est pas valide " + e.getMessage(), e);
+					}
+				}
+				
+			}
 		}
 
 
