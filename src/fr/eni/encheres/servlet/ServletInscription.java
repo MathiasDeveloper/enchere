@@ -74,8 +74,7 @@ public class ServletInscription extends javax.servlet.http.HttpServlet {
 					request.setAttribute("pseudo", pseudo);
 					request.setAttribute("motdepasse", motdepasse);
 					
-					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/jsp/validationInscription.jsp");
-					rd.forward(request, response);
+					this.getServletContext().getRequestDispatcher("/Home").forward(request, response);
 	        	}else {
 	        		out.println("Il y a eu un problème lors de l'ajout en base");
 	        	}

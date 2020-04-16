@@ -22,7 +22,9 @@
 
 	<form action="#" method="post">
 		<h2>Mon profil</h2>
-		<p class="badInput">Pseudo ou mot de passe déjà utilisé</p>
+		<div class="alert alert-danger" role="alert">
+ 			Pseudo ou email déjà utilisé
+		</div>
 		<div class="ligneFormulaire">
 			<div class="groupeFormulaire">
 				<label>Pseudo :</label>

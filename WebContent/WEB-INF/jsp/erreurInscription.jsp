@@ -22,7 +22,9 @@
 
 	<form action="#" method="post">
 		<h2>Mon profil</h2>
-		<p class="badInput">une erreur est survenue</p>
+		<div class="alert alert-danger" role="alert">
+ 			Les mots de passe ne correspondent pas
+		</div>
 		<div class="ligneFormulaire">
 			<div class="groupeFormulaire">
 				<label>Pseudo :</label>
