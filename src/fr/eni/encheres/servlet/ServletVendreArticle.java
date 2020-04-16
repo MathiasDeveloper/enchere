@@ -293,21 +293,33 @@ public class ServletVendreArticle extends HttpServlet {
 					new Log("Formulaire invalide" + e.getMessage());
 					throw new BuisnessException("Le formulaire n'est pas valide " + e.getMessage(), e);
 				}
-			}else if(request.getParameter("retraitCodePostal").length()==5){
-				try {
-				    int codePostalNbre = Integer.parseInt(request.getParameter("retraitCodePostal"));
-					retrait.setArticle(article);
-					retrait.setRue(request.getParameter("retraitRue"));
-					retrait.setCodePostal(request.getParameter("retraitCodePostal"));
-					retrait.setVille(request.getParameter("retraitVille"));
-				} catch (NumberFormatException e) {
-					message = "Veuillez rentrer un code postal valide";
-					request.setAttribute("messageEnchere", message);
-					new Log("Formulaire invalide" + e.getMessage());
-					throw new BuisnessException("Le formulaire n'est pas valide " + e.getMessage(), e);
+			}else{
+				if(request.getParameter("retraitCodePostal").length()==5) {
+					try {
+					    int codePostalNbre = Integer.parseInt(request.getParameter("retraitCodePostal"));
+						retrait.setArticle(article);
+						retrait.setRue(request.getParameter("retraitRue"));
+						retrait.setCodePostal(request.getParameter("retraitCodePostal"));
+						retrait.setVille(request.getParameter("retraitVille"));
+						return retrait;
+					} catch (NumberFormatException e) {
+						message = "Veuillez rentrer un code postal valide.";
+						request.setAttribute("messageEnchere", message);
+						new Log("Formulaire invalide" + e.getMessage());
+						throw new BuisnessException("Le formulaire n'est pas valide " + e.getMessage(), e);
+					}
+				}else {
+					try {
+						message = "Veuillez rentrer un code postal valide.";
+						throw new Exception();
+					} catch (Exception e) {
+						request.setAttribute("messageEnchere", message);
+						new Log("Formulaire invalide" + e.getMessage());
+						throw new BuisnessException("Le formulaire n'est pas valide " + e.getMessage(), e);
+					}
 				}
+				
 			}
-			return retrait;
 		}
 
 
