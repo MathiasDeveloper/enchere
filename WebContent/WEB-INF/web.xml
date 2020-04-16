@@ -14,4 +14,9 @@
 	<welcome-file-list>
 		<welcome-file>Home</welcome-file>
 	</welcome-file-list>
+	
+	<!-- Mise en place d'une session de 5 Minutes -->
+	<session-config>
+    	<session-timeout>5</session-timeout>
+  	</session-config>
 </web-app>
