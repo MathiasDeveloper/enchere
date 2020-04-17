@@ -48,7 +48,7 @@
 				</div>
 				<div class="p-3">
 					<c:if test="${!empty enchere.getArticle().getNomArticle()}">
-						<a href="#">${enchere.getArticle().getNomArticle() }</a>
+						<p>${enchere.getArticle().getNomArticle() }</p>
 					</c:if>
 
 					<c:if test="${empty enchere.getArticle().getNomArticle()}">
@@ -62,7 +62,7 @@
 						<p>Prix : ${enchere.getMontantEnchere() }</p>
 					</c:if>
 					<p>Fin de l'enchère : ${enchere.getArticle().getDateFinEnchere() }</p>
-					<p>Vendeur : <a href="AfficherProfil?id=${enchere.getUtilisateur().getIdUtilisateur() }">${enchere.getUtilisateur().getPseudo() }</a></p>
+					<p>Vendeur : ${enchere.getUtilisateur().getPseudo() }</p>
 				</div>
 			</div>
 		</c:forEach>
