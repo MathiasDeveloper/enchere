@@ -23,12 +23,12 @@
 		<div class="ligneFormulaire">
 			<div class="groupeFormulaire">
 				<label>Pseudo :</label>
-				<input type="text" required name="pseudo" id="psuedo">
+				<input type="text" name="pseudo" id="psuedo">
 			</div>
 
 			<div class="groupeFormulaire">
 				<label>Nom :</label>
-				<input type="text" required name="nom" id="nom">
+				<input type="text" name="nom" id="nom">
 			</div>
 		</div>
 
@@ -37,12 +37,12 @@
 		<div class="ligneFormulaire">
 			<div class="groupeFormulaire">
 				<label>Prénom :</label>
-				<input type="text" required name="prenom" id="">
+				<input type="text" name="prenom" id="">
 			</div>
 
 			<div class="groupeFormulaire">
 				<label>Email :</label>
-				<input type="email" required name="email" id="email">
+				<input type="email" name="email" id="email">
 			</div>
 		</div>
 
@@ -51,12 +51,12 @@
 		<div class="ligneFormulaire">
 			<div class="groupeFormulaire">
 				<label>Téléphone :</label>
-				<input type="text" required name="tel" id="">
+				<input type="text" name="tel" id="">
 			</div>
 
 			<div class="groupeFormulaire">
 				<label>Rue :</label>
-				<input type="text" required name="rue" id="rue">
+				<input type="text" name="rue" id="rue">
 			</div>
 		</div>
 		
@@ -65,12 +65,12 @@
 		<div class="ligneFormulaire">
 			<div class="groupeFormulaire">
 				<label>Code Postal :</label>
-				<input type="text" required name="cp" id="cp">
+				<input type="text" name="cp" id="cp">
 			</div>
 
 			<div class="groupeFormulaire">
 				<label>Ville :</label>
-				<input type="text" required name="ville" id="ville">
+				<input type="text" name="ville" id="ville">
 			</div>
 		</div>
 
@@ -79,12 +79,12 @@
 		<div class="ligneFormulaire">
 			<div class="groupeFormulaire">
 				<label>Mot de passe :</label>
-				<input type="password" placeholder="••••••••••••" required name="motdepasse" id="motdepasse">
+				<input type="password" placeholder="••••••••••••" name="motdepasse" id="motdepasse">
 			</div>
 			
 			<div class="groupeFormulaire">
 				<label>Confirmation :</label>
-				<input type="password"placeholder="••••••••••••" required name="confirmation"	id="confirmation">
+				<input type="password"placeholder="••••••••••••" name="confirmation"	id="confirmation">
 			</div>
 		</div>
 		
