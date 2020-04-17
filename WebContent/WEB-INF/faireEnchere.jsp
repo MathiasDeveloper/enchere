@@ -5,6 +5,11 @@
     <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
+<div class="jumbotron">
+    <div class="container">
+        <a href="Home" class="h1">ENI - Enchères</a>
+    </div>
+</div>
 <div class="container">
     <form action="faireEnchere" method="POST">
 
@@ -76,12 +81,16 @@
 		</div>
         <c:if test="${utilisateur.idUtilisateur != sessionScope.idUtilisateur && !empty sessionScope.idUtilisateur
         && messageDate == null }">
-            <div class="form-group">
-                <label for="prix">Montant</label>
-                <input id="prix" class="form-control" type="number" name="prix" value="${param.prix}" placeholder="indiquer un montant">
-            </div>
-            <input type="hidden" name="idArticle" value="${article.idArticle}">
-            <input class="btn btn-primary" type="submit" name="isSubmit" role="button" value="Encherir">
+        <div class="d-flex justify-content-center">
+	       	<div class="d-inline-flex flex-column mt-5">
+	            <div class="form-group">
+	                <label for="prix">Montant</label>
+	                <input id="prix" class="form-control" type="number" name="prix" value="${param.prix}" placeholder="indiquer un montant">
+	            </div>
+	            <input type="hidden" name="idArticle" value="${article.idArticle}">
+	            <input class="btn btn-primary" type="submit" name="isSubmit" role="button" value="Encherir">
+	        </div>
+        </div>
         </c:if>
     </form>
 </div>
