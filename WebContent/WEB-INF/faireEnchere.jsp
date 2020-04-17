@@ -48,7 +48,7 @@
             </div>
         </c:if>
         <c:if test="${!empty messageGagnant &&  enchere.utilisateur.idUtilisateur == sessionScope.idUtilisateur}">
-        	<div class="text-center mt-5">
+        	<div class="text-center mt-5 alert alert-success" role="alert">
                     <p>Vous avez ${messageGagnant}</p>
             </div>
         </c:if>
