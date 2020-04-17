@@ -10,8 +10,10 @@
 <title>Eni enchere - ${utilisateur.pseudo }</title>
 </head>
 <body>
-<div class="p-5 ml-5">
-	<a href="Home" class="h1">ENI - Enchères</a>
+<div class="jumbotron">
+    <div class="container">
+        <a href="Home" class="h1">ENI - Enchères</a>
+    </div>
 </div>
 <form action="ModifierProfil" method="POST">
 	<div class="container d-flex justify-content-around pt-5 mt-5 mb-5">
