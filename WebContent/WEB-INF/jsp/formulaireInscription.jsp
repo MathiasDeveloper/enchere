@@ -92,7 +92,7 @@
 		
 		<div class="ligneFormulaire">
 			<button class="btn btn-primary" type="submit">Créer</button>
-			<button href="#" class="btn btn-success">Annuler</button>
+			<button href="Home" class="btn btn-success">Annuler</button>
 		</div>
 	</form>
 </body>
