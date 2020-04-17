@@ -9,10 +9,10 @@
 <title>ENI-Enchères | Se connecter</title>
 
 <!-- Bootstrap core CSS -->
-<link href="<%=request.getContextPath()%>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="<%=request.getContextPath()%>/assets/css/seConnecter.css" rel="stylesheet">
+<link href="assets/css/seConnecter.css" rel="stylesheet">
 
 </head>
 <body>
