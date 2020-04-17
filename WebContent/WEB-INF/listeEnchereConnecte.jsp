@@ -86,10 +86,7 @@
 <div class="container">
     <div class="d-flex flex-wrap justify-content-around mt-4 mb-4">
         <c:forEach var="enchere" items="${encheres}">
-            <div class="border mt-3">
-                <div>
-                    <img src="/images/patate.jpeg">
-                </div>
+            <div class="border mt-3 p-3">
                 <div class="mt-3">
                     <c:if test="${!empty enchere.getArticle().getNomArticle()}">
                         <a href="faireEnchere?idArticle=${enchere.getArticle().getIdArticle() }">${enchere.getArticle().getNomArticle() }</a>
