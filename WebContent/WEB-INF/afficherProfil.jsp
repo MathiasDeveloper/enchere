@@ -10,8 +10,10 @@
 <title>${utilisateur.pseudo }</title>
 </head>
 <body>
-<div class="p-5 ml-5">
-	<a href="Home" class="h1">ENI - Enchères</a>
+<div class="jumbotron">
+    <div class="container">
+        <a href="Home" class="h1">ENI - Enchères</a>
+    </div>
 </div>
 <div class="container d-flex justify-content-center pt-5 mt-5">
 	<div class="pr-5">
@@ -35,7 +37,7 @@
 		<p>${utilisateur.ville }</p>
 	</div>
 </div>
-<div class="text-center">
+<div class="text-center mt-5">
 	<c:if test="${modifier==oui }">
 		<a class="btn btn-outline-secondary" href="ModifierProfil?id=${utilisateur.idUtilisateur }">Modifier</a>
 	</c:if>
